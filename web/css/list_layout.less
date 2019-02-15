@@ -1,0 +1,796 @@
+@import "variables.less";
+
+//---------FILTER COLUMN---------------
+
+.filter-column {
+  margin-top: 40px;
+
+  font-family: Lato, Arial, sans-serif;
+
+  //background-color: white;
+  background-color: transparent;
+  //border-right: 1px solid #eee;
+  border-right: 1px dashed @lightgrey;
+  //border-radius: 8px;
+
+  z-index: 999;
+}
+
+.filter-column-top {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+
+  .small-thumbs-list {
+    margin: 0 20px 0 0;
+    padding-left: 0;
+  }
+
+  .small-thumb {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-right: -13px;
+    box-sizing: content-box;
+
+    background-image: url(../img/default.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    border: 3px solid @background;
+    border-radius: 50%;
+  }
+
+  .small-thumb img {
+    width: inherit;
+    height: inherit;
+    box-sizing: border-box;
+
+    object-fit: cover;
+
+    border: none;
+    border-radius: 50%;
+  }
+}
+
+.trainer-filter-column{
+  .small-thumb{
+    background-image: url(../img/placeholder2.png);
+  }
+}
+
+/*-------------------------------*/
+
+.filter-title {
+  margin: 0 0 20px 0;
+  padding-left: 10px;
+
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  color: @darkgrey;
+  line-height: 30px;
+  text-align: left;
+  letter-spacing: 2px;
+}
+
+//-----------FILTER FORM----------------
+
+.filter-form {
+  font-family: inherit;
+  font-weight: 400;
+
+  .form-group .select2-selection,
+  .form-group .form-control {
+    padding: 3px 11px 4px;
+
+    color: black !important;
+
+    background-color: #f8f8f8;
+    //background-color: white;
+    //border: 0;
+    border: 1px solid @lightgrey;
+    border-radius: 17px;
+    box-shadow: none;
+
+    transition: 0.15s linear all;
+  }
+
+  .form-group .select2-selection {
+    padding-left: 17px;
+    padding-bottom: 5px;
+  }
+
+  .select2-search__field {
+    padding: 0 !important;
+  }
+
+  .form-group .select2-selection__arrow {
+    border-left: 0 !important;
+
+    b {
+      left: 40% !important;
+    }
+  }
+
+  .form-group .select2-selection:hover,
+  .form-group .form-control:hover,
+  .checkbox input[type="checkbox"]:hover,
+  .checkbox input[type="checkbox"]:checked:hover {
+    cursor: pointer;
+
+    background-color: white;
+    border-color: @primary;
+  }
+
+  .select2-container--krajee.select2-container--open .select2-selection {
+    box-shadow: none;
+  }
+
+  span.select2-selection__rendered {
+    line-height: 1.7
+  }
+
+  .select2-search__field {
+    height: auto !important;
+    line-height: 1.7 !important
+  }
+
+  .form-group .select2-selection:active,
+  .form-group .form-control:active,
+  .form-group .select2-selection:focus,
+  .form-group .form-control:focus {
+    background-color: white;
+    border: 1px solid @primary;
+    box-shadow: none;
+    outline: none;
+  }
+
+  .filter-checkbox-list {
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+
+  .control-label {
+    margin-bottom: 0;
+    padding-left: 0;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .checkbox label {
+    margin-bottom: 2px;
+    padding: 2px 0;
+
+    font-size: 10px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .checkbox input[type="checkbox"],
+  .checkbox-inline input[type="checkbox"] {
+    -webkit-appearance: none;
+
+    position: relative;
+    top: 4px;
+    left: 0;
+
+    display: inline-block;
+    margin: 0 6px 0 0 !important;
+    padding: 7px;
+
+    //background-color: #ebebeb;
+    background-color: white;
+
+    border: 1px solid @lightgrey;
+    border-radius: 3px;
+
+    transition: 0.15s linear all;
+  }
+
+  .checkbox input[type="checkbox"]:active,
+  .checkbox input[type="checkbox"]:checked:active {
+    background-color: white;
+    border: 1px solid lighten(@primary, 5%);
+  }
+
+  .checkbox input[type="checkbox"]:focus {
+    background-color: white;
+    border: 1px solid lighten(@primary, 5%);
+
+    outline: none;
+  }
+
+  .checkbox input[type="checkbox"]:checked {
+    border: 1px solid @primary;
+    background-color: white;
+    box-shadow: none;
+    color: black;
+  }
+
+  .checkbox input[type="checkbox"]:checked:after {
+    content: "";
+
+    position: absolute;
+    top: 3px;
+    left: 3px;
+
+    display: block;
+    width: 8px;
+    height: 8px;
+
+    background-color: @primary;
+    border-radius: 2px;
+  }
+}
+
+.form-group.tag-filter {
+
+  .checkbox {
+    display: inline;
+    margin-bottom: 0;
+  }
+
+  .checkbox label {
+    border: 1px dashed @primary !important;
+
+    line-height: 1;
+
+    margin: 8px 4px 0 0 !important;
+
+    background-color: white;
+
+    border-radius: 13px;
+    position: relative;
+    color: @primary;
+
+    padding: 3px 2px 2px 11px !important;
+    //margin-bottom: 0 !important;
+  }
+
+  .checkbox label::before {
+    content: '#';
+
+    position: absolute;
+    left: 3px;
+    top: 2px;
+
+    font-size: 13px;
+    color: inherit;
+  }
+
+  .checkbox input[type="checkbox"],
+  .checkbox-inline input[type="checkbox"] {
+    position: absolute !important;
+
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+
+    white-space: nowrap;
+
+    -webkit-clip-path: inset(100%);
+
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+
+  .checkbox input[type="checkbox"]:active, .checkbox input[type="checkbox"]:checked:active {
+    box-shadow: none !important;
+  }
+
+  .checkbox input[type="checkbox"]:focus {
+    outline: none;
+  }
+
+  .checkbox input[type="checkbox"]:checked {
+    background-color: @primary !important;
+    border: none !important
+  }
+
+  .checkbox input[type="checkbox"]:checked + label {
+    color: white;
+
+    background-color: @primary
+  }
+
+  .checkbox input[type="checkbox"]:checked:after {
+    content: '' !important;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 3px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  label {
+  }
+}
+
+.clear-filter {
+  position: relative;
+
+  display: block;
+  margin-left: 13px;
+  margin-top: 30px;
+  padding-left: 17px;
+
+  font-family: inherit;
+  font-size: 13px;
+  color: @darkgrey;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-decoration: none;
+
+  transition: 0.3s ease-in-out all;
+}
+
+.clear-filter::after {
+  content: "";
+
+  position: absolute;
+  top: 2px;
+  left: 0;
+
+  display: block;
+  width: 12px;
+  height: 12px;
+
+  background: url(/img/icons/close.ico) no-repeat top 2px left;
+  background-size: 11px;
+}
+
+.clear-filter:hover {
+  color: darken(@primary, 10%);
+  text-decoration: none;
+}
+
+//---------------------MAIN GRID---------------------
+
+.nothing-found-message,
+.table-view .empty {
+  display: block;
+  flex-grow: 0;
+  width: 100%;
+  height: 100px;
+  padding: 40px 20px;
+  margin: 0 auto;
+
+  font-family: Lato, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+  text-align: center;
+
+  //background-color: lighten(#eee, 1%);
+  background-color: transparent;
+  border: 2px dashed @lightgrey;
+  border-radius: 12px;
+}
+
+.name,
+.item-name {
+  margin-top: 10px;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  a:hover, a:active {
+    color: darken(@primary, 25%);
+    text-decoration: none;
+  }
+}
+
+.item {
+  cursor: default;
+}
+
+.item:hover .item-name a {
+  color: darken(@primary, 10%)
+}
+
+.thumb {
+  img {
+    width: inherit;
+    height: inherit;
+
+
+    border-radius: 50%;
+  }
+}
+
+//-------------------TRAINER_ITEM-----------------------------
+
+.trainers-grid .row {
+  margin-bottom: 26px !important;
+}
+
+.trainer-item {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  flex-wrap: wrap;
+
+  //width: 30.2% !important;
+  margin: 0 2% 35px 0;
+  padding: 25px 15px !important;
+
+  background-color: white;
+  //background-color: #fbfbfb;
+  border: 1px solid @lightgrey;
+  border-radius: 8px;
+
+  transition: 0.2s linear all;
+}
+
+.trainer-item:hover {
+  border-color: @primary;
+}
+
+.trainer-item .trainer-thumbnail {
+  position: relative;
+
+  height: 106px;
+  width: 106px;
+  margin: 0 auto 25px;
+
+  background: url(/img/placeholder2.png) no-repeat center center;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.trainer-name {
+  padding: 0 7px;
+
+  text-align: center;
+}
+
+.teach-country-list {
+  list-style: none;
+
+  display: inline-flex;
+  align-self: center;
+  justify-self: center;
+  flex-wrap: wrap;
+  margin: 15px auto 0;
+  padding: 3px 0 3px 16px;
+
+  text-align: center;
+
+  background: url(/img/icons/where.png) no-repeat center left;
+  background-size: 12px;
+}
+
+.lang-flag-list {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: cover;
+    object-position: center center;
+
+    border-radius: 50%;
+  }
+}
+
+//----
+
+.list-container {
+  padding: 10px 0;
+  position: absolute;
+}
+
+/*-----------------------*/
+
+.service-list {
+  padding: 0 0 5px;
+
+  text-align: center;
+}
+
+.service {
+  position: relative;
+
+  display: inline-block;
+  padding: 4px 7px 3px;
+
+  font-family: Lato, Arial, sans-serif;
+  font-size: 10px;
+  color: @darkgrey;
+  font-weight: 400;
+  letter-spacing: 1px;
+  word-break: keep-all;
+  text-transform: uppercase;
+
+  background-color: #fff3df;
+  border-radius: 10px;
+}
+
+//-----------EVENTS CALENDAR----------------
+
+.ui-datepicker-inline {
+  border-radius: 8px !important;
+  padding: 10px !important;
+  max-width: 100% !important;
+  border: 1px solid #eee !important;
+
+  .ui-datepicker-title, tr th {
+    font-family: Lato, Arial, sans-serif;
+    font-weight: 400;
+  }
+
+  tr th {
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    color: @primary !important
+  }
+
+  .ui-datepicker-header.ui-widget-header, .ui-state-default, tr {
+    border: 0 !important;
+    background: white !important
+  }
+
+  td a, td span {
+    text-align: center !important
+  }
+
+  .sDay a {
+    font-weight: 600 !important;
+    background: @primary !important;
+    border-radius: 50%;
+    color: white !important;
+    padding: .35em .0em;
+    box-shadow: 0 0 16px -2px @primary;
+  }
+
+  .ui-state-hover {
+    background: white !important;
+    border: 0 !important
+  }
+
+  .ui-datepicker-prev .ui-icon {
+    background: url(/img/icons/arrowl.png) no-repeat center center !important;
+    background-size: 15px !important;
+    cursor: pointer;
+  }
+
+  .ui-datepicker-next .ui-icon {
+    background: url(/img/icons/arrowr.png) no-repeat center center !important;
+    background-size: 15px !important;
+    cursor: pointer;
+  }
+}
+
+//-----------------------
+
+.trainers-list {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-wrap: wrap;
+  width: auto;
+  max-width: 990px;
+  margin-bottom: 0;
+  padding-left: 0;
+  justify-content: flex-start;
+  justify-items: flex-start;
+}
+
+//--------ARTICLE COLUMN---------------
+
+
+
+//--------------------
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .filter-column {
+    position: static;
+
+    width: 100%;
+    height: auto;
+    margin-top: 25px;
+    padding-right: 0;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #eee;
+    border-right: none;
+  }
+
+  .filter-column-top {
+    padding-left: 0;
+  }
+
+  .filter-column-top, .filter-header {
+    margin-bottom: 0.7em;
+  }
+
+  .fields-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .clear-filter {
+    width: auto;
+  }
+
+  .main-grid, .trainers-list {
+    width: 100%;
+    margin-left: 0;
+    padding-top: 15px;
+
+    //flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+  .trainer-item {
+    min-width: 260px;
+  }
+
+}
+
+@media (min-width: 768px) {
+  .flex-container {
+    flex-direction: row;
+  }
+
+  .filter-column {
+    position: fixed;
+
+    width: 215px;
+    //height: 100vh;
+    height: auto;
+    margin-top: 30px;
+    padding: 0 15px 25px 0;
+    //border-bottom: 1px dashed @primary;
+    //border-bottom: none;
+    border-right: 1px dashed @lightgrey;
+  }
+
+  .filter-column-top {
+    margin-bottom: 20px;
+  }
+
+  .fields-container {
+    display: block;
+
+    .form-group {
+      max-width: none;
+    }
+  }
+
+  .main-grid {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    max-width: 940px;
+    margin-left: 0;
+    padding-left: 240px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    box-sizing: border-box;
+  }
+
+  .trainers-list {
+    width: 100%;
+
+    padding-top: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: flex-start;
+  }
+
+  .trainer-item {
+    flex-grow: 1;
+    min-width: 230px;
+    max-width: 280px;
+    margin-bottom: 20px;
+  }
+
+  .trainer-item:nth-child(2n) {
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .trainers-list {
+    justify-content: flex-start;
+    justify-items: flex-start;
+  }
+
+  .trainer-item {
+    //flex-basis: 100%;
+    flex-grow: 1;
+  }
+
+  .trainer-item:nth-child(2n) {
+    margin-right: 2%;
+  }
+
+  .trainer-item:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 1335px) {
+  .filter-column {
+    width: 285px;
+    padding-right: 35px;
+  }
+
+  .main-grid {
+    padding-left: 330px;
+  }
+
+  .trainer-item {
+    flex-grow: 1;
+    margin-right: 25px !important;
+  }
+
+  .trainer-item:nth-child(2n) {
+    margin-right: 15px;
+  }
+
+  .trainer-item:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+//-----------------------------------------
+
+.main-grid {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+}

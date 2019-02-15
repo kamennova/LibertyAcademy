@@ -1,0 +1,38 @@
+//@blue: lighten(#0a0a3c, 30%);
+//@blue: #0d3569;
+@background: #f7f7f7;
+@blue: @primary;
+@accent: @primary;
+//@accent: #0a0a3c;
+@dark: #303030;
+@darkgrey: #303030;
+@lightcreme: #fff3df;
+@lightgrey: darken(#eee, 5%);
+
+@primary: #81c784 ;
+//@primary: #02b776;
+@secondary: #fff176;
+
+@red: #a31515;
+
+.menu-active {
+  content: "";
+
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0 auto;
+
+  background-color: @darkgrey;
+
+  z-index: 10000;
+}
+
+@media (min-width: 1200px) {
+  @space:  7.5%;
+}

@@ -1,0 +1,222 @@
+<?php
+
+use app\models\Country;
+use app\models\Language;
+use app\models\Service;
+use app\models\Trainer;
+use kartik\select2\Select2;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
+/**
+ * @var $this yii\web\View
+ * @var \yii\data\ActiveDataProvider $provider
+ * @var \app\models\trainer\TrainerCondition $condition
+ */
+
+$this->title = 'Liberty Academy | Teachers';
+
+$this->registerCssFile('/css/trainer_index.css');
+$this->registerCssFile('/css/list_layout.css');
+
+$trainers = $provider->getModels();
+$trainersNumber = count($trainers);
+
+$nameList = Trainer::find()->select(['name'])->where('name<>""')->indexBy('name')->orderBy('name')->column();
+
+$countryListSubQuery = (new \yii\db\Query())
+    ->select(['country_id'])
+    ->from('trainer_teachcountry')
+    ->distinct();
+
+$countryList = Country::find()->select('country_name')->where(['in', 'id', $countryListSubQuery])->indexBy('id')->orderBy('id')->column();
+//-----------------------------------------
+$serviceListSubQuery = (new \yii\db\Query())
+    ->select(['service_id'])
+    ->from('trainer_service')
+    ->distinct();
+
+$serviceList = Service::find()->select('service_name')->where(['in', 'id', $serviceListSubQuery])->indexBy('id')->orderBy('id')->column();
+//-----------------------------------------
+$langListSubQuery = (new \yii\db\Query())
+    ->select(['lang_id'])
+    ->from('trainer_language')
+    ->distinct();
+
+$langList = Language::find()->select('lang_name')->where(['in', 'id', $langListSubQuery])->indexBy('id')->orderBy('id')->column();
+
+?>
+
+<div class="site-container flex-container">
+
+    <aside class="filter-column">
+
+        <div class="filter-column-top">
+            <?php if ($trainers) {
+
+                echo '<ul class="small-thumbs-list trainers-thumbs-list">';
+
+                if (count($trainers) >= 3) {
+                    $totalNumber = 3;
+                } else {
+                    $totalNumber = count($trainers);
+                }
+                if (count($thumbsPick) < $totalNumber) {
+                    for ($i = 3 - count($thumbsPick); $i > 0; $i--) {
+                        echo "<li class='small-thumb'><img src='/img/default.jpg' /></li>";
+                    }
+                }
+                foreach ($thumbsPick as $thumb) {
+                    echo "<li class='small-thumb'><img src='$thumb' /></li>";
+                }
+                echo '</ul>';
+            } ?>
+            <span class="number trainers-number"><?= $trainersNumber ?> teachers</span>
+        </div>
+
+        <?php $form = ActiveForm::begin([
+            'layout' => 'default',
+            'action' => Url::to(['trainer/index']),
+            'method' => 'GET',
+            'options' => ['class' => 'filter-form']
+        ]); ?>
+
+
+        <h1 class="filter-title">Find a skilled teacher</h1>
+
+        <div class="fields-container">
+
+            <?= $form->field($condition, 'name', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]],
+                ['options' => ['class' => 'sort-select-field-2']])->widget(Select2::className(), [
+                'data' => $nameList,
+                'options' => [
+                    'placeholder' => 'Name',
+                    'onchange' => 'this.form.submit()',
+                    'class' => 'form-control',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+//                    'width' => '100%',
+                    'margin' => '0 8px'
+
+                ]])->label(false) ?>
+
+            <?= $form->field($condition, 'teachcountry_id')
+                ->dropDownList($countryList, [
+                    'prompt' => 'Teaching in...',
+                    'onchange' => 'this.form.submit()'
+                ])->label(false); ?>
+
+            <?= $form->field($condition, 'lang_id')
+                ->dropDownList($langList, [
+                    'prompt' => 'Language',
+                    'onchange' => 'this.form.submit()'
+                ])->label(false); ?>
+
+            <?= $form->field($condition, 'service_id', [
+                'horizontalCssClasses' => [
+                    'wrapper' => false,
+                    'offset' => false,
+                    'label' => 'col-sm-12',
+                ],
+                'options' => [
+                    'class' => 'filter-checkbox-list form-group'
+                ]
+            ])
+                ->checkboxList($serviceList, [
+                    'itemOptions' => ['onchange' => 'this.form.submit()']
+                ])
+                ->label('Service'); ?>
+
+            <?php ActiveForm::end(); ?>
+        </div>
+
+        <?= Html::a('Clear all filters', ['/trainer/index'], ['class' => 'clear-filter']) ?>
+
+
+    </aside>
+
+    <section class="trainers-grid main-grid">
+
+        <?= (count($trainers) == 0) ? '<p class="nothing-found-message">No teachers found(</p>' : null ?>
+
+        <?php
+        /** @noinspection ForeachInvariantsInspection */
+        for ($i = 0, $cnt = count($trainers); $i < $cnt; $i++) {
+
+            $trainer = $trainers[$i];
+
+            if (!isset($trainer->visibility)) {
+                break 1;
+            }
+
+
+            if ($i % 3 === 0 && $i > 0) {
+                echo '</div>';
+            }
+
+            if ($i % 3 === 0) {
+                echo "<div class='row'>";
+            }
+
+            echo "<div class='item trainer-item col-sm-4'>";
+
+            if ($trainer->languages) {
+                echo '<ul class="lang-flag-list">';
+
+                foreach ($trainer->languages as $language) {
+                    echo '<li class="lang-flag"><img src="/img/flags/' . $language->lang_flag . '.svg" /></li>';
+                }
+
+                echo '</ul>';
+            }
+
+            echo "<div class='item-thumbnail trainer-thumbnail'";
+
+            if ($trainer->thumb) {
+                echo "style='background:url({$trainer->thumb}) no-repeat center center; background-size: cover'";
+            }
+
+            echo "></div>";
+
+
+            echo "<h2 class='name item-name trainer-name'>" . Html::a($trainer->name, ['/trainer/profile', 'id' => $trainer->id]) . '</h2>';
+
+            if ($trainer->services) {
+
+                echo "<ul class='service-list'>";
+
+                $serviceNewList = '';
+                foreach ($trainer->services as $service) {
+                    $serviceNewList .= '<li class="service">' . $service->service_name . '</li> ';
+                }
+
+                echo $serviceNewList;
+
+                echo '</ul>';
+
+            }
+
+            echo "<ul class='teach-country-list'>";
+
+            $profileCountryList = '';
+            foreach ($trainer->teachCountries as $country) {
+                $profileCountryList .= '<li class="teach-country-item">' . $country->country_name . '</li>, ' . ' ';
+            }
+
+            echo substr($profileCountryList, 0, -4);
+
+            echo '</ul>';
+
+            echo '</div>';
+        }
+
+        echo LinkPager::widget([
+            'pagination' => $provider->pagination,
+        ]); ?>
+
+    </section>
+</div>
+

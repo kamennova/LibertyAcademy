@@ -1,0 +1,671 @@
+@import "variables.less";
+
+.main-header-wrapper.transparent {
+  background-color: transparent !important;
+}
+
+//----- DARK THEME -----
+
+.dark {
+  .main-header-wrapper {
+    border-color: #afafaf !important;
+  }
+
+  .main-nav a,
+  .user-nav a {
+    color: white;
+  }
+
+  .btn-join {
+    border-color: white !important;
+  }
+
+  .btn-join:hover {
+    border-color: @primary !important;
+  }
+
+  .poster-layer {
+    display: none;
+  }
+
+  .poster-title {
+    color: white;
+  }
+
+  .menu-icon span {
+    background-color: white !important
+  }
+
+  .header-logo {
+    width: 130px;
+    height: 37px;
+
+    background: url(../img/white-logo.png) no-repeat center center;
+    background-size: 100%;
+
+    img {
+      display: none;
+    }
+  }
+
+  .main-header .user-sub-menu {
+    a, button.logout {
+      color: white;
+    }
+
+    a:hover,
+    .logout:hover {
+      color: @primary
+    }
+
+    background-color: transparent;
+
+  }
+
+  .slides-indicators li {
+    background-color: white;
+
+    span {
+      background-color: white;
+    }
+  }
+
+}
+
+//---------POSTER SECTION---------
+
+.poster {
+  position: relative;
+  top: -70px;
+
+  width: 100%;
+  height: 100vh;
+  padding: 0;
+
+  background: url(../img/liberty.jpg) no-repeat center right;
+  background-size: calc(100% + 50px);
+
+  z-index: 100;
+
+  overflow: hidden;
+}
+
+.poster-slides {
+  padding-left: 0;
+
+  list-style: none;
+}
+
+.poster > .site-container {
+  position: absolute;
+  left: 0;
+
+  //height: 100%;
+
+  z-index: 1000;
+}
+
+.slides-indicators {
+  position: absolute;
+  //right: 0;
+  top: 30%;
+  padding-left: 0;
+  padding-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  list-style: none;
+
+  z-index: 1000;
+}
+
+.slides-indicators li {
+  position: relative;
+
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin-bottom: 25px;
+
+  border-radius: 50%;
+  background-color: black;
+}
+
+.slides-indicators li.active {
+  width: 10px;
+  height: 10px;
+}
+
+.slides-indicators li span {
+  position: absolute;
+  left: -8px;
+  //left: 0;
+  //right: 0;
+  top: -8px;
+  //bottom: 0;
+
+  display: block;
+  width: 22px;
+  height: 22px;
+  //margin: 0/ auto !important;
+
+  background-color: inherit;
+  border-radius: 50%;
+
+  opacity: 0;
+
+  transition: 0.2s linear opacity;
+}
+
+.slides-indicators li:not(.active):hover {
+  cursor: pointer;
+  span {
+    opacity: 0.3;
+  }
+}
+
+.slide {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  display: block;
+  width: 0;
+  height: 100vh;
+
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  transition: 1s ease-out width;
+
+  .site-container {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+
+    height: 30px;
+
+    text-align: right;
+  }
+}
+
+.slide.active {
+  display: block;
+  width: 100%;
+}
+
+.slide-layer {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  width: 100%;
+  height: inherit;
+
+  background-repeat: no-repeat;
+}
+
+.slide-title {
+  position: absolute;
+  top: 30%;
+  right: calc(50vw - 375px);
+
+  display: inline-block;
+  width: 750px;
+  margin: 0 auto;
+
+  font-family: Lato, Arial, sans-serif;
+  color: @darkgrey;
+  font-size: 130px !important;
+  font-weight: 700;
+  text-align: center;
+  word-spacing: 10px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.slide-caption {
+  position: absolute;
+  bottom: 30px;
+
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 17px;
+  color: white;
+
+  a {
+    font-weight: bold;
+    color: inherit;
+  }
+
+  a:hover {
+    color: inherit;
+  }
+}
+
+.slide-1 {
+  //background-image: ;
+  background-image: url(../img/liberty.jpg);
+  background-position: center right;
+
+  z-index: 100;
+
+  .slide-title {
+    z-index: 180;
+  }
+
+  .slide-layer-1 {
+    display: none;
+    background-image: url(../img/liberty_bottom.png);
+    background-size: 1000px;
+    background-position: right 47% top 40%;
+
+    z-index: 160;
+  }
+
+  .slide-layer-2 {
+    display: none;
+    background-image: url(../img/mist-2.png);
+    background-size: 800px;
+    background-position: right 15% top 40%;
+
+    z-index: 150;
+  }
+
+  .slide-layer-3 {
+    //display: none;
+    background-image: url(../img/mosie_top.png);
+    background-position: center right;
+  }
+
+  .slide-layer-4 {
+    display: none;
+    opacity: 0.7;
+    //width: 300%;
+
+    //top: 15%;
+    height: 55%;
+
+    background-color: black;
+    //background-image: url(../img/mist_1.png);
+    //background-size: 100%;
+    //background-position: right 800px bottom -70px;
+    //background-repeat: repeat-x;
+
+    background-image: url(../img/mist-2.png);
+    background-size: 100%;
+    background-position: right 800px bottom -70px;
+    background-repeat: repeat-x;
+
+    //background-image: url('https://res.cloudinary.com/dkr52htco/image/upload/v1536173269/fog-1.png');
+    //background-size: cover;
+    //background-position: center top -500px;
+
+    //background-repeat: no-repeat;
+  }
+
+  .slide-caption {
+    z-index: 160;
+  }
+}
+
+.slide-1::before,
+.slide-1::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: block;
+
+  height: 70%;
+  width: 200vw;
+
+  background-size: contain;
+  background-position: center right;
+  background-repeat: repeat-x;
+
+}
+
+.slide-1::before {
+
+  right: 20vw;
+  //background-color: black;
+  //background-image: url('https://res.cloudinary.com/dkr52htco/image/upload/v1536173269/fog-1.png');
+  //background-image: url(../img/mist_1.png);
+  //z-index: 190;
+  //background-repeat: no-repeat;
+  //background-position: center right;
+  //background-size: 1800px;
+
+  background-image: url(../img/cloud2.png);
+  //background-repeat: no-repeat;
+  background-position: top 100px right;
+  background-size: 400px;
+  background-repeat: repeat-x;
+  animation: drift 80s linear 0s infinite;
+
+  //animation: drift 5s linear 0s infinite;
+}
+
+.slide-1::after {
+  //background-color: black;
+
+  /*
+  background-image: url(../img/cloud.png);
+  background-repeat: no-repeat;
+  background-position: top 100px right;
+  background-size: 400px;
+  opacity: 0.8;
+  animation: drift 150s linear 0s infinite;
+  */
+
+
+
+  background-image: url(../img/cloud3.png);
+  background-repeat: no-repeat;
+  background-position: top 100px right;
+  background-size: 400px;
+  opacity: 0.8;
+  animation: drift 150s linear 0s infinite;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-200vw, 0, 0);
+  }
+}
+
+.slide-2 {
+  background-image: url(../img/gallery/mc3.jpg);
+  background-position: right bottom -238px;
+
+  z-index: 200;
+
+  .slide-layer {
+    height: inherit;
+
+    background-image: url(../img/top.png);
+    background-position: right bottom -238px;
+
+    z-index: 250;
+  }
+
+  .slide-title {
+    color: white;
+  }
+
+  .slide-caption {
+    color: rgba(0, 0, 0, 0.8);
+
+    z-index: 260;
+  }
+}
+
+.slide-3 {
+  background-image: url(../img/anna2.jpg);
+
+  z-index: 300;
+
+  .slide-layer {
+    background-image: url(../img/anna_marciniak.png);
+
+
+  }
+
+  .slide-title {
+    color: white;
+  }
+}
+
+.slide-3, .slide-3 .slide-layer{
+  background-position: right -4.5vw bottom 60%;
+}
+
+//-------------PHILOSOPHY SECTION----------------
+
+.philosophy {
+  padding-top: 160px !important;
+  margin-top: -110px;
+
+  .goal {
+    margin-top: 10px;
+    padding: 20px 0;
+
+    font-family: Lato, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+
+  }
+}
+
+.principles-list {
+  padding: 0;
+
+  list-style: none;
+
+  font-size: 15px;
+  letter-spacing: 1px;
+
+  li {
+    position: relative;
+
+    margin-bottom: 20px;
+    padding-left: 54px;
+    padding-top: 2px;
+    vertical-align: middle;
+
+    text-align: left;
+
+    p {
+      text-align: left;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  span.icon {
+    position: absolute;
+    top: 10px;
+    left: 0;
+
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
+  li#education .icon {
+    background: url(/img/icons/crown_gr.png) no-repeat center top;
+    background-size: 40px;
+  }
+
+  li#well-being .icon {
+    background: url(/img/icons/heart_gr.png) no-repeat center top;
+    background-size: 46px;
+  }
+
+  li#discomfort .icon {
+    background: url(/img/icons/thunder_red.png) no-repeat center top;
+    background-size: 30px;
+  }
+
+  li#discomfort .icon {
+    background: url(/img/icons/thunder_red.png) no-repeat center bottom;
+    background-size: 34px;
+  }
+
+  li#sport .icon {
+    background: url(/img/icons/whip.png) no-repeat right -4px bottom;
+    background-size: 37px;
+  }
+}
+
+.principle-name {
+  margin-top: 19px;
+
+  font-family: Lato, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/*------------GUIDE SECTION------------------*/
+
+.guide {
+
+  padding: 55px 0 75px;
+
+  .guide-list {
+    margin-top: 40px;
+
+    .guide-list-item {
+      padding: 0 30px;
+    }
+
+    h3 {
+      margin: 25px auto 10px;
+
+      font-family: Lato, Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    h3 a {
+      color: @darkgrey;
+    }
+
+    span {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    #trainer-section span {
+      background: url(/img/icons/person.png) no-repeat center center;
+      background-size: 40px;
+    }
+
+    #article-section span {
+      background: url(/img/icons/subscriber.png) no-repeat center center;
+      background-size: 100%
+    }
+
+    #event-section span {
+      background: url(/img/icons/calendar5.png) no-repeat center center;
+      background-size: 100%
+    }
+  }
+}
+
+//----------TEACHER INVITATION SECTION------------------
+
+.teachers-invitation {
+  padding: 35px 0 125px;
+
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(/img/icons/teaching.png);
+  //background-image: linear-gradient(to top, rgba(247, 247, 247, 0.97), rgba(247, 247, 247, 0.97)), url(/img/icons/teaching.png);
+  background-size: cover, 270px;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+//--------------CONTACTS SECTION---------------------------
+
+.contacts {
+  padding: 60px 0;
+
+  //input.form-control,
+  //select.form-control {
+  //  border: none !important;
+  //  border-radius: 0;
+  //  box-shadow: none !important;
+  //  border-bottom: 1px solid lightgray !important
+  //}
+  //
+  //.form-control:hover {
+  //  border-color: black !important;
+  //}
+}
+
+//----------------SIGN UP SECTION--------------------
+
+.sign-up {
+  padding: 35px 0 55px;
+
+  background-color: lighten(#eee, 4%);
+  //background-color: #efefef;
+
+  .form-control:hover {
+    border-color: @primary;
+  }
+
+  .form-control:focus {
+    background-color: white;
+  }
+}
+
+//-----------------------------
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+
+  .poster {
+    background-size: cover;
+  }
+
+  .poster-title {
+    font-size: 80px;
+  }
+
+  .poster-layer {
+
+  }
+
+  .philosophy .col-sm-6 {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  .contacts p {
+    max-width: none;
+  }
+
+}
+
+@media screen and (min-width: 768px) {
+
+  .col-sm-6:first-child {
+    padding-right: 20px;
+  }
+
+  .col-sm-6:nth-child(2) {
+    padding-left: 20px;
+  }
+
+  .content-section.contacts p {
+    //max-width: 50%;
+    margin-bottom: 30px;
+  }
+
+  .poster-title {
+    font-size: 90px;
+  }
+
+}
+
+@media screen and (min-width: 1651px) {
+  .poster {
+    //background-size: 100%;
+  }
+
+  .poster-title {
+    font-size: 105px;
+  }
+}

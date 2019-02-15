@@ -1,0 +1,53 @@
+(node) util.print is deprecated. Use console.log instead.
+.site-content {
+  background: #fcf8f5;
+}
+.trainer-info {
+  padding: 10px 0 40px 0;
+  margin: 0;
+}
+.trainer-status {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 8px;
+  color: grey;
+}
+.trainer-name a {
+  font-family: Brandon;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 10px;
+}
+.trainer-name a:hover,
+.trainer-name a:active,
+.trainer-name a:focus,
+.trainer-name a:visited {
+  color: rgba(0, 0, 0, 0.4);
+  text-decoration: none !important;
+}
+/*---------------TOPICS---------------*/
+.event-topics {
+  text-align: center;
+  margin: 60px auto -35px;
+}
+.event-topic {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  display: inline-block;
+  font-family: "Proxima Light";
+  margin: 0 5px 4px 0;
+  position: relative;
+  padding-left: 9px;
+  transition: 0.1s linear all;
+}
+/*-------------------THUMB-------------------*/
+.event-profile-thumb {
+  width: 100%;
+  height: 400px;
+  margin: 20px auto;
+  background: lightgrey;
+  border: 1px solid grey;
+}

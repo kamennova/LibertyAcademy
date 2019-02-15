@@ -1,0 +1,460 @@
+.menu-active {
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0 auto;
+  background-color: #303030;
+  z-index: 10000;
+}
+.main-header-wrapper.transparent {
+  background-color: transparent !important;
+}
+.dark .main-header-wrapper {
+  border-color: #afafaf !important;
+}
+.dark .main-nav a,
+.dark .user-nav a {
+  color: white;
+}
+.dark .btn-join {
+  border-color: white !important;
+}
+.dark .btn-join:hover {
+  border-color: #81c784 !important;
+}
+.dark .poster-layer {
+  display: none;
+}
+.dark .poster-title {
+  color: white;
+}
+.dark .menu-icon span {
+  background-color: white !important;
+}
+.dark .header-logo {
+  width: 130px;
+  height: 37px;
+  background: url(../img/white-logo.png) no-repeat center center;
+  background-size: 100%;
+}
+.dark .header-logo img {
+  display: none;
+}
+.dark .main-header .user-sub-menu {
+  background-color: transparent;
+}
+.dark .main-header .user-sub-menu a,
+.dark .main-header .user-sub-menu button.logout {
+  color: white;
+}
+.dark .main-header .user-sub-menu a:hover,
+.dark .main-header .user-sub-menu .logout:hover {
+  color: #81c784;
+}
+.dark .slides-indicators li {
+  background-color: white;
+}
+.dark .slides-indicators li span {
+  background-color: white;
+}
+.poster {
+  position: relative;
+  top: -70px;
+  width: 100%;
+  height: 100vh;
+  padding: 0;
+  background: url(../img/liberty.jpg) no-repeat center right;
+  background-size: calc(100% + 50px);
+  z-index: 100;
+  overflow: hidden;
+}
+.poster-slides {
+  padding-left: 0;
+  list-style: none;
+}
+.poster > .site-container {
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+}
+.slides-indicators {
+  position: absolute;
+  top: 30%;
+  padding-left: 0;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  z-index: 1000;
+}
+.slides-indicators li {
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  background-color: black;
+}
+.slides-indicators li.active {
+  width: 10px;
+  height: 10px;
+}
+.slides-indicators li span {
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: inherit;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s linear opacity;
+}
+.slides-indicators li:not(.active):hover {
+  cursor: pointer;
+}
+.slides-indicators li:not(.active):hover span {
+  opacity: 0.3;
+}
+.slide {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  width: 0;
+  height: 100vh;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  transition: 1s ease-out width;
+}
+.slide .site-container {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  text-align: right;
+}
+.slide.active {
+  display: block;
+  width: 100%;
+}
+.slide-layer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: inherit;
+  background-repeat: no-repeat;
+}
+.slide-title {
+  position: absolute;
+  top: 30%;
+  right: calc(50vw - 375px);
+  display: inline-block;
+  width: 750px;
+  margin: 0 auto;
+  font-family: Lato, Arial, sans-serif;
+  color: #303030;
+  font-size: 130px !important;
+  font-weight: 700;
+  text-align: center;
+  word-spacing: 10px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.slide-caption {
+  position: absolute;
+  bottom: 30px;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 17px;
+  color: white;
+}
+.slide-caption a {
+  font-weight: bold;
+  color: inherit;
+}
+.slide-caption a:hover {
+  color: inherit;
+}
+.slide-1 {
+  background-image: url(../img/liberty.jpg);
+  background-position: center right;
+  z-index: 100;
+}
+.slide-1 .slide-title {
+  z-index: 180;
+}
+.slide-1 .slide-layer-1 {
+  display: none;
+  background-image: url(../img/liberty_bottom.png);
+  background-size: 1000px;
+  background-position: right 47% top 40%;
+  z-index: 160;
+}
+.slide-1 .slide-layer-2 {
+  display: none;
+  background-image: url(../img/mist-2.png);
+  background-size: 800px;
+  background-position: right 15% top 40%;
+  z-index: 150;
+}
+.slide-1 .slide-layer-3 {
+  background-image: url(../img/mosie_top.png);
+  background-position: center right;
+}
+.slide-1 .slide-layer-4 {
+  display: none;
+  opacity: 0.7;
+  height: 55%;
+  background-color: black;
+  background-image: url(../img/mist-2.png);
+  background-size: 100%;
+  background-position: right 800px bottom -70px;
+  background-repeat: repeat-x;
+}
+.slide-1 .slide-caption {
+  z-index: 160;
+}
+.slide-1::before,
+.slide-1::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  height: 70%;
+  width: 200vw;
+  background-size: contain;
+  background-position: center right;
+  background-repeat: repeat-x;
+}
+.slide-1::before {
+  right: 20vw;
+  background-image: url(../img/cloud2.png);
+  background-position: top 100px right;
+  background-size: 400px;
+  background-repeat: repeat-x;
+  animation: drift 80s linear 0s infinite;
+}
+.slide-1::after {
+  /*
+  background-image: url(../img/cloud.png);
+  background-repeat: no-repeat;
+  background-position: top 100px right;
+  background-size: 400px;
+  opacity: 0.8;
+  animation: drift 150s linear 0s infinite;
+  */
+  background-image: url(../img/cloud3.png);
+  background-repeat: no-repeat;
+  background-position: top 100px right;
+  background-size: 400px;
+  opacity: 0.8;
+  animation: drift 150s linear 0s infinite;
+}
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-200vw, 0, 0);
+  }
+}
+.slide-2 {
+  background-image: url(../img/gallery/mc3.jpg);
+  background-position: right bottom -238px;
+  z-index: 200;
+}
+.slide-2 .slide-layer {
+  height: inherit;
+  background-image: url(../img/top.png);
+  background-position: right bottom -238px;
+  z-index: 250;
+}
+.slide-2 .slide-title {
+  color: white;
+}
+.slide-2 .slide-caption {
+  color: rgba(0, 0, 0, 0.8);
+  z-index: 260;
+}
+.slide-3 {
+  background-image: url(../img/anna2.jpg);
+  z-index: 300;
+}
+.slide-3 .slide-layer {
+  background-image: url(../img/anna_marciniak.png);
+}
+.slide-3 .slide-title {
+  color: white;
+}
+.slide-3,
+.slide-3 .slide-layer {
+  background-position: right -4.5vw bottom 60%;
+}
+.philosophy {
+  padding-top: 160px !important;
+  margin-top: -110px;
+}
+.philosophy .goal {
+  margin-top: 10px;
+  padding: 20px 0;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+.principles-list {
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+.principles-list li {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 54px;
+  padding-top: 2px;
+  vertical-align: middle;
+  text-align: left;
+}
+.principles-list li p {
+  text-align: left;
+  font-size: 14px;
+  line-height: 20px;
+}
+.principles-list span.icon {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.principles-list li#education .icon {
+  background: url(/img/icons/crown_gr.png) no-repeat center top;
+  background-size: 40px;
+}
+.principles-list li#well-being .icon {
+  background: url(/img/icons/heart_gr.png) no-repeat center top;
+  background-size: 46px;
+}
+.principles-list li#discomfort .icon {
+  background: url(/img/icons/thunder_red.png) no-repeat center top;
+  background-size: 30px;
+}
+.principles-list li#discomfort .icon {
+  background: url(/img/icons/thunder_red.png) no-repeat center bottom;
+  background-size: 34px;
+}
+.principles-list li#sport .icon {
+  background: url(/img/icons/whip.png) no-repeat right -4px bottom;
+  background-size: 37px;
+}
+.principle-name {
+  margin-top: 19px;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: left;
+}
+/*------------GUIDE SECTION------------------*/
+.guide {
+  padding: 55px 0 75px;
+}
+.guide .guide-list {
+  margin-top: 40px;
+}
+.guide .guide-list .guide-list-item {
+  padding: 0 30px;
+}
+.guide .guide-list h3 {
+  margin: 25px auto 10px;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+}
+.guide .guide-list h3 a {
+  color: #303030;
+}
+.guide .guide-list span {
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  display: block;
+}
+.guide .guide-list #trainer-section span {
+  background: url(/img/icons/person.png) no-repeat center center;
+  background-size: 40px;
+}
+.guide .guide-list #article-section span {
+  background: url(/img/icons/subscriber.png) no-repeat center center;
+  background-size: 100%;
+}
+.guide .guide-list #event-section span {
+  background: url(/img/icons/calendar5.png) no-repeat center center;
+  background-size: 100%;
+}
+.teachers-invitation {
+  padding: 35px 0 125px;
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(/img/icons/teaching.png);
+  background-size: cover, 270px;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+.contacts {
+  padding: 60px 0;
+}
+.sign-up {
+  padding: 35px 0 55px;
+  background-color: #f8f8f8;
+}
+.sign-up .form-control:hover {
+  border-color: #81c784;
+}
+.sign-up .form-control:focus {
+  background-color: white;
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .poster {
+    background-size: cover;
+  }
+  .poster-title {
+    font-size: 80px;
+  }
+  .philosophy .col-sm-6 {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+  .contacts p {
+    max-width: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .col-sm-6:first-child {
+    padding-right: 20px;
+  }
+  .col-sm-6:nth-child(2) {
+    padding-left: 20px;
+  }
+  .content-section.contacts p {
+    margin-bottom: 30px;
+  }
+  .poster-title {
+    font-size: 90px;
+  }
+}
+@media screen and (min-width: 1651px) {
+  .poster-title {
+    font-size: 105px;
+  }
+}

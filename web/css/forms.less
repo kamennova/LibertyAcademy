@@ -1,0 +1,226 @@
+@import "variables";
+
+.form-horizontal .form-group {
+  position: relative;
+
+  margin: auto 0 5px !important;
+
+  color: black !important;
+}
+
+.form-group .help-block-error {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 5px;
+
+  font-size: 14px;
+  text-align: left;
+}
+
+//------INPUTS-----
+
+.form-group .form-control,
+.form-group .select2-container--krajee .select2-selection {
+  margin: 7px auto 0;
+
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 15px;
+  color: black;
+
+  background-color: white;
+  border: 1px @lightgrey solid;
+  border-radius: 18px;
+  box-shadow: none;
+}
+
+.form-control:hover,
+.select2-container .select2-selection .select2-search__field:hover {
+  border-color: lighten(@primary, 12%);
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.form-control:active,
+.form-control:visited,
+.form-control:focus,
+.form-control:hover {
+  border-color: @primary;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.has-success .form-control,
+.has-success .select2-selection {
+  border-color: @primary !important;
+  box-shadow: none !important;
+}
+
+.has-success .form-control {
+  background-image: url(/img/icons/tick.png);
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+  background-size: 10px !important;
+}
+
+.has-error .form-control {
+  border-bottom: 1px solid #a94442 !important;
+  box-shadow: none !important;
+}
+
+.error .form-control {
+  box-shadow: none !important;
+}
+
+.cke.cke-reset {
+  margin-top: 5px !important;
+}
+
+.services-input .select2-selection .select2-selection__choice {
+  vertical-align: middle;
+
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: black;
+  text-transform: uppercase;
+
+  background-color: @lightcreme !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+/*---------------------------------------------------------------*/
+select.form-control:hover,
+select.form-control:active,
+.has-success select.form-control:focus,
+select.form-control:focus,
+.has-success select.form-control:visited {
+  //border-color: black;
+  //box-shadow: none;
+}
+
+//-----LABELS------
+
+div:not(.checkbox) label.control-label {
+  padding-left: 10px;
+  padding-top: 7px;
+
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-align: left !important;
+  text-transform: uppercase;
+}
+
+.select2-container--krajee .select2-selection {
+  //margin-top: 10px !important;
+
+  box-shadow: none !important;
+}
+
+//-----CHECKBOXES-------
+
+.checkbox label {
+  font-size: 17px;
+  line-height: 21px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.col-lg-12 label {
+  //width: auto !important
+}
+
+//---------------PASSWORD INPUT-----------------------------
+
+.input-group .form-control {
+  border: 1px solid lightgrey !important;
+  //padding-bottom: 5px !important
+}
+
+.input-group-addon {
+  border-radius: 0 !important
+}
+
+.kv-meter-container {
+  display: none;
+}
+
+//---------------------------------------------------
+
+.required label::after {
+  content: "*";
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+}
+
+.register-rules-container {
+  .required label::after {
+    display: none;
+  }
+}
+
+.form-horizontal .left-field {
+  padding-right: 12px;
+}
+
+.form-horizontal .right-field {
+  padding-left: 12px;
+}
+
+//-----EVENT FORM----
+
+.container.event-form-container {
+  padding-bottom: 40px;
+
+  .form-control {
+
+  }
+}
+
+/*=========================
+      UPDATE PROFILE
+===========================*/
+
+.update-trainer-profile {
+  .page-title {
+    margin-bottom: 27px;
+  }
+
+  .personal-info-fields {
+    margin-top: 30px;
+  }
+
+  .links-container {
+    a {
+      margin-right: 20px;
+
+      font-size: 15px;
+    }
+
+    .delete-profile-link {
+      color: red;
+    }
+
+    .btn {
+      margin-top: 0;
+    }
+  }
+}
+
+.update-trainer-profile.page-container {
+  padding-bottom: 30px;
+}
+
+/*========================
+        Login form
+=========================*/
+
+.login-form-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}

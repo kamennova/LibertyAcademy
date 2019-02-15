@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title>Компания «Международная Медицинская Группа» | Косметология: оборудование салонов, обучение
+        косметологов.</title>
+    <meta name="description" content="Компания «Международная Медицинская Группа»
+Косметологическое оборудование, оборудование для косметологического кабинета, оборудование для салонов красоты и косметических салонов.
+Обучение косметологии | курсы косметологов.
+Косметология. Киев.">
+    <meta name="keywords"
+          content="косметологическое оборудование, курсы косметологии, оборудование салонов красоты, косметология, оборудование, обучение косметологов, обучение, курсы косметологов, киев, обучение косметологии, Киев">
+    <meta name="verify-v1" content="sC90wW/q36zYGzQ0fBWvZBScbJ/YDlxfHmgeRBTgKh4=">
+    <base href="http://imgukraine.com.ua/">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+    <link type="text/css" href="/lib/jquery/themes/blitzer/jquery.ui.all.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/lib/jquery/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="/lib/jquery/ui/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/lib/jquery/ui/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/lib/jquery/ui/jquery.ui.datepicker.js"></script>
+    <script type="text/javascript" src="/lib/jquery/ui/i18n/jquery.ui.datepicker-ru.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#datepicker").datepicker(
+                {
+                    yearRange: '2017',
+                    beforeShowDay: setScheduledDays,
+                    onSelect: function (dateText, inst) {
+                        location.href = 'page/text/name=seminar#' + dateText
+                    }
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var seminarDays = [[6, 16, 2017], [7, 6, 2017], [7, 7, 2017], [6, 17, 2017], [7, 1, 2017]];
+
+        function setScheduledDays(date) {
+
+            for (i = 0; i < seminarDays.length; i++) {
+                if (date.getMonth() == seminarDays[i][0] - 1 && date.getDate() == seminarDays[i][1] && date.getFullYear() == seminarDays[i][2]) {
+                    return [true, 'sDay'];
+                }
+            }
+            return [false, ''];
+        }
+    </script>
+
+
+    <link rel="stylesheet" href="/style/common.css" type="text/css">
+    <link rel="stylesheet" href="/style/index.css" type="text/css">
+
+    <script type="text/javascript" src="/lib/script.js"></script>
+    <script type="text/javascript" src="/lib/swfobject.js"></script>
+
+
+</head>
+
+<body id="start">
+
+<div id="body">
+    <div id="datepicker"></div>
+</div>
+
+</body>
+</html>
