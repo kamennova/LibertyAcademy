@@ -18,7 +18,6 @@ class Country extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return [
@@ -34,12 +33,7 @@ class Country extends \yii\db\ActiveRecord
     {
         return [
             'country_name' => 'Country name',
-            'country_code' => 'Country code'
-             ];
+            'country_code' => 'Country code',
+        ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-
 }

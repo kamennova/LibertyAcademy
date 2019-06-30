@@ -19,7 +19,6 @@ class Language extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return [
@@ -37,11 +36,6 @@ class Language extends \yii\db\ActiveRecord
             'lang_name' => 'Language name',
             'lang_code' => 'Language code',
             'lang_flag' => 'Language flag',
-             ];
+        ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-
 }

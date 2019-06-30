@@ -12,14 +12,20 @@ use app\models\event\EventType;
  * @property string $desc
  * @property string $for
  * @property string $content
- * @property $start
- * @property $end
- * @property $thumb
+ * @property string $start
+ * @property string $end
+ * @property string $thumb
  * @property string $name
  * @property integer $price
  * @property integer $currency_id
  * @property string $address
  * @property integer $country_id
+ * @property mixed $tags
+ * @property mixed $type
+ * @property mixed $fullPrice
+ * @property mixed $trainer
+ * @property mixed $eventTag
+ * @property mixed $country
  * @property string $org
  */
 class Event extends \yii\db\ActiveRecord
@@ -75,33 +81,32 @@ class Event extends \yii\db\ActiveRecord
 
     public function getTrainer()
     {
-        return $this->hasOne(Trainer::className(), ['id' => 'trainer_id']);
+        return $this->hasOne(Trainer::class, ['id' => 'trainer_id']);
     }
 
     public function getType()
     {
-        return $this->hasOne(EventType::className(), ['id' => 'type_id']);
+        return $this->hasOne(EventType::class, ['id' => 'type_id']);
     }
 
     public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['id' => 'country_id']);
+        return $this->hasOne(Country::class, ['id' => 'country_id']);
     }
 
     public function getFullPrice()
     {
-        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(Currency::class, ['id' => 'currency_id']);
     }
 
     public function getEventTag()
     {
-        return $this->hasMany(EventTag::className(), ['event_id' => 'id']);
+        return $this->hasMany(EventTag::class, ['event_id' => 'id']);
     }
 
     public function getTags()
     {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->via('eventTag');
     }
-
 }

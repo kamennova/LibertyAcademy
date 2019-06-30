@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use yii\base\NotSupportedException;
-
 /**
  * This is the model class for table "subscriber".
  *
@@ -19,7 +17,6 @@ class Subscriber extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public static function tableName()
     {
         return 'subscriber';
@@ -35,8 +32,7 @@ class Subscriber extends \yii\db\ActiveRecord
             [['first_name', 'last_name'], 'string', 'max' => 255],
             [['email'], 'string'],
             ['email', 'email'],
-            ['email', 'unique',
-                'message' => 'This email is taken']
+            ['email', 'unique', 'message' => 'This email is taken']
         ];
     }
 
@@ -51,30 +47,8 @@ class Subscriber extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-//    public static function find()
-//    {
-//        return new TrainerQuery(get_called_class());
-//    }
-
-//************************************
-
-    public static function findIdentity($id)
-    {
-        return Subscriber::findOne($id);
-    }
-
-
     public function getId()
     {
         return $this->id;
-    }
-
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException();
     }
 }

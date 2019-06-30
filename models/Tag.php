@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-
 /**
  * This is the model class for table "tag".
  * @property integer $id
@@ -19,11 +18,10 @@ class Tag extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            ['name', 'required'],
             ['name', 'string']
         ];
     }
@@ -31,7 +29,6 @@ class Tag extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function attributeLabels()
     {
         return ['name' => 'Tag'];

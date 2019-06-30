@@ -1,10 +1,8 @@
 <?php
 
-
 namespace app\models;
 
 use Yii;
-
 
 /**
  * @inheritdoc
@@ -61,5 +59,4 @@ class RegisterTrainer extends Trainer
             return false;
         }
     }
-
 }

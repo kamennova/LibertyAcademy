@@ -2,9 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-use yii\base\Model;
-
 /**
  * SubscribeForm is the model behind the subscribe form.
  */
@@ -13,7 +10,6 @@ class SubscribeForm extends Subscriber
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return parent::rules();
@@ -22,7 +18,6 @@ class SubscribeForm extends Subscriber
     /**
      * @inheritdoc
      */
-
     public function attributeLabels()
     {
         return parent::attributeLabels();

@@ -17,7 +17,6 @@ class Service extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return [
@@ -39,5 +38,4 @@ class Service extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-
 }

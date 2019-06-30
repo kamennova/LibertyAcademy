@@ -7,12 +7,19 @@ use yii\helpers\Html;
  * This is the model class for table "article".
  * @property integer $id
  * @property integer $trainer_id
- * @property $title
- * @property $content
+ * @property string $title
+ * @property string $content
  * @property string $source
- * @property $date
- * @property int $lang_id
- * @property $thumb
+ * @property string $date
+ * @property integer $lang_id
+ * @property string $thumb
+ *
+ * @property mixed $tags
+ * @property mixed $language
+ * @property \yii\db\ActiveQuery $trainer
+ * @property mixed $comments
+ * @property mixed $articleTag
+ * @property mixed $articleComment
  */
 class Article extends \yii\db\ActiveRecord
 {
@@ -59,33 +66,33 @@ class Article extends \yii\db\ActiveRecord
 
     public function getTrainer()
     {
-        return $this->hasOne(Trainer::className(), ['id' => 'trainer_id']);
+        return $this->hasOne(Trainer::class, ['id' => 'trainer_id']);
     }
 
     public function getLanguage()
     {
-        return $this->hasOne(Language::className(), ['id' => 'lang_id']);
+        return $this->hasOne(Language::class, ['id' => 'lang_id']);
     }
 
     public function getArticleTag()
     {
-        return $this->hasMany(ArticleTag::className(), ['article_id' => 'id']);
+        return $this->hasMany(ArticleTag::class, ['article_id' => 'id']);
     }
 
     public function getArticleComment()
     {
-        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
+        return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
     public function getTags()
     {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->via('articleTag');
     }
 
     public function getComments()
     {
-        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
+        return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
 
