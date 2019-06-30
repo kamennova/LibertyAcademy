@@ -3,24 +3,22 @@
 namespace app\controllers;
 
 use app\models\event\EventSearch;
-use app\models\TrainerAmmunition;
 use app\models\TrainerCountry;
 use app\models\TrainerLanguage;
 use app\models\TrainerService;
 use Yii;
 use yii\base\DynamicModel;
-use yii\db\ActiveQuery;
+use yii\db\StaleObjectException;
 use yii\helpers\Html;
 use yii\base\Exception;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 use app\models\Trainer;
-use app\models\TrainerGallery;
-use app\models\TrainerPhoto;
+//use app\models\TrainerGallery;
+//use app\models\TrainerPhoto;
 use app\models\RegisterTrainer;
 use app\models\LoginForm;
 use app\models\trainer\TrainerCondition;
@@ -49,7 +47,7 @@ class TrainerController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'update', 'view', 'delete'],
                 'rules' => [
                     [
@@ -60,7 +58,7 @@ class TrainerController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                     'delete' => ['post'],
@@ -83,6 +81,11 @@ class TrainerController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionProfile($id)
     {
         if (!$trainer = Trainer::findOne($id)) {
@@ -95,38 +98,45 @@ class TrainerController extends Controller
 
         $upcomingEvent = Event::find()->where(['trainer_id' => $id])->orderBy(['start' => SORT_ASC])->one();
 
-        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
+//        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
 
         $articleQuery = Article::find()->where(['trainer_id' => $id]);
         $articles = $articleQuery->orderBy('date')->limit(3)->all();
         $articlesNumber = $articleQuery->count();
 
-        if ($photos) {
+        /*if ($photos) {
             foreach ($photos as $photo) {
                 $thumbs[] = Html::img($photo->src);
             }
         } else {
             $photo = null;
             $thumbs = null;
-        }
+        }*/
 
         return $this->render('profile',
             [
                 'trainer' => $trainer,
-                'photo' => $photo,
-                'thumbs' => $thumbs,
                 'events' => $events,
-                'eventsNumber' => $eventsNumber,
-                'upcomingEvent' => $upcomingEvent,
                 'articles' => $articles,
+                'upcomingEvent' => $upcomingEvent,
+//                'photo' => $photo,
+//                'thumbs' => $thumbs,
+                'eventsNumber' => $eventsNumber,
                 'articlesNumber' => $articlesNumber
             ]);
     }
 
+    /**
+     * @return string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionMyevents()
     {
         $id = Yii::$app->user->id;
-        $model = $this->findModel($id);
+        if (!$model = $this->findModel($id)) {
+            throw new NotFoundHttpException();
+        };
 
         $thumbsPick = Event::find()
             ->select('thumb')
@@ -147,10 +157,17 @@ class TrainerController extends Controller
             ]);
     }
 
+    /**
+     * @return string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionMyarticles()
     {
         $id = Yii::$app->user->id;
-        $model = $this->findModel($id);
+        if (!$model = $this->findModel($id)) {
+            throw new NotFoundHttpException();
+        }
 
         $thumbsPick = Article::find()
             ->select('thumb')
@@ -347,15 +364,6 @@ class TrainerController extends Controller
                     $trainerService->save();
                 }
 
-//                if ($model->ammunition) {
-//                    foreach ($model->ammunition as $ammunitionPiece) {
-//                        $trainerAmmunition = new TrainerAmmunition();
-//                        $trainerAmmunition->trainer_id = $model->id;
-//                        $trainerAmmunition->ammunition_id = $ammunitionPiece;
-//                        $trainerAmmunition->save();
-//                    }
-//                }
-
 //                if ($gallery) {
 //                    foreach ($model->gallery as $galleryPhoto) {
 //                        $galleryPhoto = new TrainerGallery();
@@ -374,7 +382,7 @@ class TrainerController extends Controller
 
     public function actionError()
     {
-        return $this->render('error', []);
+        return $this->render('error');
     }
 
     public function actionLogin()
@@ -399,34 +407,37 @@ class TrainerController extends Controller
      * @param integer $id
      * @return mixed
      * @throws \Exception
-     * @throws \yii\db\StaleObjectException
-     * @throws \yii\web\ForbiddenHttpException
-     * @throws \yii\web\NotFoundHttpException
      */
     public function actionDelete($id)
     {
         // language delete
         $trainerLanguages = TrainerLanguage::find()->where(['trainer_id' => $id])->all();
         foreach ($trainerLanguages as $language) {
-            $language->delete();
-//            if (!$service->delete()) {
-//                echo 'hh';
-//            };
+            try {
+                $language->delete();
+            } catch (StaleObjectException $e) {
+            } catch (\Throwable $e) {
+            }
         }
 
         // services delete
         $trainerServices = TrainerService::find()->where(['trainer_id' => $id])->all();
         foreach ($trainerServices as $service) {
-            $service->delete();
-//            if (!$service->delete()) {
-//                echo 'hh';
-//            };
+            try {
+                $service->delete();
+            } catch (StaleObjectException $e) {
+            } catch (\Throwable $e) {
+            }
         }
 
         // delete teach countries
         $trainerCountries = TrainerCountry::find()->where(['trainer_id' => $id])->all();
         foreach ($trainerCountries as $country) {
-            $country->delete();
+            try {
+                $country->delete();
+            } catch (StaleObjectException $e) {
+            } catch (\Throwable $e) {
+            }
         }
 
         // delete articles
@@ -435,7 +446,13 @@ class TrainerController extends Controller
 //            $country->delete();
 //        }
 
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+        } catch (StaleObjectException $e) {
+        } catch (ForbiddenHttpException $e) {
+        } catch (NotFoundHttpException $e) {
+        } catch (\Throwable $e) {
+        }
 
         return $this->redirect(['/site/index']);
     }
@@ -462,119 +479,97 @@ class TrainerController extends Controller
     }
 }
 
-//public function actionGallery($id)
-//    {
-//        if (!$trainer = Trainer::findOne($id)) {
-//            throw new NotFoundHttpException();
-//        }
-//
-//        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
-//
-//        if ($photos) {
-//            foreach ($photos as $photo) {
-//                $thumbs[] = Html::img($photo->src);
-//            }
-//        } else {
-//            $photo = null;
-//            $thumbs = null;
-//        }
-//
-//        return $this->render('gallery.php',
-//            [
-//                'trainer' => $trainer,
-//                'photo' => $photo,
-//                'thumbs' => $thumbs,
-//            ]);
-//    }
+/*
+public function actionGallery($id)
+    {
+        if (!$trainer = Trainer::findOne($id)) {
+            throw new NotFoundHttpException();
+        }
 
-//
-///**
-// * Creates a new Trainer model.
-// * If creation is successful, the browser will be redirected to the 'view' page.
-// * @return mixed
-// * @throws \yii\base\InvalidParamException
-// */
-//
-//public function actionCreate()
-//{
-//    $model = new Trainer();
-//
-//    if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//
-//        mkdir("@webroot/img/trainers/$model->id", 0777);
-//
-//        return $this->redirect(['view', 'id' => $model->id]);
-//    } else {
-//        return $this->render('create', [
-//            'model' => $model,
-//        ]);
-//    }
-//}
+        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
 
-//public function actionChangepass()
-//{
-//    $id = Yii::$app->user->id;
-//    $model = $this->findModel($id);
-//
-//    return $this->render('changepass', [
-//        'model' => $model
-//    ]);
-//
-//}
+        if ($photos) {
+            foreach ($photos as $photo) {
+                $thumbs[] = Html::img($photo->src);
+            }
+        } else {
+            $photo = null;
+            $thumbs = null;
+        }
 
-//
-//     * @param $id
-//     * @return string|\yii\web\Response
-//     * @throws \yii\web\NotFoundHttpException
-//     * @throws \yii\web\ForbiddenHttpException
-//     * @throws \yii\base\InvalidParamException
-//     */
-//    public function actionUpdate($id)
-//    {
-//        $model = $this->findModel($id);
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//            if ($model->imageFile) {
-//                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-//                $model->thumb = '/img/trainers/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
-//            }
-//
-//            if ($model->galleryFiles) {
-//                $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-//            }
-//
-//            $t = Yii::$app->db->beginTransaction();
-//
-//            try {
-//                if ($model->save()) {
-//
-//                    if ($model->imageFile && !$model->imageFile->saveAs(substr($model->thumb, 1))) {
-//                        throw new Exception('Не удалось сохранить файл.');
-//                    }
-//
-//                    if ($model->galleryFiles) {
-//                        $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-//
-//                        foreach ($model->galleryFiles as $file) {
-//                            $path = 'img/trainers/gallery/' . $file->baseName . '.' . $file->extension;
-//                            $file->saveAs($path);
-//
-//                            $image = new TrainerGallery();
-//                            $image->src = '/' . $path;
-//                            $image->trainer_id = $model->id;
-//                            $image->save();
-//                        }
-//                    }
-//
-//                    $t->commit();
-//                    return $this->redirect(['view', 'id' => $model->id]);
-//                }
-//            } catch (Exception $e) {
-//            }
-//            $t->rollBack();
-//        }
-//
-//        return $this->render('update', [
-//            'model' => $model,
-//        ]);
-//    }
+        return $this->render('gallery.php',
+            [
+                'trainer' => $trainer,
+                'photo' => $photo,
+                'thumbs' => $thumbs,
+            ]);
+    }
+
+public function actionChangepass()
+{
+    $id = Yii::$app->user->id;
+    $model = $this->findModel($id);
+
+    return $this->render('changepass', [
+        'model' => $model
+    ]);
+
+}
+
+
+    @param $id
+     * @return string|\yii\web\Response
+     * @throws \yii\web\NotFoundHttpException
+     * @throws \yii\web\ForbiddenHttpException
+     * @throws \yii\base\InvalidParamException
+
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->imageFile) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $model->thumb = '/img/trainers/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
+            }
+
+            if ($model->galleryFiles) {
+                $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
+            }
+
+            $t = Yii::$app->db->beginTransaction();
+
+            try {
+                if ($model->save()) {
+
+                    if ($model->imageFile && !$model->imageFile->saveAs(substr($model->thumb, 1))) {
+                        throw new Exception('Не удалось сохранить файл.');
+                    }
+
+                    if ($model->galleryFiles) {
+                        $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
+
+                        foreach ($model->galleryFiles as $file) {
+                            $path = 'img/trainers/gallery/' . $file->baseName . '.' . $file->extension;
+                            $file->saveAs($path);
+
+                            $image = new TrainerGallery();
+                            $image->src = '/' . $path;
+                            $image->trainer_id = $model->id;
+                            $image->save();
+                        }
+                    }
+
+                    $t->commit();
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } catch (Exception $e) {
+            }
+            $t->rollBack();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+ */

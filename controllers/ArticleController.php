@@ -8,10 +8,8 @@ use app\models\article\ArticleForm;
 use app\models\ArticleTag;
 use app\models\Comment;
 use app\models\CommentForm;
-use app\models\Trainer;
 use Yii;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,7 +27,7 @@ class ArticleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -48,44 +46,36 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         if (!$article = Article::findOne($id)) {
             throw new NotFoundHttpException();
         }
 
-        $author = Trainer::find()->where(['id' => $article->trainer_id])->all();
-        $comments = Comment::find()->where(['article_id' => $article->id])->all();
-
         $model = new CommentForm();
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->article_id = $article->id;
+            $model->article_id = $id;
             $model->date = date('Y-m-d');
 
-            if ($model->upload()) {
-                $model->save(false);
-
-                return $this->redirect(['article/view', 'id' => $article->id, [
-                    'comments' => $comments,
-                    'article' => $article,
-                    'author' => $author,
-                    'model' => $model
-                ]]);
+            if ($model->validate() && $model->save()) {
+                return $this->refresh();
             }
         }
 
         return $this->render('view', [
-            'comments' => $comments,
             'article' => $article,
-            'author' => $author,
             'model' => $model
         ]);
     }
 
     /**
-     * @param $trainer_id
      * @return string|\yii\web\Response
      * @throws \yii\base\InvalidParamException
      */
@@ -119,18 +109,25 @@ class ArticleController extends Controller
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-
         }
+
         return $this->render('create', ['model' => $model]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
-        $model = $this->findModelForm($id);
+        if(!$model = $this->findModelForm($id)){
+         throw new NotFoundHttpException();
+        }
+
         $errors = '';
 
         if ($model->load(Yii::$app->request->post())) {
-
             ArticleTag::deleteAll(['article_id' => $id]);
 
             foreach ($model->tags as $tag) {
@@ -159,6 +156,13 @@ class ArticleController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($id)
     {
         $articleComments = Comment::find()->where(['article_id' => $id])->all();
@@ -167,12 +171,16 @@ class ArticleController extends Controller
             $comment->delete();
         }
 
-
         $this->findModel($id)->delete();
 
         return $this->redirect(['/trainer/myarticles']);
     }
 
+    /**
+     * @param $id
+     * @return Article|null
+     * @throws NotFoundHttpException
+     */
     protected function findModel($id)
     {
         if (($model = Article::findOne($id)) !== null) {
@@ -182,6 +190,11 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return ArticleForm|null
+     * @throws NotFoundHttpException
+     */
     protected function findModelForm($id)
     {
         if (($model = ArticleForm::findOne($id)) !== null) {

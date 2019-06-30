@@ -7,10 +7,9 @@ use app\models\event\EventForm;
 use app\models\EventTag;
 use app\models\Trainer;
 use Yii;
-use yii\helpers\VarDumper;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \app\models\Event;
@@ -18,6 +17,8 @@ use yii\web\UploadedFile;
 
 /**
  * EventController implements the CRUD actions for Event model.
+ *
+ * @property mixed $eventCurator
  */
 class EventController extends Controller
 {
@@ -28,7 +29,7 @@ class EventController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -48,6 +49,11 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         if (!$event = Event::findOne($id)) {
@@ -59,9 +65,15 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionCreate()
     {
         $model = new EventForm();
+
         $curatorName = $this->getEventCurator()->getFullName();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -87,17 +99,24 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (!$model = $this->findModel($id)) {
+            throw new NotFoundHttpException();
+        }
+
         $curatorName = $this->getEventCurator()->getFullName();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $model->save();
 
             foreach ($model->tags as $tag) {
-
                 $at = new EventTag();
                 $at->event_id = $model->id;
                 $at->tag_id = $tag;
@@ -126,11 +145,15 @@ class EventController extends Controller
      * @param integer $id
      * @return mixed
      */
-
     public
     function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        try {
+            $this->findModel($id)->delete();
+        } catch (StaleObjectException $e) {
+        } catch (NotFoundHttpException $e) {
+        } catch (\Throwable $e) {
+        }
 
         return $this->goBack();
     }
@@ -152,6 +175,11 @@ class EventController extends Controller
         }
     }
 
+    /**
+     * @return Trainer|null
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
     protected function getEventCurator()
     {
         if (Yii::$app->user->id) {
@@ -161,29 +189,3 @@ class EventController extends Controller
         } else throw new ForbiddenHttpException('Access denied');
     }
 }
-
-//    public function actionUpdate($id)
-//    {
-//        $model = $this->findModel($id);
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//
-//            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-//            $model->thumb = 'img/trainers/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
-//
-//            $t = Yii::$app->db->beginTransaction();
-//
-//            if ($model->save()) {
-//                if (!$model->imageFile->saveAs($model->thumb)) {
-//                    throw new Exception('Не удалось сохранить файл.');
-//                }
-//                $t->commit();
-//                return $this->redirect(['view', 'id' => $model->id]);
-//            }
-//            $t->rollBack();
-//        }
-//
-//        return $this->render('update', [
-//            'model' => $model,
-//        ]);
-//    }

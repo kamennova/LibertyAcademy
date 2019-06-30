@@ -2,14 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\RegisterForm;
 use app\models\Subscriber;
 use app\models\UploadForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\web\UploadedFile;
 
@@ -22,7 +20,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout'],
                 'rules' => [
                     [
@@ -33,7 +31,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -85,9 +83,8 @@ class SiteController extends Controller
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($model->upload()) {
-                $this->redirect('index');
                 // file is uploaded successfully
-                return;
+                return $this->redirect('index');
             }
         }
 
@@ -98,13 +95,6 @@ class SiteController extends Controller
     {
         return $this->render('internship.php');
     }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-
 
     /**
      * Logout action.
