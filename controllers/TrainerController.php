@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\event\EventSearch;
+use app\models\trainer\TrainerForm;
 use app\models\TrainerCountry;
 use app\models\TrainerLanguage;
 use app\models\TrainerService;
@@ -30,6 +31,7 @@ use app\models\Event;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers;
 
 /** @noinspection PhpUndefinedClassInspection */
 
@@ -192,28 +194,53 @@ class TrainerController extends Controller
      * Displays a single Trainer model.
      * @param integer $id
      * @return mixed
-     * @throws \yii\db\Exception
-     * @throws \yii\web\ForbiddenHttpException
      * @throws \yii\web\NotFoundHttpException
      * @throws \yii\base\InvalidParamException
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelForm($id);
         $errors = '';
 
         if ($model->load(Yii::$app->request->post())) {
 
-            TrainerService::deleteAll(['trainer_id' => $model->id]);
+            TrainerService::deleteAll(['trainer_id' => $id]);
 
             foreach ($model->services as $service) {
+                $ts = new TrainerService();
+                $ts->trainer_id = $id;
+                $ts->service_id = $service;
 
-                $trainerService = new TrainerService();
-                $trainerService->trainer_id = $model->id;
-                $trainerService->service_id = $service->id;
+                if (!$ts->save()) {
+                    $errors .= Html::errorSummary($ts);
+                };
+            }
 
-                if (!$trainerService->save()) {
-                    $errors .= Html::errorSummary($trainerService);
+//            ---
+
+            TrainerLanguage::deleteAll(['trainer_id' => $id]);
+
+            foreach ($model->languages as $lang) {
+                $tl = new TrainerLanguage();
+                $tl->trainer_id = $id;
+                $tl->lang_id = $lang;
+
+                if (!$tl->save()) {
+                    $errors .= Html::errorSummary($tl);
+                };
+            }
+
+//            ---
+
+            TrainerCountry::deleteAll(['trainer_id' => $id]);
+
+            foreach ($model->teachCountries as $country) {
+                $tc = new TrainerCountry();
+                $tc->trainer_id = $id;
+                $tc->country_id = $country;
+
+                if (!$tc->save()) {
+                    $errors .= Html::errorSummary($tc);
                 };
             }
 
@@ -226,7 +253,7 @@ class TrainerController extends Controller
                 $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
             }
 
-            $t = Yii::$app->db->beginTransaction();
+//            $t = Yii::$app->db->beginTransaction();
 
             try {
                 if ($model->save()) {
@@ -235,7 +262,7 @@ class TrainerController extends Controller
                         throw new Exception('Не удалось сохранить файл.');
                     }
 
-                    if ($model->galleryFiles) {
+              /*      if ($model->galleryFiles) {
                         $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
 
                         foreach ($model->galleryFiles as $file) {
@@ -247,14 +274,14 @@ class TrainerController extends Controller
                             $image->trainer_id = $model->id;
                             $image->save();
                         }
-                    }
+                    } */
 
-                    $t->commit();
+//                    $t->commit();
                     return $this->redirect(['profile', 'id' => $model->id]);
                 }
             } catch (Exception $e) {
             }
-            $t->rollBack();
+//            $t->rollBack();
         }
 
         return $this->render('update', [
@@ -472,6 +499,18 @@ class TrainerController extends Controller
         }
 
         if (($model = Trainer::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findModelForm($id)
+    {
+        if (($model = TrainerForm::findOne($id)) !== null) {
+            $model->services = $model->getServices()->select('id')->column();
+            $model->languages = $model->getLanguages()->select('id')->column();
+            $model->teachCountries = $model->getTeachCountries()->select('id')->column();
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
