@@ -13,7 +13,6 @@ use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
  * TrainerController implements the CRUD actions for Trainer model.
@@ -89,26 +88,25 @@ class ArticleController extends Controller
             $model->trainer_id = Yii::$app->user->id;
             $model->date = date('Y-m-d');
 
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
             if ($model->upload()) {
                 if ($model->imageFile) {
-                    ($model->thumb = '/img/article/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                    $model->imageFile->saveAs('./img/article/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension);
                 }
+
                 $model->save(false);
             }
-            {
-                ArticleTag::deleteAll(['article_id' => $model->id]);
 
-                foreach ($model->tags as $tag) {
-                    $at = new ArticleTag();
-                    $at->article_id = $model->id;
-                    $at->tag_id = $tag;
+            ArticleTag::deleteAll(['article_id' => $model->id]);
 
-                    $at->save();
-                }
-                return $this->redirect(['view', 'id' => $model->id]);
+            foreach ($model->tags as $tag) {
+                $at = new ArticleTag();
+                $at->article_id = $model->id;
+                $at->tag_id = $tag;
+
+                $at->save();
             }
+
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', ['model' => $model]);
@@ -121,8 +119,8 @@ class ArticleController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(!$model = $this->findModelForm($id)){
-         throw new NotFoundHttpException();
+        if (!$model = $this->findModelForm($id)) {
+            throw new NotFoundHttpException();
         }
 
         $errors = '';
@@ -139,7 +137,14 @@ class ArticleController extends Controller
                     $errors .= Html::errorSummary($at) . '<br>';
                 }
             }
-            if ($model->save()) {
+
+            if($model->upload()){ // todo
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs('./img/article/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                }
+            }
+
+            if ($model->save(false)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -199,6 +204,7 @@ class ArticleController extends Controller
     {
         if (($model = ArticleForm::findOne($id)) !== null) {
             $model->tags = $model->getTags()->select('id')->column();
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
