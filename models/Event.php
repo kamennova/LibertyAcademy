@@ -10,13 +10,13 @@ use app\models\event\EventType;
  * @property integer $type_id
  * @property integer $trainer_id
  * @property string $desc
- * @property string $for
  * @property string $content
  * @property string $start
  * @property string $end
  * @property string $thumb
  * @property string $name
- * @property integer $price
+ * @property integer $price_min
+ * @property integer $price_max
  * @property integer $currency_id
  * @property string $address
  * @property integer $country_id
@@ -26,7 +26,6 @@ use app\models\event\EventType;
  * @property mixed $trainer
  * @property mixed $eventTag
  * @property mixed $country
- * @property string $org
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -45,8 +44,9 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             [['type_id', 'trainer_id', 'start', 'name', 'desc'], 'required'],
-            [['name', 'thumb', 'desc', 'content', 'org', 'for', 'address'], 'string'],
-            [['country_id', 'currency_id'], 'integer']
+            [['name', 'thumb', 'desc', 'start', 'end', 'address'], 'string', 'max' => 255],
+            ['content', 'string'],
+            [['country_id', 'currency_id', 'price_min', 'price_max'], 'integer']
         ];
     }
 
@@ -62,11 +62,10 @@ class Event extends \yii\db\ActiveRecord
             'start' => 'Start date',
             'end' => 'End date',
             'currency_id' => 'Currency',
-            'for' => 'Target audience',
-            'org' => 'Organization',
             'content' => 'Full description',
             'country_id' => 'Country',
             'trainer_id' => 'Curator',
+            'tags' => 'Topics'
         ];
     }
 
@@ -94,9 +93,33 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(Country::class, ['id' => 'country_id']);
     }
 
+    public function getLocation(){
+        $location = $this->country ? $this->country->country_name : null;
+        $location = ($this->address ? $this->address . ', ' : null) . $location;
+
+        return $location;
+    }
+
     public function getFullPrice()
     {
         return $this->hasOne(Currency::class, ['id' => 'currency_id']);
+    }
+
+    public function getPriceHtmlString(){
+        if($this->price_min) {
+            $cur = Currency::find()->where(['id' => $this->currency_id])->asArray()->one()['currency_symbol'];
+
+            $price = '<span class="currency">' . $cur . '</span>';
+            $price .= $this->price_min;
+
+            if ($this->price_max) {
+                $price .= ' - ' . $this->price_max;
+            }
+
+            return $price;
+        }
+
+        return null;
     }
 
     public function getEventTag()
