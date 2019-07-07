@@ -14,6 +14,10 @@ use yii\helpers\Html;
 $this->registerCssFile('/css/forms.css');
 $this->registerCssFile('/css/create-form.css');
 
+$this->registerJsFile('/js/upload_img.js');
+
+$default_lang_id = 1; // English
+
 ?>
 
 <div class="container article-form-container">
@@ -21,7 +25,8 @@ $this->registerCssFile('/css/create-form.css');
     <?php $form = ActiveForm::begin([
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'><div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>"
+            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'>" .
+                "<div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>"
         ],
         'options' => [
             'enctype' => 'multipart/form-data',
@@ -30,16 +35,11 @@ $this->registerCssFile('/css/create-form.css');
 
     <section class="main-info-input article-main-info-input">
         <section class="image-upload">
-            <div class="article-thumb thumb">
+            <div class="article-thumbnail thumbnail">
                 <?= $model->thumb ? "<img src='{$model->thumb}' />" : null ?>
             </div>
-            <?= $form->field($model, 'imageFile', ['horizontalCssClasses' => [
-                'wrapper' => false,
-                'offset' => false,
-                'label' => '']])
-                ->fileInput([
-                    'inputTemplate' => "<div class='row'><div class='col-lg-12'>{beginLabel}{labelTitle}\n<div class='col-sm-12'>{input}</div>{endLabel}</div></div>\n<div class='help-block'>{error}</div>"])
-                ->label('Featured image') ?>
+            <?= $form->field($model, 'imageFile', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false,
+                'label' => '']])->fileInput()->label('Featured image') ?>
         </section>
         <div class="row name">
             <?= $form->field($model, 'title')->textarea([
@@ -53,7 +53,7 @@ $this->registerCssFile('/css/create-form.css');
     <div class="row">
         <div class="col-sm-8 left-field article-tags-input">
             <?= $form->field($model, 'tags')
-                ->widget(Select2::className(), [
+                ->widget(Select2::class, [
                     'data' => Tag::find()->select('name')->indexBy('id')->column(),
                     'options' => [
                         'placeholder' => 'Tags',
@@ -64,16 +64,18 @@ $this->registerCssFile('/css/create-form.css');
                         'allowClear' => true,
                         'margin' => '0 8px',
                     ],
+                    'showToggleAll' => false,
                 ])->label('Tags'); ?>
         </div>
         <div class="col-sm-4 right-field">
-            <?= $form->field($model, 'lang_id')->dropDownList(Language::find()->select(['lang_name'])->indexBy('id')->column(), ['prompt' => 'select']) ?>
+            <?= $form->field($model, 'lang_id')->dropDownList(Language::find()->select(['lang_name'])
+                ->indexBy('id')->column(), ['prompt' => 'select', 'value' => $default_lang_id]) ?>
         </div>
     </div>
 
     <div class="row article-content-input">
         <?= $form->field($model, 'content', ['template' => '{label}<br><br><div class="row" ><div class="col-lg-12">{input}{error}{hint}</div></div>'])
-            ->widget(CKEditor::className(), [
+            ->widget(CKEditor::class, [
                 'preset' => 'standart',
                 'clientOptions' => [
                     'min-height' => '500px',
