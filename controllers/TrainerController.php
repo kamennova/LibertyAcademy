@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ChangePasswordForm;
 use app\models\event\EventSearch;
 use app\models\trainer\TrainerForm;
 use app\models\TrainerCountry;
@@ -18,8 +19,6 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 use app\models\Trainer;
-//use app\models\TrainerGallery;
-//use app\models\TrainerPhoto;
 use app\models\RegisterTrainer;
 use app\models\LoginForm;
 use app\models\trainer\TrainerCondition;
@@ -31,7 +30,6 @@ use app\models\Event;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers;
 
 /** @noinspection PhpUndefinedClassInspection */
 
@@ -76,7 +74,6 @@ class TrainerController extends Controller
 
         return $this->render('index', [
                 'provider' => $condition->trainerSearch(),
-                'thumbsProvider' => $condition->formQuery(),
                 'condition' => $condition,
             ]
         );
@@ -96,24 +93,11 @@ class TrainerController extends Controller
 
         $eventQuery = Event::find()->where(['trainer_id' => $id]);
         $events = $eventQuery->orderBy('start')->limit(3)->all();
-        $eventsNumber = $eventQuery->count();
 
         $upcomingEvent = Event::find()->where(['trainer_id' => $id])->orderBy(['start' => SORT_ASC])->one();
 
-//        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
-
         $articleQuery = Article::find()->where(['trainer_id' => $id]);
         $articles = $articleQuery->orderBy('date')->limit(3)->all();
-        $articlesNumber = $articleQuery->count();
-
-        /*if ($photos) {
-            foreach ($photos as $photo) {
-                $thumbs[] = Html::img($photo->src);
-            }
-        } else {
-            $photo = null;
-            $thumbs = null;
-        }*/
 
         return $this->render('profile',
             [
@@ -121,10 +105,6 @@ class TrainerController extends Controller
                 'events' => $events,
                 'articles' => $articles,
                 'upcomingEvent' => $upcomingEvent,
-//                'photo' => $photo,
-//                'thumbs' => $thumbs,
-                'eventsNumber' => $eventsNumber,
-                'articlesNumber' => $articlesNumber
             ]);
     }
 
@@ -148,6 +128,7 @@ class TrainerController extends Controller
             ->column();
 
         $eventSearchModel = new EventSearch();
+        $eventSearchModel->trainer_id = $id;
         $eventDataProvider = $eventSearchModel->search(Yii::$app->request->get());
 
         return $this->render('myevents',
@@ -179,6 +160,7 @@ class TrainerController extends Controller
             ->column();
 
         $articleSearchModel = new ArticleSearch();
+        $articleSearchModel->trainer_id = $id;
         $articleDataProvider = $articleSearchModel->search(Yii::$app->request->get());
 
         return $this->render('myarticles',
@@ -204,6 +186,8 @@ class TrainerController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
+            $model->update_links();
+
             TrainerService::deleteAll(['trainer_id' => $id]);
 
             foreach ($model->services as $service) {
@@ -215,8 +199,6 @@ class TrainerController extends Controller
                     $errors .= Html::errorSummary($ts);
                 };
             }
-
-//            ---
 
             TrainerLanguage::deleteAll(['trainer_id' => $id]);
 
@@ -230,8 +212,6 @@ class TrainerController extends Controller
                 };
             }
 
-//            ---
-
             TrainerCountry::deleteAll(['trainer_id' => $id]);
 
             foreach ($model->teachCountries as $country) {
@@ -244,44 +224,21 @@ class TrainerController extends Controller
                 };
             }
 
-            if ($model->imageFile) {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                $model->thumb = '/img/trainers/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
+            if ($model->upload()) {
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@webroot') . $model->thumb);
+                }
             }
-
-            if ($model->galleryFiles) {
-                $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-            }
-
-//            $t = Yii::$app->db->beginTransaction();
 
             try {
-                if ($model->save()) {
-
-                    if ($model->imageFile && !($model->imageFile->saveAs(substr($model->thumb, 1)))) {
-                        throw new Exception('Не удалось сохранить файл.');
-                    }
-
-              /*      if ($model->galleryFiles) {
-                        $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-
-                        foreach ($model->galleryFiles as $file) {
-                            $path = 'img/trainers/gallery/' . $file->baseName . '.' . $file->extension;
-                            $file->saveAs($path);
-
-                            $image = new TrainerGallery();
-                            $image->src = '/' . $path;
-                            $image->trainer_id = $model->id;
-                            $image->save();
-                        }
-                    } */
-
-//                    $t->commit();
+                if ($model->save(false)) {
                     return $this->redirect(['profile', 'id' => $model->id]);
                 }
             } catch (Exception $e) {
+                print_r($model->errors);
+                echo $e;
+                echo $errors;
             }
-//            $t->rollBack();
         }
 
         return $this->render('update', [
@@ -291,10 +248,15 @@ class TrainerController extends Controller
 
     public function actionRegister()
     {
-        $model = new DynamicModel(['no_bits', 'no_violence', 'no_sports']);
-        $model->addRule(['no_bits'], 'required', ['message' => 'A teacher at Liberty Academy must not use bits.', 'requiredValue' => 1]);;
-        $model->addRule(['no_violence'], 'required', ['message' => 'A teacher at Liberty Academy must not punish a horse.', 'requiredValue' => 1]);;
-        $model->addRule(['no_sports'], 'required', ['message' => 'A teacher at Liberty Academy must not take part in traditional horse sports.', 'requiredValue' => 1]);;
+        $model = new DynamicModel(['needs_first', 'no_violence', 'choice']);
+        $model->addRule(['needs_first'], 'required', [
+            'message' => 'A teacher at Liberty Academy must respect horse`s needs.', 'requiredValue' => 1]);
+        $model->addRule(['no_violence'], 'required', [
+            'message' => 'A teacher at Liberty Academy must not punish a horse or use ammunition the way it causes pain.',
+            'requiredValue' => 1]);
+        $model->addRule(['choice'], 'required', [
+            'message' => 'The core principle of Liberty training is to let the horse choose for himself.',
+            'requiredValue' => 1]);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -315,7 +277,6 @@ class TrainerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
 
             if ($model->upload()) {
 
@@ -325,23 +286,10 @@ class TrainerController extends Controller
                     $thumbSrc = null;
                 }
 
-                if ($model->galleryFiles) {
-
-                    $gallery = array();
-
-                    foreach ($model->galleryFiles as $galleryFile) {
-                        $gallery[] = '/img/teacher/gallery/' . $galleryFile->baseName . '.' . $galleryFile->extension;
-                    }
-                } else {
-                    $gallery = null;
-                }
-
                 Yii::$app->session->set('register', $model->getAttributes());
                 Yii::$app->session->set('registerAdd', [
                     'services' => $model->services,
                     'languages' => $model->languages,
-                    'ammunition' => $model->ammunition,
-                    'gallery' => $gallery,
                     'thumb' => $thumbSrc
                 ]);
 
@@ -368,6 +316,16 @@ class TrainerController extends Controller
             $model->load(Yii::$app->request->post());
 
             if ($model->validate(['teachCountries', 'site', 'soc_fb', 'soc_tw', 'soc_inst', 'email', 'homecountry_id'])) {
+
+                $model->update_links();
+
+                try {
+                    $hash = Yii::$app->getSecurity()->generatePasswordHash($model->pass);
+                    $model->pass = $hash;
+                } catch (Exception $e) {
+                    echo $e;
+                }
+
                 $model->save();
 
                 foreach ($model->languages as $language) {
@@ -391,15 +349,6 @@ class TrainerController extends Controller
                     $trainerService->save();
                 }
 
-//                if ($gallery) {
-//                    foreach ($model->gallery as $galleryPhoto) {
-//                        $galleryPhoto = new TrainerGallery();
-//                        $galleryPhoto->trainer_id = $model->id;
-//                        $galleryPhoto->src = Yii::getAlias('@webroot') . '/img/teacher/gallery/' . $galleryPhoto->baseName . '.' . $galleryPhoto->extension;
-//                        $galleryPhoto->save();
-//                    }
-//                }
-
                 return $this->redirect(['login']);
             }
         }
@@ -419,9 +368,11 @@ class TrainerController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -431,50 +382,32 @@ class TrainerController extends Controller
     /**
      * Deletes an existing Trainer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
      * @return mixed
      * @throws \Exception
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        // language delete
-        $trainerLanguages = TrainerLanguage::find()->where(['trainer_id' => $id])->all();
-        foreach ($trainerLanguages as $language) {
+        $id = Yii::$app->user->id;
+
+        TrainerLanguage::deleteAll(['trainer_id' => $id]);
+        TrainerService::deleteAll(['trainer_id' => $id]);
+        TrainerCountry::deleteAll(['trainer_id' => $id]);
+
+        Article::deleteAll(['trainer_id' => $id]);
+        Event::deleteAll(['trainer_id' => $id]);
+
+        $model = $this->findModel($id);
+
+        if ($model->thumb !== '' && $model->thumb !== null) {
             try {
-                $language->delete();
-            } catch (StaleObjectException $e) {
-            } catch (\Throwable $e) {
+                unlink(Yii::getAlias('@webroot') . $model->thumb);
+            } catch (\Exception $e) {
+                echo $e;
             }
         }
-
-        // services delete
-        $trainerServices = TrainerService::find()->where(['trainer_id' => $id])->all();
-        foreach ($trainerServices as $service) {
-            try {
-                $service->delete();
-            } catch (StaleObjectException $e) {
-            } catch (\Throwable $e) {
-            }
-        }
-
-        // delete teach countries
-        $trainerCountries = TrainerCountry::find()->where(['trainer_id' => $id])->all();
-        foreach ($trainerCountries as $country) {
-            try {
-                $country->delete();
-            } catch (StaleObjectException $e) {
-            } catch (\Throwable $e) {
-            }
-        }
-
-        // delete articles
-//        $trainerCountries = TrainerCountry::find()->where(['trainer_id' => $id])->all();
-//        foreach ($trainerCountries as $country){
-//            $country->delete();
-//        }
 
         try {
-            $this->findModel($id)->delete();
+            $model->delete();
         } catch (StaleObjectException $e) {
         } catch (ForbiddenHttpException $e) {
         } catch (NotFoundHttpException $e) {
@@ -482,6 +415,22 @@ class TrainerController extends Controller
         }
 
         return $this->redirect(['/site/index']);
+    }
+
+    public function actionChange_pass($id)
+    {
+
+        $model = new ChangePasswordForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $this->findModel($id)->pass = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+
+            return $this->redirect(['/site/index']);
+        }
+
+        return $this->render('change_pass', [
+//            'model' => $model,
+        ]);
     }
 
     /**
@@ -505,110 +454,21 @@ class TrainerController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return TrainerForm|null
+     * @throws NotFoundHttpException
+     */
     protected function findModelForm($id)
     {
         if (($model = TrainerForm::findOne($id)) !== null) {
             $model->services = $model->getServices()->select('id')->column();
             $model->languages = $model->getLanguages()->select('id')->column();
             $model->teachCountries = $model->getTeachCountries()->select('id')->column();
+
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }
-
-/*
-public function actionGallery($id)
-    {
-        if (!$trainer = Trainer::findOne($id)) {
-            throw new NotFoundHttpException();
-        }
-
-        $photos = TrainerPhoto::find()->where(['trainer_id' => $id])->limit(3)->all();
-
-        if ($photos) {
-            foreach ($photos as $photo) {
-                $thumbs[] = Html::img($photo->src);
-            }
-        } else {
-            $photo = null;
-            $thumbs = null;
-        }
-
-        return $this->render('gallery.php',
-            [
-                'trainer' => $trainer,
-                'photo' => $photo,
-                'thumbs' => $thumbs,
-            ]);
-    }
-
-public function actionChangepass()
-{
-    $id = Yii::$app->user->id;
-    $model = $this->findModel($id);
-
-    return $this->render('changepass', [
-        'model' => $model
-    ]);
-
-}
-
-
-    @param $id
-     * @return string|\yii\web\Response
-     * @throws \yii\web\NotFoundHttpException
-     * @throws \yii\web\ForbiddenHttpException
-     * @throws \yii\base\InvalidParamException
-
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->imageFile) {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                $model->thumb = '/img/trainers/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
-            }
-
-            if ($model->galleryFiles) {
-                $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-            }
-
-            $t = Yii::$app->db->beginTransaction();
-
-            try {
-                if ($model->save()) {
-
-                    if ($model->imageFile && !$model->imageFile->saveAs(substr($model->thumb, 1))) {
-                        throw new Exception('Не удалось сохранить файл.');
-                    }
-
-                    if ($model->galleryFiles) {
-                        $model->galleryFiles = UploadedFile::getInstances($model, 'galleryFiles');
-
-                        foreach ($model->galleryFiles as $file) {
-                            $path = 'img/trainers/gallery/' . $file->baseName . '.' . $file->extension;
-                            $file->saveAs($path);
-
-                            $image = new TrainerGallery();
-                            $image->src = '/' . $path;
-                            $image->trainer_id = $model->id;
-                            $image->save();
-                        }
-                    }
-
-                    $t->commit();
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            } catch (Exception $e) {
-            }
-            $t->rollBack();
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
- */
