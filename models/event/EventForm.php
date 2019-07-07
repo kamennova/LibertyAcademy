@@ -4,6 +4,7 @@ namespace app\models\event;
 
 use app\models\Event;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "event".
@@ -25,7 +26,6 @@ class EventForm extends Event
         );
     }
 
-
     /**
      * @inheritdoc
      */
@@ -40,8 +40,17 @@ class EventForm extends Event
     {
         if ($this->validate()) {
 
-            if ($this->imageFile) {
-                $this->imageFile->saveAs(Yii::getAlias('@webroot') . '/img/event/thumb/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
+                if ($this->thumb !== '' && $this->thumb !== null) {
+                    unlink('.' . $this->thumb);
+                }
+
+                do {
+                    $filename = uniqid(rand(), false) . '.' . $this->imageFile->extension;
+                    if (!file_exists(sys_get_temp_dir() . $filename)) break;
+                } while (true);
+
+                $this->thumb = '/img/event/thumb/' . $filename;
             }
 
             return true;
@@ -49,5 +58,4 @@ class EventForm extends Event
             return false;
         }
     }
-
 }
