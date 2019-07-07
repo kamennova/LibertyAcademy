@@ -1,25 +1,18 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-
-/* @var $model app\models\LoginForm */
-
 use app\models\Country;
-use app\models\TrainerStatus;
-use dosamigos\ckeditor\CKEditor;
 use kartik\select2\Select2;
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 
 ?>
 
 <div class="row">
     <div class="col-sm-6 left-field">
-        <?= $form->field($model, 'email', ['errorOptions' => ['class' => 'help-block', 'encode' => false]])->input('email')->label('Email') ?>
+        <?= $form->field($model, 'email', ['errorOptions' => ['class' => 'help-block', 'encode' => false]])
+            ->input('email')->label('Email') ?>
     </div>
     <div class="col-sm-6 right-field">
-        <?= $form->field($model, 'homecountry_id')->dropDownList(Country::find()->select(['country_name'])->indexBy('id')->column(), ['prompt' => 'select']) ?>
+        <?= $form->field($model, 'homecountry_id')->dropDownList(Country::find()->select(['country_name'])
+            ->indexBy('id')->column(), ['prompt' => 'select']) ?>
     </div>
 </div>
 <div class="row">
@@ -45,6 +38,7 @@ use yii\bootstrap\ActiveForm;
                     'allowClear' => true,
                     'width' => '100%'
                 ],
+                'showToggleAll' => false,
             ])->label('Where do you teach?'); ?>
 
     </div>
@@ -61,6 +55,3 @@ use yii\bootstrap\ActiveForm;
         <?= $form->field($model, 'soc_tw')->textInput(['maxlength' => true]) ?>
     </div>
 </div>
-
-
-

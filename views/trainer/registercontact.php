@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-/* @var $model app\models\LoginForm */
+/* @var $model app\models\RegisterTrainer */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -20,13 +20,13 @@ $this->registerCssFile('/css/forms.css');
 
     <?php $form = ActiveForm::begin([
         'action' => ['/trainer/registercontact'],
-//        'id' => 'login-form',
         'layout' => 'horizontal',
         'options' => [
             'class' => 'trainer-register-form contact-info-fields'
         ],
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'>\n<div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>",
+            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'>\n" .
+                "<div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>",
             'horizontalCssClasses' => [
                 'label' => ''
             ]
@@ -47,5 +47,3 @@ $this->registerCssFile('/css/forms.css');
 
     <?php ActiveForm::end(); ?>
 </div>
-
-

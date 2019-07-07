@@ -3,8 +3,6 @@
 use app\models\Language;
 use app\models\Tag;
 use kartik\select2\Select2;
-use yii\helpers\Html;
-use yii\jui\DatePicker;
 use yii\web\View;
 use yii\bootstrap\ActiveForm;
 
@@ -13,8 +11,8 @@ use yii\bootstrap\ActiveForm;
 
 $tagList = Tag::find()->select('name')->indexBy('id')->orderBy('name')->column();
 $this->registerJsFile('/js/calendar.js', ['position' => View::POS_HEAD]);
-?>
 
+?>
 
 <?php $form = ActiveForm::begin([
     'action' => ['/trainer/myarticles'],
@@ -23,15 +21,16 @@ $this->registerJsFile('/js/calendar.js', ['position' => View::POS_HEAD]);
     'options' => ['class' => 'filter-form']
 ]); ?>
 
-
 <?= $form->field($model, 'title')->textInput(['placeholder' => 'Title', 'onchange' => 'this.form.submit()'])->label(false) ?>
 
 <?= $form->field($model, 'lang_id')
-    ->dropDownList(Language::find()->select('language.lang_name, language.id')->innerJoin('article', 'language.id =  article.lang_id')->distinct()->indexBy('id')->column(),
+    ->dropDownList(Language::find()->select('language.lang_name, language.id')
+        ->innerJoin('article', 'language.id =  article.lang_id')->distinct()->indexBy('id')->column(),
         ['prompt' => 'Language', 'onchange' => 'this.form.submit()'])->label(false) ?>
 
-<?= $form->field($model, 'tag_id', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]], ['options' => ['class' => 'sort-select-field-2']])
-    ->widget(Select2::className(), [
+<?= $form->field($model, 'tag_id', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]],
+    ['options' => ['class' => 'sort-select-field-2']])
+    ->widget(Select2::class, [
         'data' => $tagList,
         'options' => [
             'placeholder' => 'Tags',

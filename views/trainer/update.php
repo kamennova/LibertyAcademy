@@ -1,9 +1,5 @@
 <?php
 
-use app\models\Country;
-use app\models\TrainerStatus;
-use dosamigos\ckeditor\CKEditor;
-use kartik\select2\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -56,23 +52,14 @@ $this->registerCssFile('/css/register.css');
     </div>
     <div class="links-container centered">
         <?php $url = Url::to(['trainer/delete', 'id' => $model->id]); ?>
-        <?= Html::a('Delete profile',$url, [
-                            'title' => Yii::t('app', 'Delete'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete?'),
-                            'data-method' => 'post',
-                'class' => 'delete-profile-link']); ?>
+        <?= Html::a('Delete profile', $url, [
+            'title' => Yii::t('app', 'Delete'),
+            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete?'),
+            'data-method' => 'post',
+            'class' => 'delete-profile-link']); ?>
         <?= Html::a("Change password", ['/trainer/change_pass', 'id' => $model->id], ['class' => "change-pass-link"]) ?>
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success centered' : 'btn centered']) ?>
+        <?= Html::submitButton('Create', ['class' => 'btn centered']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 </div>
-
-
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
-
-

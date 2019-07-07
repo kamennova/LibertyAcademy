@@ -3,12 +3,12 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-/* @var $model app\models\LoginForm */
+/* @var $model app\models\RegisterTrainer */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Register';
+$this->title = 'Register | Liberty Academy';
 $this->registerCssFile('/css/register.css');
 $this->registerCssFile('/css/forms.css');
 
@@ -49,12 +49,7 @@ $this->registerCssFile('/css/forms.css');
 
     <div class="form-group" align="center">
         <?= Html::a('Back', ['/trainer/register'], ['class' => 'btn btn-wide']) ?>
-
         <?= Html::submitButton('Next', ['class' => 'btn btn-wide', 'name' => 'submit-button']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-
-
-
-

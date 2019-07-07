@@ -38,7 +38,6 @@ $authorNameList = Trainer::find()
     ->indexBy('id')
     ->column();
 
-
 $commentsList = '';
 $articleComments = \app\models\Comment::find()->orderBy(['date' => SORT_DESC])->limit(3)->all();
 
@@ -57,9 +56,7 @@ foreach ($articleComments as $comment) {
 ?>
 
 <div class="site-container flex-container">
-
     <aside class="filter-column" id="filter-column">
-
         <div class="filter-column-top">
 
             <?php if ($articles) {
@@ -131,11 +128,6 @@ foreach ($articleComments as $comment) {
         <section class="main-grid-content">
             <?= (count($articles) == 0) ? '<p class="nothing-found-message">No articles found :-(</p>' : null ?>
 
-            <section class="latest">
-                <img class="latest-thumbnail" src="/img/poster1.jpg"/>
-                <h2 class="latest-title">Hydration, fascia vs. horse training</h2>
-            </section>
-
             <ul class="articles-list">
 
                 <?php foreach ($articles as $article) {
@@ -177,5 +169,4 @@ foreach ($articleComments as $comment) {
         ]) ?>
 
     </section>
-
 </div>

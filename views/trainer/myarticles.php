@@ -28,6 +28,7 @@ $articlesNumber = count($articles);
     <aside class="filter-column">
         <div class="filter-column-top">
             <?php
+            /** @var mixed $thumbsPick */
             if ($thumbsPick) {
                 echo '<ul class="small-thumbs-list">';
 
@@ -50,7 +51,6 @@ $articlesNumber = count($articles);
 
     <section class="my-articles-grid main-grid">
         <?= Html::a('Add article', ['article/create', 'trainer_id' => $model->id], ['class' => 'btn btn-smaller btn-add btn-add-article']); ?>
-<!--        <div class="my-articles">-->
 
             <?= GridView::widget([
                 'dataProvider' => $articleDataProvider,
@@ -109,7 +109,7 @@ $articlesNumber = count($articles);
                         'contentOptions' => ['class' => 'date-td']
                     ],
                     [
-                        'class' => ActionColumn::className(),
+                        'class' => ActionColumn::class,
                         'controller' => 'article',
                         'header' => 'Actions',
                         'headerOptions' => ['style' => 'width: 90px;  text-align: center'],
@@ -117,7 +117,5 @@ $articlesNumber = count($articles);
                     ],
                 ],
             ]); ?>
-<!--        </div>-->
     </section>
-
 </div>

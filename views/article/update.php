@@ -9,14 +9,14 @@ $this->title = 'Update Article: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
+
 ?>
+
 <div class="trainer-update">
 
     <?= Html::errorSummary($model) ?>
-
     <?= $this->render('_form', [
         'model' => $model,
-//        'title' => $title
     ]) ?>
 
 </div>
