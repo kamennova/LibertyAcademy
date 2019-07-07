@@ -3,6 +3,7 @@
 namespace app\models\trainer;
 
 use app\models\Trainer;
+use yii\web\UploadedFile;
 
 /**
  * @inheritdoc
@@ -38,7 +39,21 @@ class TrainerForm extends Trainer
 
     public function upload()
     {
-        if ($this->validate(['services', 'teachCountries', 'languages'])) {
+        if ($this->validate(['services', 'teachCountries', 'languages', 'imageFile'])) {
+
+            if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
+                if ($this->thumb !== '' && $this->thumb !== null) {
+                    unlink('.' . $this->thumb);
+                }
+
+                do {
+                    $filename = uniqid(rand(), false) . '.' . $this->imageFile->extension;
+                    if (!file_exists(sys_get_temp_dir() . $filename)) break;
+                } while (true);
+
+                $this->thumb = '/img/teacher/thumb/' . $filename;
+            }
+
             return true;
         }
 
