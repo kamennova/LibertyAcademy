@@ -1,11 +1,11 @@
-<?php namespace app\models\article;
+<?php
+
+namespace app\models\article;
 
 use app\models\Article;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
-
 
 class ArticleSearch extends Article
 {
@@ -13,7 +13,6 @@ class ArticleSearch extends Article
     /**
      * @inheritdoc
      */
-
     public $tag_id;
 
     public function rules()
@@ -27,7 +26,6 @@ class ArticleSearch extends Article
     /**
      * @inheritdoc
      */
-
     public function scenarios()
     {
         return Model::scenarios();
@@ -51,7 +49,21 @@ class ArticleSearch extends Article
         ]);
 
         if ($params && !($this->load($params) && $this->validate())) {
-            return $dataProvider;
+
+            if ($this->trainer_id) {
+                $query->andFilterWhere(['trainer_id' => $this->trainer_id]);
+            }
+
+            return new ActiveDataProvider([
+                'query' => $query,
+                'sort' => [
+                    'defaultOrder' => ['date' => SORT_DESC]
+                ],
+                'pagination' => [
+                    'pageSize' => '40'
+                ]
+            ]);
+//            return $dataProvider;
         }
 
         $query->andFilterWhere(['id' => $this->id]);
@@ -71,7 +83,6 @@ class ArticleSearch extends Article
 
         $query->andFilterWhere(['trainer_id' => Yii::$app->user->id]);
 
-
 //        foreach ($this->tags as $tag) {
 //            $query->innerJoin('article_tag', 'article.id=article_tag.article_id');
 //            $query->andFilterWhere(['tag_id'=>$tag->id]);
@@ -84,11 +95,12 @@ class ArticleSearch extends Article
 
         return new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['date' => SORT_DESC]
+            ],
             'pagination' => [
                 'pageSize' => '40'
             ]
         ]);
     }
 }
-
-?>
