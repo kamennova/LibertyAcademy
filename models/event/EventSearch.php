@@ -1,11 +1,11 @@
-<?php namespace app\models\event;
+<?php
 
+namespace app\models\event;
 
 use app\models\Event;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 
 class EventSearch extends Event
 {
@@ -26,7 +26,6 @@ class EventSearch extends Event
     /**
      * @inheritdoc
      */
-
     public function scenarios()
     {
         return Model::scenarios();
@@ -39,7 +38,6 @@ class EventSearch extends Event
      * @return ActiveDataProvider
      * @throws \yii\base\InvalidParamException
      */
-
     public function search($params)
     {
         $query = Event::find();
@@ -49,7 +47,21 @@ class EventSearch extends Event
         ]);
 
         if ($params && !($this->load($params) && $this->validate())) {
-            return $dataProvider;
+            if($this->trainer_id){
+                $query->andFilterWhere(['trainer_id' => $this->trainer_id]);
+            }
+
+            return new ActiveDataProvider([
+                'query' => $query,
+                'sort'=> [
+                    'defaultOrder' => ['start'=>SORT_DESC]
+                ],
+                'pagination' => [
+                    'pageSize' => '40'
+                ]
+            ]);
+
+//            return $dataProvider;
         }
 
         $query->andFilterWhere(['id' => $this->id]);
@@ -67,11 +79,12 @@ class EventSearch extends Event
 
         return new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => ['start'=>SORT_DESC]
+            ],
             'pagination' => [
                 'pageSize' => 40,
                 ]
         ]);
     }
 }
-
-?>
