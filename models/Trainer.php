@@ -27,16 +27,22 @@ use yii\web\UploadedFile;
  * @property string $address
  * @property string $big_desc
  * @property string $pass
- * @property string $cover_photo
  * @property string $city
- * @property integer $riding
  * @property integer $is_admin
  *
  * @property Event[] $events
  * @property Language[] $languages
  * @property Service[] $services
  * @property Country[] $teachCountries
- * @property Ammunition[] $ammunition
+ * @property mixed $thumbs
+ * @property mixed $trainerStatus
+ * @property mixed $gallery
+ * @property mixed $trainerLanguage
+ * @property mixed $trainerCountry
+ * @property mixed $trainerHomeCountry
+ * @property string $fullName
+ * @property mixed $trainerService
+ * @property void $authKey
  * @property Article[] $articles
  *
  */
@@ -46,7 +52,7 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
      * @var UploadedFile
      */
     public $imageFile;
-    public $galleryFiles;
+    public $galleryFiles; // todo
 
     /**
      * @inheritdoc
@@ -64,12 +70,15 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['name', 'email', 'homecountry_id', 'surname', 'desc', 'pass'], 'required'],
-            [['soc_fb', 'city', 'soc_tw', 'soc_inst', 'big_desc'], 'string'],
-            [['name', 'org', 'thumb', 'cover_photo', 'desc', 'surname', 'email', 'pass', 'site', 'address'], 'string', 'max' => 255],
+            [['big_desc'], 'string'],
+            [['name', 'surname', 'email', 'pass', 'city', 'address', 'soc_tw', 'soc_inst', 'soc_fb', 'site',
+                'org', 'thumb'], 'string', 'max' => 255],
+            ['desc', 'string', 'max' => 150],
             [['id_status', 'homecountry_id'], 'integer'],
             ['email', 'email'],
             ['email', 'unique',
-                'message' => 'This email is taken. Already registered? ' . Html::a('Log in', ['site/login'], ['class' => 'enter login'])],
+                'message' => 'This email is taken. Already registered? ' .
+                    Html::a('Log in', ['site/login'], ['class' => 'enter login'])],
             ['imageFile', 'file', 'extensions' => 'png, jpg, jpeg'],
             ['galleryFiles', 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10],
             ['pass', 'string', 'length' => [3, 255], 'message' => 'The password should contain at least 3 chars'],
@@ -88,19 +97,15 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
             'desc' => 'Description',
             'homecountry_id' => 'Country of residence',
             'email' => 'Email',
-            'thumb' => 'Thumb',
-            'authorities' => 'Authorities',
-            'credo' => 'Credo',
+            'thumb' => 'Thumbnail',
             'id_status' => 'Status',
             'site' => 'Website',
             'address' => 'Address',
-            'big_desc' => 'Big Description',
-            'caption' => 'Caption',
+            'big_desc' => 'Big description',
             'soc_fb' => 'Facebook page',
             'soc_tw' => 'Twitter page',
             'soc_inst' => 'Instagram page',
             'pass' => 'Password',
-            'cover_photo' => 'Cover photo',
             'imageFile' => 'Thumbnail'
         ];
     }
@@ -110,12 +115,12 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getEvents()
     {
-        return $this->hasMany(Event::className(), ['trainer_id' => 'id']);
+        return $this->hasMany(Event::class, ['trainer_id' => 'id']);
     }
 
     public function getTrainerStatus()
     {
-        return $this->hasOne(TrainerStatus::className(), ['id' => 'id_status']);
+        return $this->hasOne(TrainerStatus::class, ['id' => 'id_status']);
     }
 
     public function getFullName()
@@ -123,78 +128,56 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->name . ' ' . $this->surname;
     }
 
-    public function getThumbs()
-    {
-        return $this->hasMany(Thumb::className(), ['trainer_id' => 'id']);
-    }
-
-    public function getGallery()
-    {
-        return $this->hasMany(TrainerGallery::className(), ['trainer_id' => 'id']);
-    }
-
-
-//    --------------------
-
 //    -------------------------------
 
     public function getTrainerHomeCountry()
     {
-        return $this->hasOne(Country::className(), ['id' => 'homecountry_id']);
+        return $this->hasOne(Country::class, ['id' => 'homecountry_id']);
     }
-
 
     public function getTrainerCountry()
     {
-        return $this->hasMany(TrainerCountry::className(), ['trainer_id' => 'id']);
+        return $this->hasMany(TrainerCountry::class, ['trainer_id' => 'id']);
     }
 
     public function getTeachCountries()
     {
-        return $this->hasMany(Country::className(), ['id' => 'country_id'])
+        return $this->hasMany(Country::class, ['id' => 'country_id'])
             ->via('trainerCountry');
     }
 
-//    -------------------------
-
-    public function getTrainerAmmunition()
+    public function getLocation()
     {
-        return $this->hasMany(TrainerAmmunition::className(), ['trainer_id' => 'id']);
+        return ($this->city ? "$this->city, " : null) . $this->trainerHomeCountry->country_name;
     }
 
-    public function getAmmunition()
-    {
-        return $this->hasMany(Ammunition::className(), ['id' => 'ammunition_id'])
-            ->via('trainerAmmunition');
-    }
-
-//    -------------------------
+//    -----
 
     public function getTrainerService()
     {
-        return $this->hasMany(TrainerService::className(), ['trainer_id' => 'id']);
+        return $this->hasMany(TrainerService::class, ['trainer_id' => 'id']);
     }
 
     public function getServices()
     {
-        return $this->hasMany(Service::className(), ['id' => 'service_id'])
+        return $this->hasMany(Service::class, ['id' => 'service_id'])
             ->via('trainerService');
     }
 
-//    ---------------------------
+//    -----
 
     public function getTrainerLanguage()
     {
-        return $this->hasMany(TrainerLanguage::className(), ['trainer_id' => 'id']);
+        return $this->hasMany(TrainerLanguage::class, ['trainer_id' => 'id']);
     }
 
     public function getLanguages()
     {
-        return $this->hasMany(Language::className(), ['id' => 'lang_id'])
+        return $this->hasMany(Language::class, ['id' => 'lang_id'])
             ->via('trainerLanguage');
     }
 
-//------------------------------------------
+//   -----
 
     /**
      * @inheritdoc
@@ -205,7 +188,7 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
         return new TrainerQuery(get_called_class());
     }
 
-//************************************
+//   -----
 
     public static function findIdentity($id)
     {
@@ -237,8 +220,33 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
 //        throw new NotSupportedException();
     }
 
+    /**
+     * @param mixed $token
+     * @param null $type
+     * @return void|IdentityInterface
+     * @throws NotSupportedException
+     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException();
+    }
+
+    public static function update_link($link)
+    {
+        $protocol = 'http';
+
+        if ($link !== '' && substr($link, 0, strlen($protocol)) !== $protocol) {
+            $link = $protocol . '://' . $link;
+        }
+
+        return $link;
+    }
+
+    public function update_links()
+    {
+        $this->site = Trainer::update_link($this->site);
+        $this->soc_fb = Trainer::update_link($this->soc_fb);
+        $this->soc_tw = Trainer::update_link($this->soc_tw);
+        $this->soc_inst = Trainer::update_link($this->soc_inst);
     }
 }
