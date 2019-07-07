@@ -90,7 +90,7 @@ class ArticleController extends Controller
 
             if ($model->upload()) {
                 if ($model->imageFile) {
-                    $model->imageFile->saveAs('./img/article/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                    $model->imageFile->saveAs('.' . $model->thumb);
                 }
 
                 $model->save(false);
@@ -138,9 +138,9 @@ class ArticleController extends Controller
                 }
             }
 
-            if($model->upload()){ // todo
+            if ($model->upload()) { // todo
                 if ($model->imageFile) {
-                    $model->imageFile->saveAs('./img/article/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension);
+                    $model->imageFile->saveAs('.' . $model->thumb);
                 }
             }
 
@@ -170,13 +170,20 @@ class ArticleController extends Controller
      */
     public function actionDelete($id)
     {
-        $articleComments = Comment::find()->where(['article_id' => $id])->all();
+        Comment::deleteAll(['article_id' => $id]);
+        ArticleTag::deleteAll(['article_id' => $id]);
 
-        foreach ($articleComments as $comment) {
-            $comment->delete();
+        $model = $this->findModel($id);
+
+        if($model->thumb !== '' && $model->thumb !== null){
+            try {
+                unlink(Yii::getAlias('@webroot') . $model->thumb);
+            } catch (\Exception $e) {
+                echo $e;
+            }
         }
 
-        $this->findModel($id)->delete();
+        $model->delete();
 
         return $this->redirect(['/trainer/myarticles']);
     }
