@@ -9,22 +9,17 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 $this->registerCssFile('/css/profile.css');
-
 $this->registerJs(' $(".big-description p:has(img)").addClass("image-p");');
 
 $this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
 
-//--------TRAINER INFO------------
+// --- Trainer main info ---
 
 $countryList = ''; // where teaching
 foreach ($trainer->teachCountries as $country) {
     $countryList .= Html::a($country->country_name, ['trainer/index', 'TrainerCondition[teachcountry_id]' => $country->id]) . ', ';
 }
 $countryList = substr($countryList, 0, -2);
-
-$location = ''; // where based
-($trainer->city) ? $location = "$trainer->city, " : null;
-$location .= $trainer->trainerHomeCountry->country_name;
 
 $serviceList = ''; // services $trainer provides
 if ($trainer->services) {
@@ -39,7 +34,8 @@ $languageList = ''; // languages $trainer speaks
 if ($trainer->languages) {
     $languageList = '<ul class="languages-list">';
     foreach ($trainer->languages as $language) {
-        $languageList .= "<li><img class='lang-icon' alt='{$language->lang_code}' src='/img/flags/{$language->lang_flag}.svg' />" . $language->lang_name . '</li>';
+        $lang_flag = $language->lang_flag == '' ? $language->lang_code : $language->lang_flag;
+        $languageList .= "<li><img class='lang-icon' alt='{$language->lang_code}' src='/img/flags/$lang_flag.svg' />" . $language->lang_name . '</li>';
     }
     $languageList .= '</ul>';
 }
@@ -48,9 +44,12 @@ $websitesList = ''; // $trainer's web pages
 if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
     $websitesList = '<ul class="trainer-pages-list">';
 
-    $trainer->soc_fb ? $websitesList .= '<li class="page-item facebook">' . Html::a('<span>Facebook</span>', "$trainer->soc_fb") . '</li>' : null;
-    $trainer->soc_inst ? $websitesList .= '<li class="page-item instagram">' . Html::a('<span>Instagram</span>', "$trainer->soc_inst") . '</li>' : null;
-    $trainer->soc_tw ? $websitesList .= '<li class="page-item twitter">' . Html::a('<span>Twitter</span>', "$trainer->soc_tw") . '</li>' : null;
+    $trainer->soc_fb ? $websitesList .=
+        '<li class="page-item facebook">' . Html::a('<span>Facebook</span>', "$trainer->soc_fb") . '</li>' : null;
+    $trainer->soc_inst ? $websitesList .=
+        '<li class="page-item instagram">' . Html::a('<span>Instagram</span>', "$trainer->soc_inst") . '</li>' : null;
+    $trainer->soc_tw ? $websitesList .=
+        '<li class="page-item twitter">' . Html::a('<span>Twitter</span>', "$trainer->soc_tw") . '</li>' : null;
 
     $websitesList .= '</ul>';
 }
@@ -65,7 +64,7 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
         </div>
 
         <h1 class="name trainer-name"><?= $trainer->name . ' ' . $trainer->surname ?></h1>
-        <h3 class="location trainer-location"><?= $location ?></h3>
+        <h3 class="location trainer-location"><?= $trainer->trainerHomeCountry->country_name ?></h3>
         <?= $serviceList ?>
 
         <blockquote class="short-description trainer-short-description">
@@ -76,10 +75,13 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
     <section class="main-info trainer-main-info">
         <?= DetailView::widget([
             'model' => $trainer,
-            'template' => function ($attribute, $index, $widget) {
+            'template' => function ($attribute) {
                 if (isset($attribute['value']) && $attribute['value'] !== '' && $attribute['value'] !== ' ') {
-                    return "<div class='info-item'><label class='item-label'>{$attribute['label']}</label><br><strong class='item-value'>{$attribute['value']}</strong></div>";
+                    return "<div class='info-item'><label class='item-label'>{$attribute['label']}</label>" .
+                        "<br><strong class='item-value'>{$attribute['value']}</strong></div>";
                 }
+
+                return null;
             },
             'attributes' => [
                 [
@@ -88,7 +90,7 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
                 [
                     'attribute' => 'location',
                     'label' => 'Based in',
-                    'value' => $location
+                    'value' => $trainer->location
                 ],
                 [
                     'attribute' => 'teachCountries',
@@ -123,46 +125,40 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
             ['class' => 'action-item trainer-events']) : null ?>
 
         <?= $trainer->site ? Html::a("Visit website",
-            ["$trainer->site"],
+            "$trainer->site",
             ['class' => 'action-item trainer-website']) : null ?>
 
     </section>
 
-    <?php if ($websitesList <> '') {
-        echo
-            '<section class="trainer-pages">' .
-            '<p>' . $trainer->name . ' elsewhere: </p>' .
-            $websitesList .
-            '</section>';
-    } ?>
+    <?php if ($websitesList <> '') { ?>
+        <section class="trainer-pages">
+            <p> <?= $trainer->name ?> elsewhere: </p>
+            <?= $websitesList ?>
+        </section>
+    <?php } ?>
 
-    <?php if ($upcomingEvent) {
-        echo <<<EOD
-    <article class="modal upcoming-event modal-show" id="upcoming-event-modal">
+    <?php /** @var \app\models\Event $upcomingEvent */
+    if ($upcomingEvent) { ?>
+
+        <article class="modal upcoming-event modal-show" id="upcoming-event-modal">
         <span class="modal-close">
             <span class="visually-hidden">Close</span>
             &#215
         </span>
-        <div class="event-thumb">
-EOD;
-        if ($upcomingEvent->thumb != '') {
-            echo "<img src='$upcomingEvent->thumb' />";
-        }
-        echo <<<EOD
-        </div>
-        <h2 class="modal-title item-label info-item-label">Upcoming event</h2>
-        <h3 class="event-name">
-EOD;
-        echo $upcomingEvent->name;
-        echo <<<EOD
-</h3>
-        <p class="date">
-            <span class="day">1</span> <span class="month">Oct</span> -
-            <span class="day">10</span> <span class="month">Oct</span> 2018
-        </p>
-    </article>
-    
-EOD;
-    } ?>
+            <div class="event-thumb">
 
+                <?php if ($upcomingEvent->thumb != '') {
+                    echo "<img src='$upcomingEvent->thumb' />";
+                } ?>
+
+            </div>
+            <h2 class="modal-title item-label info-item-label">Upcoming event</h2>
+            <h3 class="event-name"> <?= $upcomingEvent->name ?> </h3>
+            <p class="date">
+                <span class="day month"><?= $upcomingEvent->start ?></span> -
+                <span class="day"><?= $upcomingEvent->end ?></span>
+            </p>
+        </article>
+
+    <?php } ?>
 </div>

@@ -4,16 +4,18 @@
  * @property \app\models\Event $event
  */
 
+use app\models\Event;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+/** @var Event $event */
 $trainer = $event->trainer;
 
 $this->registerCssFile('/css/profile.css');
 
 $this->title = $event->name . ' | Liberty Academy';
 
-$this->registerJs('$("p:has(img)").addClass("image-p")');
+$this->registerJs('$(".big-description p:has(img)").addClass("image-p")');
 
 //-----------
 
@@ -26,14 +28,10 @@ if ($event->tags) {
     $tagList .= '</ul>';
 }
 
-//-----------
-
-$location = ''; // where based
-$event->address ? $location = "$event->address, " : null;
-$event->country->country_name ? $location .= $event->country->country_name : null;
-
 //------------
 
+$country = $event->country ? '<h3 class="location event-location">' . $event->country->country_name . '</h3>' : null;
+$start_date_label = $event->end ? 'Start date' : 'Date';
 $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : null;
 
 ?>
@@ -46,7 +44,7 @@ $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : 
         </div>
 
         <h1 class="name event-name"><?= $event->name ?></h1>
-        <h3 class="location event-location"><?= $location ?></h3>
+        <?= $country ?>
         <?= $tagList ?>
 
         <blockquote class="short-description event-short-description">
@@ -57,24 +55,27 @@ $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : 
     <section class="main-info event-main-info">
         <?php echo DetailView::widget([
             'model' => $event,
-            'template' => function ($attribute, $index, $widget) {
-                if (isset($attribute['value']) && $attribute['value'] !== '' && $attribute['value'] !== ' ') {
-                    return "<div class='info-item'><label class='item-label'>{$attribute['label']}</label><br><strong class='item-value'>{$attribute['value']}</strong></div>";
+            'template' => function ($attribute) {
+                if (!($attribute['attribute'] == 'price_min' && !isset($event->price_min)) &&
+                    isset($attribute['value']) && $attribute['value'] !== '' && $attribute['value'] !== ' ') {
+                    return "<div class='info-item'><label class='item-label'>{$attribute['label']}</label>" .
+                        "<br><strong class='item-value'>{$attribute['value']}</strong></div>";
                 }
             },
             'attributes' => [
                 [
                     'attribute' => 'location',
                     'label' => 'Location',
-                    'value' => $location
+                    'value' => $event->location
                 ],
                 [
                     'attribute' => 'trainer_id',
-                    'value' => Html::a($trainer->fullName, ['trainer/profile', 'id' => $trainer->id])
-
+                    'label' => 'Held by',
+                    'value' => Html::a($trainer->fullName, ['trainer/profile', 'id' => $trainer->id]),
                 ],
                 [
                     'attribute' => 'start',
+                    'label' => $start_date_label,
                     'value' => Yii::$app->formatter->asDate($event->start, 'php:d M Y')
                 ],
                 [
@@ -84,11 +85,10 @@ $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : 
                 [
                     'attribute' => 'type_id',
                     'value' => $event->type->name
-
                 ],
                 [
                     'attribute' => 'price',
-                    'value' => $event->fullPrice->currency_symbol . $event->price
+                    'value' => $event->priceHtmlString,
                 ],
             ],
         ]); ?>
