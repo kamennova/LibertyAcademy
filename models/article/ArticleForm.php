@@ -3,11 +3,10 @@
 namespace app\models\article;
 
 use app\models\Article;
-use app\models\Tag;
-use Yii;
+use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "article".
+ * This is the form model class for Article model.
  * @inheritdoc
  * @property array $tags
  */
@@ -39,19 +38,22 @@ class ArticleForm extends Article
     {
         if ($this->validate(['tags', 'title', 'source', 'content', 'imageFile'])) {
 
-            if ($this->imageFile) {
-                $this->imageFile->saveAs(Yii::getAlias('@webroot') . '/img/article/thumb/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
+                if ($this->thumb !== '' && $this->thumb !== null) {
+                    unlink('.' . $this->thumb);
+                }
+
+                do {
+                    $filename = uniqid(rand(), false) . '.' . $this->imageFile->extension;
+                    if (!file_exists(sys_get_temp_dir() . $filename)) break;
+                } while (true);
+
+                $this->thumb = '/img/article/thumb/' . $filename;
             }
 
             return true;
-        } else {
-            return false;
         }
-    }
 
-    public function getTags()
-    {
-        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])
-            ->via('articleTag');
+        return false;
     }
 }
