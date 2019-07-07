@@ -81,16 +81,20 @@ class EventController extends Controller
             $model->trainer_id = Yii::$app->user->id;
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-            if ($model->upload() &&
-                ($model->thumb = '/img/event/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension)
-                && $model->save(false)) {
-                foreach ($model->tags as $tag) {
-                    $et = new EventTag();
-                    $et->event_id = $model->id;
-                    $et->tag_id = $tag;
-                    $et->save();
+            if ($model->upload()) {
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@webroot') . $model->thumb);
                 }
-                return $this->redirect(['event/profile', 'id' => $model->id]);
+
+                if ($model->save(false)) {
+                    foreach ($model->tags as $tag) {
+                        $et = new EventTag();
+                        $et->event_id = $model->id;
+                        $et->tag_id = $tag;
+                        $et->save();
+                    }
+                    return $this->redirect(['event/view', 'id' => $model->id]);
+                }
             }
         }
         return $this->render('create', [
@@ -107,24 +111,34 @@ class EventController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (!$model = $this->findModel($id)) {
+        if (!$model = $this->findModelForm($id)) {
             throw new NotFoundHttpException();
         }
 
         $curatorName = $this->getEventCurator()->getFullName();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
 
-            foreach ($model->tags as $tag) {
-                $at = new EventTag();
-                $at->event_id = $model->id;
-                $at->tag_id = $tag;
-
-                $at->save();
+            if ($model->upload()) { // todo
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@webroot') . $model->thumb);
+                }
             }
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save()) {
+
+                EventTag::deleteAll(['event_id' => $id]);
+
+                foreach ($model->tags as $tag) {
+                    $at = new EventTag();
+                    $at->event_id = $model->id;
+                    $at->tag_id = $tag;
+
+                    $at->save();
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -144,18 +158,31 @@ class EventController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public
     function actionDelete($id)
     {
+        $model = $this->findModel($id);
+
+        EventTag::deleteAll(['event_id' => $id]);
+
+        if ($model->thumb !== '' && $model->thumb !== null) {
+            try {
+                unlink(Yii::getAlias('@webroot') . $model->thumb);
+            } catch (\Exception $e) {
+                echo $e;
+            }
+        }
+
         try {
-            $this->findModel($id)->delete();
+            $model->delete();
         } catch (StaleObjectException $e) {
         } catch (NotFoundHttpException $e) {
         } catch (\Throwable $e) {
         }
 
-        return $this->goBack();
+        return $this->redirect(['/trainer/myevents']);
     }
 
     /**
@@ -187,5 +214,20 @@ class EventController extends Controller
                 return $curator;
             } else throw new NotFoundHttpException('The requested page does not exist');
         } else throw new ForbiddenHttpException('Access denied');
+    }
+
+    /**
+     * @param $id
+     * @return EventForm|null
+     * @throws NotFoundHttpException
+     */
+    protected function findModelForm($id)
+    {
+        if (($model = EventForm::findOne($id)) !== null) {
+            $model->tags = $model->getTags()->select('id')->column();
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }
