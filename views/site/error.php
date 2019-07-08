@@ -1,28 +1,4 @@
-<?php
-
-/* @var $this yii\web\View */
-/* @var $name string */
-/* @var $message string */
-/* @var $exception Exception */
-
-use yii\helpers\Html;
-
-$this->title = $name;
-?>
-<div class="site-error">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+    <div align="center">
+        <h2 class="error-title" style="font-size: 200px; font-weight: bold; margin-top: 40px;">Error</h2>
+        <img src="/img/errorhorse.png" style='width: 300px'/>
     </div>
-
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-    <img src="/img/errorhorse.png" style='width: 800px'/>
-
-</div>
