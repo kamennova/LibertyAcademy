@@ -423,13 +423,15 @@ class TrainerController extends Controller
         $model = new ChangePasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $this->findModel($id)->pass = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $trainer = $this->findModel($id);
+            $trainer->pass = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $trainer->save();
 
             return $this->redirect(['/site/index']);
         }
 
         return $this->render('change_pass', [
-//            'model' => $model,
+            'model' => $model,
         ]);
     }
 
