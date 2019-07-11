@@ -13,6 +13,7 @@ use yii\base\DynamicModel;
 use yii\db\StaleObjectException;
 use yii\helpers\Html;
 use yii\base\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -174,13 +175,13 @@ class TrainerController extends Controller
 
     /**
      * Displays a single Trainer model.
-     * @param integer $id
      * @return mixed
      * @throws \yii\web\NotFoundHttpException
      * @throws \yii\base\InvalidParamException
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id = Yii::$app->user->id;
         $model = $this->findModelForm($id);
         $errors = '';
 
@@ -290,7 +291,8 @@ class TrainerController extends Controller
                 Yii::$app->session->set('registerAdd', [
                     'services' => $model->services,
                     'languages' => $model->languages,
-                    'thumb' => $thumbSrc
+                    'imageFile' => $model->imageFile,
+//                    'thumb' => $model->thumb,
                 ]);
 
                 return $this->render('registercontact', [
@@ -305,6 +307,9 @@ class TrainerController extends Controller
         ]);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionRegistercontact()
     {
         $model = new RegisterTrainer();
@@ -318,6 +323,10 @@ class TrainerController extends Controller
             if ($model->validate(['teachCountries', 'site', 'soc_fb', 'soc_tw', 'soc_inst', 'email', 'homecountry_id'])) {
 
                 $model->update_links();
+
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@web') . $model->thumb);
+                }
 
                 try {
                     $hash = Yii::$app->getSecurity()->generatePasswordHash($model->pass);
@@ -393,10 +402,14 @@ class TrainerController extends Controller
         TrainerService::deleteAll(['trainer_id' => $id]);
         TrainerCountry::deleteAll(['trainer_id' => $id]);
 
-        Article::deleteAll(['trainer_id' => $id]);
+        $model = $this->findModel($id);
+
+        foreach ($model->articles as $article) {
+            $article->safeDelete();
+        }
+
         Event::deleteAll(['trainer_id' => $id]);
 
-        $model = $this->findModel($id);
 
         if ($model->thumb !== '' && $model->thumb !== null) {
             try {
