@@ -7,7 +7,6 @@ use app\models\event\EventForm;
 use app\models\EventTag;
 use app\models\Trainer;
 use Yii;
-use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -40,6 +39,7 @@ class EventController extends Controller
     public function actionIndex()
     {
         $condition = new EventCondition();
+        $condition->show_archived = true;
         $condition->start = null;
         $condition->load(Yii::$app->request->get());
 
@@ -87,12 +87,16 @@ class EventController extends Controller
                 }
 
                 if ($model->save(false)) {
-                    foreach ($model->tags as $tag) {
-                        $et = new EventTag();
-                        $et->event_id = $model->id;
-                        $et->tag_id = $tag;
-                        $et->save();
+
+                    if ($model->tags) {
+                        foreach ($model->tags as $tag) {
+                            $et = new EventTag();
+                            $et->event_id = $model->id;
+                            $et->tag_id = $tag;
+                            $et->save();
+                        }
                     }
+
                     return $this->redirect(['event/view', 'id' => $model->id]);
                 }
             }
@@ -115,6 +119,10 @@ class EventController extends Controller
             throw new NotFoundHttpException();
         }
 
+        if($model->trainer_id !== Yii::$app->user->id){
+            return $this->redirect('/trainer/myevents');
+        }
+
         $curatorName = $this->getEventCurator()->getFullName();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -127,14 +135,16 @@ class EventController extends Controller
 
             if ($model->save()) {
 
-                EventTag::deleteAll(['event_id' => $id]);
+                if ($model->tags) {
+                    EventTag::deleteAll(['event_id' => $id]);
 
-                foreach ($model->tags as $tag) {
-                    $at = new EventTag();
-                    $at->event_id = $model->id;
-                    $at->tag_id = $tag;
+                    foreach ($model->tags as $tag) {
+                        $at = new EventTag();
+                        $at->event_id = $model->id;
+                        $at->tag_id = $tag;
 
-                    $at->save();
+                        $at->save();
+                    }
                 }
 
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -163,26 +173,19 @@ class EventController extends Controller
     public
     function actionDelete($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->request->post()) {
+            $model = $this->findModel($id);
 
-        EventTag::deleteAll(['event_id' => $id]);
-
-        if ($model->thumb !== '' && $model->thumb !== null) {
-            try {
-                unlink(Yii::getAlias('@webroot') . $model->thumb);
-            } catch (\Exception $e) {
-                echo $e;
+            if($model->trainer_id !== Yii::$app->user->id){
+                return $this->redirect('/trainer/myarticles');
             }
+
+            $model->safeDelete();
+
+            return $this->redirect(['/trainer/myevents']);
         }
 
-        try {
-            $model->delete();
-        } catch (StaleObjectException $e) {
-        } catch (NotFoundHttpException $e) {
-        } catch (\Throwable $e) {
-        }
-
-        return $this->redirect(['/trainer/myevents']);
+        return $this->redirect(['/site/index']);
     }
 
     /**

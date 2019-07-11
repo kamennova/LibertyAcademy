@@ -98,12 +98,14 @@ class ArticleController extends Controller
 
             ArticleTag::deleteAll(['article_id' => $model->id]);
 
-            foreach ($model->tags as $tag) {
-                $at = new ArticleTag();
-                $at->article_id = $model->id;
-                $at->tag_id = $tag;
+            if ($model->tags) {
+                foreach ($model->tags as $tag) {
+                    $at = new ArticleTag();
+                    $at->article_id = $model->id;
+                    $at->tag_id = $tag;
 
-                $at->save();
+                    $at->save();
+                }
             }
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -123,18 +125,24 @@ class ArticleController extends Controller
             throw new NotFoundHttpException();
         }
 
+        if ($model->trainer_id !== Yii::$app->user->id) {
+            return $this->redirect('/trainer/myarticles');
+        }
+
         $errors = '';
 
         if ($model->load(Yii::$app->request->post())) {
             ArticleTag::deleteAll(['article_id' => $id]);
 
-            foreach ($model->tags as $tag) {
-                $at = new ArticleTag();
-                $at->article_id = $model->id;
-                $at->tag_id = $tag;
+            if ($model->tags) {
+                foreach ($model->tags as $tag) {
+                    $at = new ArticleTag();
+                    $at->article_id = $model->id;
+                    $at->tag_id = $tag;
 
-                if (!$at->save()) {
-                    $errors .= Html::errorSummary($at) . '<br>';
+                    if (!$at->save()) {
+                        $errors .= Html::errorSummary($at) . '<br>';
+                    }
                 }
             }
 
@@ -166,26 +174,22 @@ class ArticleController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
-        Comment::deleteAll(['article_id' => $id]);
-        ArticleTag::deleteAll(['article_id' => $id]);
+        if (Yii::$app->request->post()) {
+            $model = $this->findModel($id);
 
-        $model = $this->findModel($id);
-
-        if($model->thumb !== '' && $model->thumb !== null){
-            try {
-                unlink(Yii::getAlias('@webroot') . $model->thumb);
-            } catch (\Exception $e) {
-                echo $e;
+            if($model->trainer_id !== Yii::$app->user->id){
+                return $this->redirect('/trainer/myarticles');
             }
+
+            $model->safeDelete();
+
+            return $this->redirect(['/trainer/myarticles']);
         }
 
-        $model->delete();
-
-        return $this->redirect(['/trainer/myarticles']);
+        return $this->redirect(['/site/index']);
     }
 
     /**
