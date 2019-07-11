@@ -3,6 +3,8 @@
 namespace app\models;
 
 use app\models\event\EventType;
+use Yii;
+use yii\db\StaleObjectException;
 
 /**
  * This is the model class for table "event".
@@ -46,7 +48,9 @@ class Event extends \yii\db\ActiveRecord
             [['type_id', 'trainer_id', 'start', 'name', 'desc'], 'required'],
             [['name', 'thumb', 'desc', 'start', 'end', 'address'], 'string', 'max' => 255],
             ['content', 'string'],
-            [['country_id', 'currency_id', 'price_min', 'price_max'], 'integer']
+            [['country_id', 'currency_id', 'price_min', 'price_max'], 'integer'],
+            [['name', 'desc', 'start', 'end', 'address'], 'filter', 'filter' => '\yii\helpers\Html::encode'],
+            ['content', 'filter', 'filter' => '\yii\helpers\HtmlPurifier::process'],
         ];
     }
 
@@ -93,7 +97,8 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(Country::class, ['id' => 'country_id']);
     }
 
-    public function getLocation(){
+    public function getLocation()
+    {
         $location = $this->country ? $this->country->country_name : null;
         $location = ($this->address ? $this->address . ', ' : null) . $location;
 
@@ -105,8 +110,9 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(Currency::class, ['id' => 'currency_id']);
     }
 
-    public function getPriceHtmlString(){
-        if($this->price_min) {
+    public function getPriceHtmlString()
+    {
+        if ($this->price_min) {
             $cur = Currency::find()->where(['id' => $this->currency_id])->asArray()->one()['currency_symbol'];
 
             $price = '<span class="currency">' . $cur . '</span>';
@@ -131,5 +137,24 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->via('eventTag');
+    }
+
+    public function safeDelete()
+    {
+        EventTag::deleteAll(['event_id' => $this->id]);
+
+        if ($this->thumb !== '' && $this->thumb !== null && Yii::getAlias('@webroot') . $this->thumb) {
+            try {
+                unlink(Yii::getAlias('@webroot') . $this->thumb);
+            } catch (\Exception $e) {
+                echo $e;
+            }
+        }
+
+        try {
+            $this->delete();
+        } catch (StaleObjectException $e) {
+        } catch (\Throwable $e) {
+        }
     }
 }
