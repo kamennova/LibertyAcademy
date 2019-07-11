@@ -1,6 +1,9 @@
 <?php
+
 namespace app\models;
 
+use Yii;
+use yii\db\StaleObjectException;
 use yii\helpers\Html;
 
 /**
@@ -41,10 +44,8 @@ class Article extends \yii\db\ActiveRecord
             [['title', 'content', 'thumb', 'source'], 'string'],
             ['lang_id', 'integer'],
             ['imageFile', 'file', 'extensions' => 'png, jpg, jpeg'],
-            ['title', 'filter', 'filter' => function ($value) {
-                $value = Html::encode(strip_tags($value));
-                return $value;
-            }]
+            ['title', 'filter', 'filter' => '\yii\helpers\Html::encode'],
+            ['content', 'filter', 'filter' => '\yii\helpers\HtmlPurifier::process'],
         ];
     }
 
@@ -95,9 +96,29 @@ class Article extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
-
     public static function find()
     {
         return new TrainerQuery(get_called_class());
+    }
+
+    public function safeDelete()
+    {
+        Comment::deleteAll(['article_id' => $this->id]);
+        ArticleTag::deleteAll(['article_id' => $this->id]);
+
+        if ($this->thumb !== '' && $this->thumb !== null &&
+            file_exists(Yii::getAlias('@webroot') . $this->thumb)) {
+            try {
+                unlink(Yii::getAlias('@webroot') . $this->thumb);
+            } catch (\Exception $e) {
+                echo $e;
+            }
+        }
+
+        try {
+            $this->delete();
+        } catch (StaleObjectException $e) {
+        } catch (\Throwable $e) {
+        }
     }
 }
