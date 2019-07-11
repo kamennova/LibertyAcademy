@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\web\UploadedFile;
 
 /**
  * @inheritdoc
@@ -14,7 +14,6 @@ use Yii;
 class RegisterTrainer extends Trainer
 {
     public $services;
-    public $ammunition;
     public $languages;
     public $teachCountries;
 
@@ -42,21 +41,20 @@ class RegisterTrainer extends Trainer
 
     public function upload()
     {
-        if ($this->validate(['pass', 'name', 'services', 'ammunition', 'languages', 'org', 'desc', 'big_desc', 'imageFile', 'galleryFiles'])) {
+        if ($this->validate(['name', 'surname', 'pass', 'services', 'languages', 'org', 'desc', 'big_desc', 'imageFile'])) {
 
-            if ($this->imageFile) {
-                $this->imageFile->saveAs(Yii::getAlias('@webroot') . '/img/teacher/thumb/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-            }
+            if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
+                do {
+                    $filename = uniqid(rand(), false) . '.' . $this->imageFile->extension;
+                    if (!file_exists(sys_get_temp_dir() . $filename)) break;
+                } while (true);
 
-            if ($this->galleryFiles) {
-                foreach ($this->galleryFiles as $file) {
-                    $file->saveAs(Yii::getAlias('@webroot') . '/img/teacher/gallery/' . $file->baseName . '.' . $file->extension);
-                }
+                $this->thumb = '/img/teacher/thumb/' . $filename;
             }
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
