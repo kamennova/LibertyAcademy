@@ -81,7 +81,11 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
                     Html::a('Log in', ['site/login'], ['class' => 'enter login'])],
             ['imageFile', 'file', 'extensions' => 'png, jpg, jpeg'],
             ['galleryFiles', 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10],
-            ['pass', 'string', 'length' => [3, 255], 'message' => 'The password should contain at least 3 chars'],
+            ['pass', 'string', 'length' => [6, 255], 'message' => 'Password should contain at least 6 characters'],
+
+            [['name', 'surname', 'city', 'org', 'desc', 'address', 'soc_tw', 'soc_inst', 'soc_fb', 'site'], 'filter',
+                'filter' => '\yii\helpers\Html::encode'],
+            [['big_desc'], 'filter', 'filter' => '\yii\helpers\HtmlPurifier::process']
         ];
     }
 
@@ -117,6 +121,12 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Event::class, ['trainer_id' => 'id']);
     }
+
+    public function getArticles()
+    {
+        return $this->hasMany(Article::class, ['trainer_id' => 'id']);
+    }
+
 
     public function getTrainerStatus()
     {
@@ -248,5 +258,27 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
         $this->soc_fb = Trainer::update_link($this->soc_fb);
         $this->soc_tw = Trainer::update_link($this->soc_tw);
         $this->soc_inst = Trainer::update_link($this->soc_inst);
+    }
+
+    /**
+     * @return string
+     */
+    public function getArticleDesc()
+    {
+        $desc = '';
+        $counter = count($this->services);
+
+        foreach ($this->services as $service) {
+            $counter--;
+
+            $desc .= $service->service_name . ($counter == 1 ? ' and ' : ', ');
+        }
+
+        $desc = ucfirst(substr($desc, 0, strlen($desc) - 2));
+
+        $desc .= ' from ' . $this->location . '.<br><br>';
+        $desc .= '<span class="quote">"' . $this->desc . '" </span><br>';
+
+        return $desc;
     }
 }
