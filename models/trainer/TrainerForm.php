@@ -23,7 +23,7 @@ class TrainerForm extends Trainer
         return array_merge(parent::rules(), [
                 ['services', 'safe'],
                 ['languages', 'safe'],
-                ['teachCountries', 'safe']
+                ['teachCountries', 'safe'],
             ]
         );
     }
@@ -39,10 +39,10 @@ class TrainerForm extends Trainer
 
     public function upload()
     {
-        if ($this->validate(['services', 'teachCountries', 'languages', 'imageFile'])) {
+        if ($this->validate()) {
 
             if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
-                if ($this->thumb !== '' && $this->thumb !== null) {
+                if ($this->thumb !== '' && $this->thumb !== null && file_exists('.' . $this->thumb)) {
                     unlink('.' . $this->thumb);
                 }
 
