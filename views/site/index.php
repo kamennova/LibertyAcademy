@@ -3,38 +3,36 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->registerCssFile('/css/site_index.css');
-$this->registerCssFile('/css/subscribe_form.css');
-$this->registerJsFile('/js/poster.js', ['depends' => 'yii\web\JqueryAsset']);
+$this->registerCssFile('/build/site_index.css');
+$this->registerCssFile('/build/subscribe_form.css');
 $this->title = 'Liberty Academy';
 
 ?>
 
 <section class="poster">
-
     <ul class="poster-slides">
         <li class="slide slide-1 active" id="slide-1">
             <h2 class="slide-title">Go liberty</h2>
-            <div class="slide-layer slide-layer-1"></div>
-            <div class="slide-layer slide-layer-2"></div>
-            <div class="slide-layer slide-layer-3"></div>
-            <div class="slide-layer slide-layer-4"></div>
+<!--            <div class="slide-layer slide-layer-1"></div>-->
+            <!--            <div class="slide-layer slide-layer-2"></div>-->
+<!--            <div class="slide-layer slide-layer-3"></div>-->
+            <!--            <div class="slide-layer slide-layer-4"></div>-->
             <p class="slide-caption">
-                <?= Html::a('Mosie Trewhitt', ['/trainer/profile', 'id' => 7]) ?> & Nipomo
+                Mosie Trewhitt & Nipomo. Photo by Claire Bryett Andrew
             </p>
         </li>
-        <li class="slide slide-2" id="slide-2">
+        <!--<li class="slide slide-2" id="slide-2">
             <h2 class="slide-title">Go liberty</h2>
             <div class="slide-layer"></div>
             <p class="slide-caption">
-                <?= Html::a('Martin Contreras', ['/trainer/profile', 'id' => 1]) ?> & Chiara
+                <= Html::a('Martin Contreras', ['/trainer/profile', 'id' => 1]) ?> & Chiara
             </p>
         </li>
         <li class="slide slide-3" id="slide-3">
             <h2 class="slide-title">Go liberty</h2>
             <div class="slide-layer"></div>
             <p class="slide-caption">
-                <?= Html::a('Anna Marciniak', ['/trainer/profile', 'id' => 48]) ?> & Falcao
+                <= Html::a('Anna Marciniak', ['/trainer/profile', 'id' => 48]) ?> & Falcao
             </p>
         </li>
     </ul>
@@ -43,8 +41,7 @@ $this->title = 'Liberty Academy';
         <li data-slide-to="1" class="indicator active" id="indicator-1"><span></span></li>
         <li data-slide-to="2" class="indicator" id="indicator-2"><span></span></li>
         <li data-slide-to="3" class="indicator" id="indicator-3"><span></span></li>
-    </ul>
-
+    </ul> -->
 </section>
 
 <section class="content-section philosophy" id="philosophy">
@@ -59,7 +56,7 @@ $this->title = 'Liberty Academy';
                         <span class="icon"></span>
                         <h3 class="principle-name"> Horse's well-being first </h3>
                         <p> Horse's health and needs are always put first before training schedule
-                             </p>
+                        </p>
                     </li>
                     <li id="education">
                         <span class="icon"></span>
@@ -85,7 +82,7 @@ $this->title = 'Liberty Academy';
         </div>
 
         <div class="row goal">
-            <p> The goal of liberty training is to establish a true deep connection between the human and the horse.</p>
+            <p> The goal of liberty training is to establish a friendly connection between the human and the horse.</p>
         </div>
     </div>
 </section>
@@ -96,6 +93,11 @@ $this->title = 'Liberty Academy';
         <h3 class="section-subtitle">All info in one place</h3>
 
         <div class="row guide-list">
+            <div class="col-sm-4 guide-list-item" id="trainer-section">
+                <span></span>
+                <h3><?= Html::a('Teachers', ['/trainer/index']) ?></h3>
+                <p>Instructors, clinicians, writers and just horse lovers</p>
+            </div>
             <div class="col-sm-4 guide-list-item" id="article-section">
                 <span></span>
                 <h3><?= Html::a('Articles', ['/article/index']) ?></h3>
@@ -103,13 +105,8 @@ $this->title = 'Liberty Academy';
             </div>
             <div class="col-sm-4 guide-list-item" id="event-section">
                 <span></span>
-                <h3><?= Html::a('Workshops', ['/event/index']) ?></h3>
+                <h3><?= Html::a('Events', ['/event/index']) ?></h3>
                 <p>Clinics, webinars, educational book releases and more</p>
-            </div>
-            <div class="col-sm-4 guide-list-item" id="trainer-section">
-                <span></span>
-                <h3><?= Html::a('Teachers', ['/trainer/index']) ?></h3>
-                <p>Instructors, clinicians, writers and just horse lovers</p>
             </div>
         </div>
     </section>
@@ -119,8 +116,9 @@ $this->title = 'Liberty Academy';
         <h3 class="section-subtitle">You are welcome</h3>
         <hr class="article-hr">
         <p> If you are an experienced horse trainer sharing the approach of liberty in horse
-            training, you are welcome to join the community! Tell horse people about yourself, post articles and announce clinics
-            schedule after registering. <?= Html::a('Find out more', '/site/philosophy') ?></p>
+            training, you are welcome to join the community! Tell horse people about yourself, post articles and
+            announce clinics
+            schedule after registering. <?= Html::a('Find out more', '/site/about') ?></p>
     </section>
 </div>
 
@@ -162,8 +160,7 @@ $this->title = 'Liberty Academy';
         <h3 class="section-subtitle">Feel free to contact</h3>
         <hr class="article-hr">
         <p> Thanks for your interest in Liberty Academy. If you have any business inquiries or want to leave feedback,
-<!--            or             Html::a('become partners', '/site/philosophy#partnership') -->
-             drop an email</p>
+            drop an email</p>
         <?= Html::a('Leave a message', '/site/contact', ['class' => 'btn btn-center']) ?>
     </div>
 </section>

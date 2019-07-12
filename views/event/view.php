@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /** @var Event $event */
 $trainer = $event->trainer;
 
-$this->registerCssFile('/css/profile.css');
+$this->registerCssFile('/build/profile.css');
 
 $this->title = $event->name . ' | Liberty Academy';
 
@@ -84,7 +84,7 @@ $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : 
                 ],
                 [
                     'attribute' => 'type_id',
-                    'value' => $event->type->name
+                    'value' => $event->type->name == 'Other' ? null : $event->type->name
                 ],
                 [
                     'attribute' => 'price',

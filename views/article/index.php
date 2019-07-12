@@ -16,8 +16,8 @@ use \app\models\Trainer;
  */
 $this->title = 'Articles | Liberty Academy';
 
-$this->registerCssFile('/css/article_index.css');
-$this->registerCssFile('/css/list_layout.css');
+$this->registerCssFile('/build/article_index.css');
+$this->registerCssFile('/build/list_layout.css');
 
 $model = new \app\models\RegisterTrainer();
 
@@ -43,7 +43,7 @@ $articleComments = \app\models\Comment::find()->orderBy(['date' => SORT_DESC])->
 
 foreach ($articleComments as $comment) {
     $commentedArticle = \app\models\Article::findOne(['id' => $comment->article_id]);
-    $commentsList .= '<li>' .
+    $commentsList .=  '<li>' .
         '<p class="comment-date">' . $comment->date . '</p>' .
         '<p class="comment-content">„' . $comment->content . '“</p>' .
         '- <strong class="comment-author-name">' . $comment->author_name . '</strong> on ' .

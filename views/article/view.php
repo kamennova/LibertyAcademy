@@ -10,8 +10,8 @@ use yii\helpers\Html;
 $author = $article->trainer;
 
 $this->title = $article->title . ' | Liberty Academy';
-$this->registerCssFile('/css/article_profile.css');
-$this->registerCssFile('/css/sort-by-form.css');
+$this->registerCssFile('/build/article_profile.css');
+$this->registerCssFile('/build/sort-by-form.css');
 
 $this->registerJs('$(".article-content p:has(img)").addClass("image-p")');
 
@@ -64,7 +64,7 @@ $authorServiceList .= '</ul>'; ?>
                 <h3 class="author-name">
                     <?= Html::a($author->name . ' ' . $author->surname, ['/trainer/profile', 'id' => $author->id]) ?>
                 </h3>
-                <p>  <?= $author->articleDesc ?> </p>
+                <p>  <?= $author->getArticleDesc() ?> </p>
                 <?= Html::a("All articles by $author->name",
                     ['/article/index', 'ArticleCondition[trainer_id]' => $author->id], ['class' => 'all-articles']) ?>
             </div>

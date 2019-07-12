@@ -13,8 +13,8 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
-$this->registerCssFile('/css/trainer_view.css');
-$this->registerCssFile('/css/list_layout.css');
+$this->registerCssFile('/build/trainer_view.css');
+$this->registerCssFile('/build/list_layout.css');
 
 $this->title = "My articles | " . $model->name . " " . $model->surname;
 
@@ -39,7 +39,7 @@ $articlesNumber = count($articles);
                 echo '</ul>';
             }
             ?>
-            <span class="number"><?= $articlesNumber ?> articles</span>
+            <span class="number"><?= $articlesNumber ?> article<?= $articlesNumber == 1 ? null : 's' ?></span>
         </div>
 
         <h1 class="filter-title">Filter articles</h1>

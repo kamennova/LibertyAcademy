@@ -11,10 +11,10 @@ use yii\helpers\Html;
 /* @var $model app\models\article\ArticleForm */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->registerCssFile('/css/forms.css');
-$this->registerCssFile('/css/create-form.css');
+$this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/create-form.css');
 
-$this->registerJsFile('/js/upload_img.js');
+$this->registerJsFile('/build/upload_img.js');
 
 $default_lang_id = 1; // English
 

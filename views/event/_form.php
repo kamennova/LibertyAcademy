@@ -14,10 +14,10 @@ use app\models\Currency;
 /* @var $model app\models\eVENT */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->registerCssFile('/css/forms.css');
-$this->registerCssFile('/css/create-form.css');
+$this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/create-form.css');
 
-$this->registerJsFile('/js/upload_img.js');
+$this->registerJsFile('/build/upload_img.js');
 
 ?>
 
@@ -84,9 +84,14 @@ $this->registerJsFile('/js/upload_img.js');
             <div class="col-sm-6 left-field">
                 <?= $form->field($model, 'start')->widget(DateRangePicker::class, [
                     'pluginOptions' => [
+                        'autocomplete' => "off",
                         'locale' => ['format' => "YYYY-MM-DD"],
                         'singleDatePicker' => true,
                         'showDropdowns' => true,
+                    ],
+                    'options' => [
+                        'class' => 'form-control',
+                        'autocomplete' => "off"
                     ]]) ?>
             </div>
             <div class="col-sm-6 right-field">
@@ -95,6 +100,10 @@ $this->registerJsFile('/js/upload_img.js');
                         'locale' => ['format' => "YYYY-MM-DD"],
                         'singleDatePicker' => true,
                         'showDropdowns' => true,
+                    ],
+                    'options' => [
+                        'class' => 'form-control',
+                        'autocomplete' => "off"
                     ]]) ?>
             </div>
         </div>
@@ -138,7 +147,7 @@ $this->registerJsFile('/js/upload_img.js');
     <?= $form->field($model, 'content', ['template' => '{label}<br><br><div class="row" ><div class="col-lg-12">{input}{error}{hint}</div></div>'])
         ->widget(CKEditor::class, [
             'options' => ['height' => 'auto'],
-            'preset' => 'basic',
+            'preset' => 'standart',
         ]) ?>
 
     <div class="form-group" align="center">
