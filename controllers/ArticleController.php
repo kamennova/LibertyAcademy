@@ -7,7 +7,6 @@ use app\models\article\ArticleCondition;
 use app\models\article\ArticleForm;
 use app\models\ArticleTag;
 use app\models\Comment;
-use app\models\CommentForm;
 use Yii;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -56,7 +55,7 @@ class ArticleController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $model = new CommentForm();
+        $model = new Comment();
 
         if ($model->load(Yii::$app->request->post())) {
 
