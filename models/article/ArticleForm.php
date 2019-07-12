@@ -39,7 +39,7 @@ class ArticleForm extends Article
         if ($this->validate(['tags', 'title', 'source', 'content', 'imageFile'])) {
 
             if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
-                if ($this->thumb !== '' && $this->thumb !== null) {
+                if ($this->thumb !== '' && $this->thumb !== null && file_exists('.' . $this->thumb)) {
                     unlink('.' . $this->thumb);
                 }
 

@@ -3,7 +3,6 @@
 namespace app\models\event;
 
 use app\models\Event;
-use Yii;
 use yii\web\UploadedFile;
 
 /**
@@ -41,7 +40,7 @@ class EventForm extends Event
         if ($this->validate()) {
 
             if ($this->imageFile = UploadedFile::getInstance($this, 'imageFile')) {
-                if ($this->thumb !== '' && $this->thumb !== null) {
+                if ($this->thumb !== '' && $this->thumb !== null && file_exists('.' . $this->thumb)) {
                     unlink('.' . $this->thumb);
                 }
 
