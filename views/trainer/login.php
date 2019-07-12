@@ -9,9 +9,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'Liberty Academy | Login';
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/css/forms.css');
+$this->registerCssFile('/build/forms.css');
 
 ?>
 
