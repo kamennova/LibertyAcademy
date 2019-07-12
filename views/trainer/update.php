@@ -15,8 +15,8 @@ $this->title = 'Update profile | ' . $model->fullName;
 $this->params['breadcrumbs'][] = ['label' => 'Trainers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerCssFile('/css/forms.css');
-$this->registerCssFile('/css/register.css');
+$this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/register.css');
 
 ?>
 
@@ -58,7 +58,7 @@ $this->registerCssFile('/css/register.css');
             'data-method' => 'post',
             'class' => 'delete-profile-link']); ?>
         <?= Html::a("Change password", ['/trainer/change_pass', 'id' => $model->id], ['class' => "change-pass-link"]) ?>
-        <?= Html::submitButton('Create', ['class' => 'btn centered']) ?>
+        <?= Html::submitButton('Update', ['class' => 'btn centered']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

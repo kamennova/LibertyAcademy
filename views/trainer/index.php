@@ -19,7 +19,7 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Teachers | Liberty Academy';
 
-$this->registerCssFile('/css/list_layout.css');
+$this->registerCssFile('/build/list_layout.css');
 
 $trainers = $provider->getModels();
 $trainersNumber = $provider->pagination->totalCount;
@@ -103,7 +103,7 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
             } ?>
 
             <span class="number trainers-number">
-                <?= $trainersNumber ?> teacher <?= (($trainersNumber !== 1) ? 's' : null) ?>
+                <?= $trainersNumber ?> teacher<?= (($trainersNumber !== 1) ? 's' : null) ?>
             </span>
         </div>
 

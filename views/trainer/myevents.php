@@ -7,8 +7,8 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
-$this->registerCssFile('/css/trainer_view.css');
-$this->registerCssFile('/css/list_layout.css');
+$this->registerCssFile('/build/trainer_view.css');
+$this->registerCssFile('/build/list_layout.css');
 
 $this->title = "My events | " . $model->name . " " . $model->surname;
 
@@ -35,7 +35,7 @@ $eventsNumber = count($eventDataProvider->getModels());
                 echo '</ul>';
             }
             ?>
-            <span class="number"><?= $eventsNumber ?> events</span>
+            <span class="number"><?= $eventsNumber ?> event<?= $eventsNumber == 1 ? null : 's' ?></span>
         </div>
 
         <h1 class="filter-title">Filter events</h1>

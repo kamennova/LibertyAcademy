@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-$this->registerCssFile('/css/profile.css');
+$this->registerCssFile('/build/profile.css');
 $this->registerJs(' $(".big-description p:has(img)").addClass("image-p");');
 
 $this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
@@ -155,8 +155,11 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
             <h2 class="modal-title item-label info-item-label">Upcoming event</h2>
             <h3 class="event-name"> <?= $upcomingEvent->name ?> </h3>
             <p class="date">
-                <span class="day month"><?= $upcomingEvent->start ?></span> -
+                <span class="day month"><?= $upcomingEvent->start ?></span>
+                <?php if($upcomingEvent->end){ ?>
+                -
                 <span class="day"><?= $upcomingEvent->end ?></span>
+                <?php } ?>
             </p>
         </article>
 

@@ -8,9 +8,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Register';
-$this->registerCssFile('/css/register.css');
-$this->registerCssFile('/css/forms.css');
+$this->title = 'Register | Liberty Academy';
+$this->registerCssFile('/build/register.css');
+$this->registerCssFile('/build/forms.css');
 ?>
 
 <div class="container register-form-container register-contact">

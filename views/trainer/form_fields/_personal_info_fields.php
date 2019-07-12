@@ -10,7 +10,7 @@ use app\models\Service;
 use dosamigos\ckeditor\CKEditor;
 use kartik\select2\Select2;
 
-$this->registerJsFile('/js/upload_img.js');
+$this->registerJsFile('/build/upload_img.js');
 
 ?>
 

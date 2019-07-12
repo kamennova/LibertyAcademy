@@ -9,8 +9,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Register | Liberty Academy';
-$this->registerCssFile('/css/register.css');
-$this->registerCssFile('/css/forms.css');
+$this->registerCssFile('/build/register.css');
+$this->registerCssFile('/build/forms.css');
 
 ?>
 
