@@ -17,8 +17,8 @@ use yii\helpers\Url;
  */
 $this->title = 'Events | Liberty Academy';
 
-$this->registerCssFile('/css/list_layout.css');
-$this->registerCssFile('/css/event_index.css');
+$this->registerCssFile('/build/list_layout.css');
+$this->registerCssFile('/build/event_index.css');
 
 //-----
 
@@ -122,6 +122,10 @@ $workshopDates = [];
                 ])
                 ->label(false); ?>
 
+            <?= $form->field($condition, 'show_archived', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false],
+                'options' => ['class' => 'filter-checkbox-list']])
+                ->checkbox(['checked' => true, 'value' => 1, 'unchecked' => 0, 'onchange' => 'this.form.submit()',]) ?>
+
             <?php ActiveForm::end(); ?>
         </div>
 
@@ -156,14 +160,14 @@ $workshopDates = [];
                         <?php } ?>
 
                         <h2 class="name item-name event-name">
-                            <?php Html::a($event->name, ['/event/view', 'id' => $event->id]) ?>
+                            <?= Html::a($event->name, ['/event/view', 'id' => $event->id]) ?>
                         </h2>
 
                         <ul class="event-options">
                             <?= $event->address ? '<li class="event-address">' . $event->address . '</li>' : null ?>
 
                             <li class="event-curator">
-                                <?php Html::a($event->trainer->fullName, ['/trainer/profile', 'id' => $event->trainer->id]) ?>
+                                <?= Html::a($event->trainer->fullName, ['/trainer/profile', 'id' => $event->trainer->id]) ?>
                             </li>
 
                             <?php if (!is_null($event->priceHtmlString)) {
@@ -173,22 +177,27 @@ $workshopDates = [];
 
                         <?= "<p class='event-desc'>$event->desc</p></div></section>" ?>
 
-                        <section class="event-dates">
+                        <?php if ($event->start) { ?>
+                            <section class="event-dates">
 
-                        <span class="date start-date">
-                            <span class="day"> <?= Yii::$app->formatter->asDate($event->start, 'php:d') ?> </span>
-                            <span class="month"> <?= Yii::$app->formatter->asDate($event->start, 'php:M') ?> </span>
-                        </span>
+                                <p class="days">
+                            <span class="date start-date">
+                                <span class="day"><?= Yii::$app->formatter->asDate($event->start, 'php:d') ?></span>
+                                <span class="month"><?= Yii::$app->formatter->asDate($event->start, 'php:M') ?></span>
+                            </span>
 
-                            <?php if ($event->end) { ?>
-                                <span class="dash"></span>
-                                <span class="date end-date">
-                                    <span class="day"> <?= Yii::$app->formatter->asDate($event->end, 'php:d') ?> </span>
-                                <span class="month"> <?= Yii::$app->formatter->asDate($event->end, 'php:M') ?> </span>
+                                    <?php if ($event->end) { ?>
+                                        <span class="dash"></span>
+                                        <span class="date end-date">
+                                    <span class="day"><?= Yii::$app->formatter->asDate($event->end, 'php:d') ?></span>
+                                <span class="month"><?= Yii::$app->formatter->asDate($event->end, 'php:M') ?></span>
                                 </span>
-                            <?php } ?>
+                                    <?php } ?>
+                                </p>
+                                <p class="year"><?= Yii::$app->formatter->asDate($event->start, 'php:Y') ?></p>
 
-                        </section>
+                            </section>
+                        <?php } ?>
             </li>
 
         <?php } ?>
