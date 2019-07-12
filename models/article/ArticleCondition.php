@@ -49,23 +49,10 @@ class ArticleCondition extends Article
 
         return new ActiveDataProvider([
                 'query' => $query,
-//                'pagination' => [
-//                    'pageSize' => 8,
-//                ],
+                'pagination' => [
+                    'pageSize' => 15,
+                ],
             ]
         );
     }
 }
-//
-//<?= $form->field($condition, 'date', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]], ['options' => ['class' => 'sort-select-field-2']])
-//    ->widget(DateRangePicker::classname(), [
-//        'presetDropdown' => true,
-//        'hideInput' => true,
-//        'options' => [
-//            'placeholder' => 'Date',
-//            'onchange' => 'this.form.submit()',
-//            'class' => 'form-control',
-//        ]
-//    ])
-//    ->label(false); ?>
-
