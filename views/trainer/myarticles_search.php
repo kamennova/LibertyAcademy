@@ -3,14 +3,12 @@
 use app\models\Language;
 use app\models\Tag;
 use kartik\select2\Select2;
-use yii\web\View;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
 
 $tagList = Tag::find()->select('name')->indexBy('id')->orderBy('name')->column();
-$this->registerJsFile('/js/calendar.js', ['position' => View::POS_HEAD]);
 
 ?>
 

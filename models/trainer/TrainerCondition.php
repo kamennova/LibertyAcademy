@@ -4,7 +4,6 @@ namespace app\models\trainer;
 
 use app\models\Trainer;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 
 class TrainerCondition extends Trainer
 {
@@ -103,11 +102,3 @@ class TrainerCondition extends Trainer
         );
     }
 }
-
-//
-//<?= $form->field($condition, 'homecountry_id', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]])
-//    ->dropDownList($countryList, [
-//        'prompt' => 'Country',
-//        'onchange' => 'this.form.submit()'
-//    ])->label(false);
-?>

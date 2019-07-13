@@ -2,15 +2,12 @@
 
 namespace app\models;
 
-use Yii;
-use yii\helpers\Html;
-use yii\web\UploadedFile;
-
 /**
- * This is the model class for table "trainer_gallery".
+ * This is the model class for table "trainer_status".
  * @property integer $id
- * @property string $src
- * @property integer $trainer_id
+ * @property string $name
+ *
+ * @property mixed $trainer
  */
 class TrainerStatus extends \yii\db\ActiveRecord
 {
@@ -42,11 +39,6 @@ class TrainerStatus extends \yii\db\ActiveRecord
 
     public function getTrainer()
     {
-        return $this->hasMany(Trainer::className(), ['id_status' => 'id']);
+        return $this->hasMany(Trainer::class, ['id_status' => 'id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-
 }

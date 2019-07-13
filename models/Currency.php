@@ -21,23 +21,11 @@ class Currency extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-
     public function rules()
     {
         return [
             [['currency_name', 'currency_code', 'currency_symbol'], 'required'],
             [['currency_name', 'currency_code'], 'string']
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-
-    public function attributeLabels()
-    {
-        return [
-
         ];
     }
 }

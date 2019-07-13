@@ -55,10 +55,10 @@ class LoginForm extends Model
      */
     public function login()
     {
-        $hash = Trainer::find()->where(['email' => $this->email])->one()['pass'];
-
-        if (Yii::$app->getSecurity()->validatePassword($this->password, $hash)) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if($hash = Trainer::find()->where(['email' => $this->email])->one()) {
+            if (Yii::$app->getSecurity()->validatePassword($this->password, $hash['pass'])) {
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            }
         }
 
         return false;
