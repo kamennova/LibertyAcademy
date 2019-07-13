@@ -1,87 +1,52 @@
 @import "variables.less";
 
-.grid-view{
+.grid-view {
   width: 100%;
 }
 
 .table-view {
   width: 100%;
-  margin: 15px auto 50px;
+  margin: 15px 0 50px;
 
-  font-size: 16px;
-
-  background-color: transparent;
-  border: none;
+  font-family: Lato, Arial, sans-serif;
 
   th {
-    padding: 10px 15px !important;
+    padding: 10px 15px;
 
     font-size: 14px;
     font-weight: 500;
     color: lighten(@darkgrey, 10%);
-  }
 
-  th a, th a:active {
-    font-weight: 500 !important;
-    color: lighten(@darkgrey, 10%);
-    text-decoration: underline;
-  }
+    a {
+      font-weight: 500;
+      color: lighten(@darkgrey, 10%);
+      text-decoration: underline;
+    }
 
-  th a:hover {
-    color: black;
+    a:active, a:hover {
+      color: black;
+    }
   }
 
   tr {
-    border-bottom: 1px solid @lightgrey
+    border-bottom: 1px solid @lightgrey;
   }
 
-  tr:last-of-type{
+  tbody tr:last-of-type {
     border-bottom: none;
   }
 
-  thead tr{
-    border-bottom: 1px solid @lightgrey !important
-  }
-
   td {
-    padding: 20px 15px !important;
+    padding: 20px 15px;
     vertical-align: middle;
-  }
-
-  td:first-child {
-    border-left: 0;
-  }
-
-  .title-td {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    border-right: 0;
   }
 
   .date-td {
     min-width: 68px;
 
-    font-family: "Lato", Lato, Arial, sans-serif;
     font-size: 13px;
   }
-
-  .tags-td {
-    border-left: 0;
-  }
-
-  .title-th {
-    border-right: 0;
-  }
-
-  .tags-th {
-    border-left: 0;
-  }
 }
-
-//----actions---
 
 a .glyphicon {
   color: rgba(0, 0, 0, 0.5)
@@ -91,59 +56,34 @@ a:hover .glyphicon {
   color: rgba(0, 0, 0, 0.96)
 }
 
-//---------------------
-
-input {
-  //margin-bottom: 10px !important;
-}
-
-//-----------------------
-
-.my-articles-grid{
-  position: relative;
-}
-
-.btn-add::before,
-.btn-add::after {
-  content: "";
-
-  position: absolute;
-  left: 24px;
-  top: 0;
-  bottom: 0;
-
-  display: block;
-  width: 2px;
-  height: 9px;
-  margin: auto 0;
-
-  background-color: white;
-}
-
-.btn-add::after{
-  transform: rotate(90deg)
-}
-
-.btn-add.btn-add-article,
-.btn-add.btn-add-event{
+.btn.btn-add {
   position: absolute;
   right: 0;
 
   margin-top: 0;
   margin-right: 0;
   padding-left: 37px;
-}
 
-//-------------------------
+  &::before, &::after {
+    content: "";
 
-.filter-column {
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
 
-  .fields-container {
-    //margin-bottom: 25px;
+    display: block;
+    width: 2px;
+    height: 9px;
+    margin: auto 0;
+
+    background-color: white;
+  }
+
+  &::after {
+    transform: rotate(90deg)
   }
 }
-
-//------------ARTICLES---------------------------
 
 .summary {
   position: relative;
@@ -153,20 +93,20 @@ input {
   margin-bottom: 60px;
 
   text-align: left;
-  font-family: "Proxima Nova", Arial, sans-serif;
   font-size: 15px;
-  font-weight: 500;
-  color: #4a4a4a
+  font-weight: 400;
+  color: #4a4a4a;
 }
 
-.article-thumb {
+.item-thumb {
+  display: inline-block;
   width: 35px;
   height: 35px;
   margin: 0 15px 0 0;
 
   background: url(/img/default.jpg) no-repeat center center;
+  background-size: cover;
   border-radius: 50%;
-  background-size: cover !important;
 
   img {
     width: inherit;
@@ -177,24 +117,24 @@ input {
   }
 }
 
-.article-title {
+.item-title {
   display: inline-block;
 
-  font-family: "Lato", Arial, sans-serif;
+  font-size: 16px;
   font-weight: 500;
   color: black;
+
+  &:hover {
+    color: @primary;
+    text-decoration: none;
+  }
 }
 
-.article-title:hover {
-  color: @primary;
-  text-decoration: none;
-}
-
-.article-tag {
+.item-tag {
   margin-right: 4px;
   padding: 6px 10px;
 
-  font-family: "Lato", Arial, sans-serif;
+  font-family: Lato, Arial, sans-serif;
   font-size: 11px;
   font-weight: 300;
   text-transform: uppercase;

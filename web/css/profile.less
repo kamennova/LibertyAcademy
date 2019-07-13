@@ -1,5 +1,9 @@
 @import "variables.less";
 
+.profile {
+  text-align: center;
+}
+
 //--------PROFILE TOP---------
 
 .profile-top {
@@ -10,8 +14,6 @@
 
   margin-bottom: 0;
   padding: 0;
-
-  border-bottom: 1px solid #eee;
 }
 
 .site-content {
@@ -28,10 +30,8 @@
 
   text-align: left;
 
-  background-image: url(../img/default.jpg);
+  background: url(../img/default.jpg) no-repeat center center;
   background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
   border: 4px solid #7ed682;
   border-radius: 50% !important;
 
@@ -131,45 +131,36 @@
   border: 0;
 }
 
-.short-description::before,
-.short-description::after {
-  content: '';
+.short-description:not(.event-short-description) {
+  &::before, &::after {
+    content: '';
 
-  position: relative;
+    position: relative;
 
-  display: inline-block;
-  width: 19px;
-  height: 19px;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
 
-  background-image: url(../img/icons/apostrophe.png);
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-}
+    background-image: url(../img/icons/apostrophe.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
 
-.short-description::before {
-  top: -10px;
-  left: -15px;
+  &::before {
+    top: -10px;
+    left: -15px;
 
-  transform: rotate(180deg);
-}
+    transform: rotate(180deg);
+  }
 
-.short-description::after {
-  top: 15px;
-  left: 10px;
+  &::after {
+    top: 15px;
+    left: 10px;
+  }
 }
 
 .short-description strong {
-  //padding-left: 4px;
-  //padding-right: 4px;
-
   font-weight: normal;
-  //white-space: pre-wrap;
-
-  //background-color: lighten(@primary, 20%);
-  //box-shadow: 4px 0 0 lighten(@primary, 20%), 4px 0 0 lighten(@primary, 20%);
-  //box-decoration-break: clone;
-  //-webkit-box-decoration-break: clone;
-  //-ms-box-decoration-break: clone;
 }
 
 //-------MAIN INFO-------------
@@ -186,7 +177,7 @@
 }
 
 .main-info {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
   flex-grow: 2;
@@ -290,7 +281,7 @@
   color: rgba(0, 0, 0, 0.87);
   font-weight: 400;
   word-spacing: .3px;
-  text-align: left;
+  text-align: justify;
   text-rendering: optimizeLegibility;
 
   overflow: visible;
@@ -302,7 +293,7 @@
     margin-left: auto;
   }
 
-  p {
+  p, ul, ol {
     width: 650px;
     max-width: 100%;
     margin-right: auto;
@@ -416,7 +407,7 @@
   justify-content: center;
   flex-grow: 0;
   width: auto;
-  margin: 10px auto 0;
+  margin: 25px auto 0;
   padding: 0;
 
   .action-item {
@@ -474,7 +465,7 @@
   }
 
   .trainer-events::before {
-    background-image: url(../img/icons/calendar5.png);
+    background-image: url(../img/icons/calendar.png);
     background-size: 28px;
     background-position: center center;
   }
@@ -500,12 +491,12 @@
 
 //----------
 
-p.image-p{
+p.image-p {
   width: 100%;
   text-align: center;
 }
 
-.image-p img{
+.image-p img {
   max-width: 100%;
   margin: 20px auto;
 }
@@ -674,7 +665,6 @@ p.image-p{
   }
 
   .main-info {
-    width: 760px;
     padding-right: 20px;
     padding-left: 20px;
 
@@ -711,10 +701,11 @@ p.image-p{
     left: auto;
     top: 120px;
     bottom: auto !important;
+
+    text-align: left;
   }
 
   .modal-close {
     font-size: 24px;
   }
-
 }

@@ -82,7 +82,7 @@
   height: 100vh;
   padding: 0;
 
-  background: url(../img/liberty.jpg) no-repeat center right;
+  //background: url(../img/liberty.jpg) no-repeat center right;
   background-size: calc(100% + 50px);
 
   z-index: 100;
@@ -100,14 +100,11 @@
   position: absolute;
   left: 0;
 
-  //height: 100%;
-
   z-index: 1000;
 }
 
 .slides-indicators {
   position: absolute;
-  //right: 0;
   top: 30%;
   padding-left: 0;
   padding-top: 40px;
@@ -141,15 +138,11 @@
 .slides-indicators li span {
   position: absolute;
   left: -8px;
-  //left: 0;
-  //right: 0;
   top: -8px;
-  //bottom: 0;
 
   display: block;
   width: 22px;
   height: 22px;
-  //margin: 0/ auto !important;
 
   background-color: inherit;
   border-radius: 50%;
@@ -230,6 +223,7 @@
 .slide-caption {
   position: absolute;
   bottom: 30px;
+  right: 40px;
 
   font-family: "Open Sans", Arial, sans-serif;
   font-size: 17px;
@@ -246,9 +240,8 @@
 }
 
 .slide-1 {
-  //background-image: ;
-  background-image: url(../img/liberty.jpg);
-  background-position: center right;
+  background: white url(../img/slider/slide1/liberty.jpg) center right;
+  background-size: cover;
 
   z-index: 100;
 
@@ -256,9 +249,9 @@
     z-index: 180;
   }
 
-  .slide-layer-1 {
+  /*.slide-layer-1 {
     display: none;
-    background-image: url(../img/liberty_bottom.png);
+    background-image: url(../img/slider/liberty_bottom.png);
     background-size: 1000px;
     background-position: right 47% top 40%;
 
@@ -267,7 +260,7 @@
 
   .slide-layer-2 {
     display: none;
-    background-image: url(../img/mist-2.png);
+    background-image: url(../img/slider/mist-2.png);
     background-size: 800px;
     background-position: right 15% top 40%;
 
@@ -275,102 +268,44 @@
   }
 
   .slide-layer-3 {
-    //display: none;
-    background-image: url(../img/mosie_top.png);
+    background-image: url(../img/slider/mosie_top.png);
     background-position: center right;
-  }
-
-  .slide-layer-4 {
-    display: none;
-    opacity: 0.7;
-    //width: 300%;
-
-    //top: 15%;
-    height: 55%;
-
-    background-color: black;
-    //background-image: url(../img/mist_1.png);
-    //background-size: 100%;
-    //background-position: right 800px bottom -70px;
-    //background-repeat: repeat-x;
-
-    background-image: url(../img/mist-2.png);
-    background-size: 100%;
-    background-position: right 800px bottom -70px;
-    background-repeat: repeat-x;
-
-    //background-image: url('https://res.cloudinary.com/dkr52htco/image/upload/v1536173269/fog-1.png');
-    //background-size: cover;
-    //background-position: center top -500px;
-
-    //background-repeat: no-repeat;
-  }
+  }*/
 
   .slide-caption {
     z-index: 160;
   }
 }
 
-.slide-1::before,
-.slide-1::after {
-  content: "";
+.slide-1 {
+  &::before, &::after {
+    content: "";
 
-  position: absolute;
-  top: 0;
-  right: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
 
-  display: block;
+    display: block;
 
-  height: 70%;
-  width: 200vw;
+    height: 70%;
+    width: 200vw;
 
-  background-size: contain;
-  background-position: center right;
-  background-repeat: repeat-x;
+    background-size: 400px;
+  }
 
-}
+  &::before {
+    right: 20vw;
 
-.slide-1::before {
+    background: url(../img/slider/slide1/cloud2.png) repeat-x top 100px right;
 
-  right: 20vw;
-  //background-color: black;
-  //background-image: url('https://res.cloudinary.com/dkr52htco/image/upload/v1536173269/fog-1.png');
-  //background-image: url(../img/mist_1.png);
-  //z-index: 190;
-  //background-repeat: no-repeat;
-  //background-position: center right;
-  //background-size: 1800px;
+    animation: drift 80s linear 0s infinite;
+  }
 
-  background-image: url(../img/cloud2.png);
-  //background-repeat: no-repeat;
-  background-position: top 100px right;
-  background-size: 400px;
-  background-repeat: repeat-x;
-  animation: drift 80s linear 0s infinite;
-
-  //animation: drift 5s linear 0s infinite;
-}
-
-.slide-1::after {
-  //background-color: black;
-
-  /*
-  background-image: url(../img/cloud.png);
-  background-repeat: no-repeat;
-  background-position: top 100px right;
-  background-size: 400px;
-  opacity: 0.8;
-  animation: drift 150s linear 0s infinite;
-  */
-
-
-
-  background-image: url(../img/cloud3.png);
-  background-repeat: no-repeat;
-  background-position: top 100px right;
-  background-size: 400px;
-  opacity: 0.8;
-  animation: drift 150s linear 0s infinite;
+  &::after {
+    background: url(../img/slider/slide1/cloud3.png) no-repeat top 100px right;
+    opacity: 0.8;
+    animation: drift 150s linear 0s infinite;
+  }
 }
 
 @keyframes drift {
@@ -381,52 +316,52 @@
     transform: translate3d(-200vw, 0, 0);
   }
 }
+//
+//.slide-2 {
+//  background-image: url(../img/gallery/mc3.jpg);
+//  background-position: right bottom -238px;
+//
+//  z-index: 200;
+//
+//  .slide-layer {
+//    height: inherit;
+//
+//    background-image: url(../img/top.png);
+//    background-position: right bottom -238px;
+//
+//    z-index: 250;
+//  }
+//
+//  .slide-title {
+//    color: white;
+//  }
+//
+//  .slide-caption {
+//    color: rgba(0, 0, 0, 0.8);
+//
+//    z-index: 260;
+//  }
+//}
+//
+//.slide-3 {
+//  background-image: url(../img/anna2.jpg);
+//
+//  z-index: 300;
+//
+//  .slide-layer {
+//    background-image: url(../img/anna_marciniak.png);
+//
+//
+//  }
+//
+//  .slide-title {
+//    color: white;
+//  }
+//}
 
-.slide-2 {
-  background-image: url(../img/gallery/mc3.jpg);
-  background-position: right bottom -238px;
-
-  z-index: 200;
-
-  .slide-layer {
-    height: inherit;
-
-    background-image: url(../img/top.png);
-    background-position: right bottom -238px;
-
-    z-index: 250;
-  }
-
-  .slide-title {
-    color: white;
-  }
-
-  .slide-caption {
-    color: rgba(0, 0, 0, 0.8);
-
-    z-index: 260;
-  }
-}
-
-.slide-3 {
-  background-image: url(../img/anna2.jpg);
-
-  z-index: 300;
-
-  .slide-layer {
-    background-image: url(../img/anna_marciniak.png);
-
-
-  }
-
-  .slide-title {
-    color: white;
-  }
-}
-
-.slide-3, .slide-3 .slide-layer{
-  background-position: right -4.5vw bottom 60%;
-}
+//.slide-3, .slide-3 .slide-layer{
+//  background-position: right -4.5vw bottom 60%;
+//}
 
 //-------------PHILOSOPHY SECTION----------------
 
@@ -481,12 +416,12 @@
   }
 
   li#education .icon {
-    background: url(/img/icons/crown_gr.png) no-repeat center top;
+    background: url(/img/icons/crown.png) no-repeat center top;
     background-size: 40px;
   }
 
   li#well-being .icon {
-    background: url(/img/icons/heart_gr.png) no-repeat center top;
+    background: url(/img/icons/heart.png) no-repeat center top;
     background-size: 46px;
   }
 
@@ -559,7 +494,7 @@
     }
 
     #event-section span {
-      background: url(/img/icons/calendar5.png) no-repeat center center;
+      background: url(/img/icons/calendar.png) no-repeat center center;
       background-size: 100%
     }
   }
@@ -570,29 +505,14 @@
 .teachers-invitation {
   padding: 35px 0 125px;
 
-  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(/img/icons/teaching.png);
-  //background-image: linear-gradient(to top, rgba(247, 247, 247, 0.97), rgba(247, 247, 247, 0.97)), url(/img/icons/teaching.png);
-  background-size: cover, 270px;
-  background-repeat: no-repeat;
-  background-position: center top;
+  background: url(/img/icons/teaching.png) no-repeat center center;
+  background-size: 270px;
 }
 
 //--------------CONTACTS SECTION---------------------------
 
 .contacts {
   padding: 60px 0;
-
-  //input.form-control,
-  //select.form-control {
-  //  border: none !important;
-  //  border-radius: 0;
-  //  box-shadow: none !important;
-  //  border-bottom: 1px solid lightgray !important
-  //}
-  //
-  //.form-control:hover {
-  //  border-color: black !important;
-  //}
 }
 
 //----------------SIGN UP SECTION--------------------
@@ -650,7 +570,6 @@
   }
 
   .content-section.contacts p {
-    //max-width: 50%;
     margin-bottom: 30px;
   }
 
@@ -662,7 +581,6 @@
 
 @media screen and (min-width: 1651px) {
   .poster {
-    //background-size: 100%;
   }
 
   .poster-title {

@@ -114,15 +114,13 @@
   em::selection {
     background-color: lighten(@primary, 12%);
   }
+
+  ul, ol{
+    li {
+      margin-bottom: 11px;
+    }
+  }
 }
-
-/* .main-info {
-  margin-top: 30px;
-  padding: 0 20px;
-
-  font-size: 18px;
-  text-align: justify;
-} */
 
 /*--------ABOUT AUTHOR--------*/
 
@@ -204,15 +202,9 @@
     margin-bottom: 20px;
   }
 
-  /*.author-desc {
-    width: 100%;
-    margin: 2px 0;
-    padding: 0;
-
-    font-size: 15px;
-
-    border: 0;
-  } */
+  .quote {
+    font-style: italic;
+  }
 
   .all-articles {
     font-family: Lato, Arial, sans-serif;
@@ -356,7 +348,6 @@
   }
 
   //----
-
   .form-horizontal .right-field {
     padding-left: 0 !important;
   }
@@ -368,7 +359,9 @@
 
 @media screen and (min-width: 768px) {
   .article-container,
-  .article-content p {
+  .article-content p,
+  .article-content ul,
+  .article-content ol {
     width: 650px;
     margin: 0 auto 15px;
   }
@@ -404,20 +397,3 @@
 
 @media (min-width: 1100px) {
 }
-
-//<?= empty($author->org) ? null : 'in ' . $author->org ?>
-//                                          from <?= empty($author->city) ? null : $author->city . ', ' ?>
-//<?= $author->trainerHomeCountry->country_name ?>.
-//<?= "<blockquote class='author-desc'>\"$author->desc\"</blockquote>" ?>
-
-//<?= $form->field($model, 'date')->widget(DatePicker::className(), [
-//    'name' => 'dp_5',
-//    'inline' => true,
-//    'options' => [
-//        'change' => 'this.form.submit()',
-//        'yearRange' => '2017'],
-//    'clientOptions' => [
-//        'beforeShowDay' => new yii\web\JsExpression('setScheduledDays'),
-//        'onSelect' => new yii\web\JsExpression('function(){$("#w0").submit();}'),
-//    ]
-//])->label(false) ?>
