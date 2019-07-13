@@ -10,9 +10,16 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 
+function generate_horsey(){
+    $horsey_num = rand(1, 6);
+
+    return "url(/img/icons/temp/{$horsey_num}.svg);";
+}
+
 ?>
 <div class="site-contact event-sort">
     <h1 class="page-title"><?= Html::encode($this->title) ?></h1>
+    <span class="horsey-divider" style="background-image: <?= generate_horsey() ?>"></span>
     <div class="page-container">
         <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
