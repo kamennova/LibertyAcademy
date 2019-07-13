@@ -114,7 +114,7 @@ $this->title = 'Liberty Academy';
     <section class="content-section teachers-invitation" id="for-trainers">
         <h2 class="section-title">Join teachers</h2>
         <h3 class="section-subtitle">You are welcome</h3>
-        <hr class="article-hr">
+        <hr class="content-divider">
         <p> If you are an experienced horse trainer sharing the approach of liberty in horse
             training, you are welcome to join the community! Tell horse people about yourself, post articles and
             announce clinics
@@ -158,7 +158,7 @@ $this->title = 'Liberty Academy';
     <div class="page-container">
         <h2 class="section-title">Have a question?</h2>
         <h3 class="section-subtitle">Feel free to contact</h3>
-        <hr class="article-hr">
+        <hr class="content-divider">
         <p> Thanks for your interest in Liberty Academy. If you have any business inquiries or want to leave feedback,
             drop an email</p>
         <?= Html::a('Leave a message', '/site/contact', ['class' => 'btn btn-center']) ?>

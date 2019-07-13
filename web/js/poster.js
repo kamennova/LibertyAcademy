@@ -11,7 +11,7 @@ let movementStrength = 45,
 // setting background size
 let slides = document.getElementsByClassName('slide');
 slides[0].style.backgroundSize = imageWidth + "px";
-slides[1].style.backgroundSize = imageWidth + "px";
+/* slides[1].style.backgroundSize = imageWidth + "px";
 
 if (window.innerWidth < 1920) {
     let rightPos = 1920 - window.innerWidth;
@@ -19,9 +19,9 @@ if (window.innerWidth < 1920) {
     // slides[2].style.backgroundPosition = "right -" + rightPos + "px top";
 } else {
     slides[2].style.backgroundSize = imageWidth + "px";
-}
+} */
 
-document.querySelector('.slide-2 .slide-layer').style.backgroundSize = imageWidth + "px";
+//document.querySelector('.slide-2 .slide-layer').style.backgroundSize = imageWidth + "px";
 document.querySelector('.slide-1 .slide-layer-3').style.backgroundSize = imageWidth + "px";
 
 // moving background with mouse moves
@@ -104,7 +104,7 @@ window.addEventListener('scroll', function (e) {
     }
 });
 
-let posterMoveInterval = setInterval(posterMove, 3000);
+let posterMoveInterval = setInterval(posterMove, 5000);
 let newIndex;
 
 let indicators = document.getElementsByClassName('indicator');
@@ -115,7 +115,7 @@ for (let d = 0; d < indicators.length; d++) {
         slideIndex = newIndex;
         console.log(slideIndex);
         // slideIndex = (newIndex + 1) % x.length;
-        posterMoveInterval = setInterval(posterMove, 3000);
+        posterMoveInterval = setInterval(posterMove, 5000);
     });
 }
 
@@ -130,7 +130,7 @@ if (document.body.clientWidth >= 1024) {
 
     let rightOffset = (document.body.clientWidth - siteContainerWidth) / 2;
 
-    indicatorsList.style.right = rightOffset + 'px';
+    //indicatorsList.style.right = rightOffset + 'px';
 
     let slideCaptions = document.getElementsByClassName('slide-caption');
     for (let i = 0; i < slideCaptions.length; i++) {

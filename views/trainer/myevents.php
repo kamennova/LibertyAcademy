@@ -68,18 +68,18 @@ $eventsNumber = count($eventDataProvider->getModels());
                     'attribute' => 'name',
                     'value' => function ($event) {
 
-                        return "<div class='article-thumb'>" . ($event->thumb ? "<img src='$event->thumb' />" : null) . "</div>" .
-                            Html::a("$event->name", ['/event/view', 'id' => $event->id], ['class' => 'article-title']);
+                        return "<div class='item-thumb'>" . ($event->thumb ? "<img src='$event->thumb' />" : null) . "</div>" .
+                            Html::a("$event->name", ['/event/view', 'id' => $event->id], ['class' => 'item-title']);
                     },
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'title-td'],
                     'headerOptions' => ['class' => 'title-th']
                 ],
                 [
-                    'value' => function ($article) {
+                    'value' => function ($event) {
                         $tags = '';
-                        foreach ($article->tags as $tag) {
-                            $tags .= "<span class='article-tag'>" . $tag->name . '</span>';
+                        foreach ($event->tags as $tag) {
+                            $tags .= "<span class='item-tag'>" . $tag->name . '</span>';
                         }
                         return substr($tags, 0, -2);
                     },
