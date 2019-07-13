@@ -13,7 +13,6 @@ use yii\base\DynamicModel;
 use yii\db\StaleObjectException;
 use yii\helpers\Html;
 use yii\base\Exception;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -324,10 +323,6 @@ class TrainerController extends Controller
 
                 $model->update_links();
 
-                if ($model->imageFile) {
-                    $model->imageFile->saveAs(Yii::getAlias('@web') . $model->thumb);
-                }
-
                 try {
                     $hash = Yii::$app->getSecurity()->generatePasswordHash($model->pass);
                     $model->pass = $hash;
@@ -335,7 +330,11 @@ class TrainerController extends Controller
                     echo $e;
                 }
 
-                $model->save();
+                if ($model->imageFile) {
+                    $model->imageFile->saveAs(Yii::getAlias('@webroot') . $model->thumb);
+                }
+
+                $model->save(false);
 
                 foreach ($model->languages as $language) {
                     $trainerLanguage = new TrainerLanguage();
