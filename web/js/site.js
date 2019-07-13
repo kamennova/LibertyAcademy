@@ -28,7 +28,7 @@ $('#menu-icon').click(function () {
         expanded = true;
     }
     else {
-        $('.main-nav-sub-menu').animate({'top': '-500px'}, {duration: 400});
+        $('.main-nav-sub-menu').animate({'top': '-595px'}, {duration: 400});
         expanded = false;
     }
 });
@@ -66,34 +66,39 @@ if (eventModal) {
 
 // --------FILTER COLUMN----------
 
-// var isMobile = window.matchMedia("(max-width: 700px)");
+let isMobile = screen.width < 768;
 
 let mainGrid = document.getElementsByClassName('main-grid')[0];
-if(mainGrid) {
-    let mainGridHeight = mainGrid.offsetHeight;
+if (mainGrid) {
 
-    let filterColumn = document.getElementsByClassName('filter-column')[0];
-    let filterColumnOffsets = 55;
-    let filterColumnHeight = filterColumn.offsetHeight + filterColumnOffsets;
+    if(!isMobile) {
+        let mainGridHeight = mainGrid.offsetHeight;
 
-    let footerHeight = document.getElementsByClassName('main-footer')[0].offsetHeight;
-    let maxScrollHeight = document.body.offsetHeight + window.innerHeight - filterColumnHeight - footerHeight - filterColumnOffsets;
+        let filterColumn = document.getElementsByClassName('filter-column')[0];
+        let filterColumnOffsets = 55;
+        let filterColumnHeight = filterColumn.offsetHeight + filterColumnOffsets;
 
-    if (filterColumnHeight > mainGridHeight) {
-        mainGrid.style.height = filterColumnHeight + 'px';
-    }
+        let footerHeight = document.getElementsByClassName('main-footer')[0].offsetHeight;
+        let maxScrollHeight = document.body.offsetHeight + window.innerHeight - filterColumnHeight - footerHeight - filterColumnOffsets;
 
-    window.addEventListener('scroll', () => {
-        let windowScroll = $(window).scrollTop() + window.innerHeight;
-
-        if (windowScroll > maxScrollHeight) {
-            filterColumn.style.position = 'absolute';
-            filterColumn.style.bottom = '25px';
-        } else {
-            filterColumn.style.position = 'fixed';
-            filterColumn.style.bottom = 'auto';
+        if (filterColumnHeight > mainGridHeight) {
+            mainGrid.style.height = filterColumnHeight + 'px';
         }
-    });
+
+        window.addEventListener('scroll', () => {
+            let windowScroll = $(window).scrollTop() + window.innerHeight;
+
+            if (windowScroll > maxScrollHeight) {
+                filterColumn.style.position = 'absolute';
+                filterColumn.style.bottom = '25px';
+            } else {
+                filterColumn.style.position = 'fixed';
+                filterColumn.style.bottom = 'auto';
+            }
+        });
+    } else {
+        console.log('hfgh');
+    }
 }
 // ------CKEDITOR---------
 
