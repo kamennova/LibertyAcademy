@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\web\UploadedFile;
 
 /**
@@ -50,6 +51,8 @@ class RegisterTrainer extends Trainer
                 } while (true);
 
                 $this->thumb = '/img/teacher/thumb/' . $filename;
+
+                $this->imageFile->saveAs(Yii::getAlias('@webroot') . $this->thumb);
             }
 
             return true;

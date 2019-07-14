@@ -13,6 +13,7 @@ use yii\base\DynamicModel;
 use yii\db\StaleObjectException;
 use yii\helpers\Html;
 use yii\base\Exception;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -276,22 +277,11 @@ class TrainerController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
             if ($model->upload()) {
-
-                if ($model->imageFile) {
-                    $thumbSrc = '/img/teacher/thumb/' . $model->imageFile->baseName . '.' . $model->imageFile->extension;
-                } else {
-                    $thumbSrc = null;
-                }
-
                 Yii::$app->session->set('register', $model->getAttributes());
                 Yii::$app->session->set('registerAdd', [
                     'services' => $model->services,
                     'languages' => $model->languages,
-                    'imageFile' => $model->imageFile,
-//                    'thumb' => $model->thumb,
                 ]);
 
                 return $this->render('registercontact', [
@@ -328,10 +318,6 @@ class TrainerController extends Controller
                     $model->pass = $hash;
                 } catch (Exception $e) {
                     echo $e;
-                }
-
-                if ($model->imageFile) {
-                    $model->imageFile->saveAs(Yii::getAlias('@webroot') . $model->thumb);
                 }
 
                 $model->save(false);
