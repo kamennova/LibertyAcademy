@@ -309,7 +309,8 @@ class TrainerController extends Controller
             $model->is_admin = 0;
             $model->load(Yii::$app->request->post());
 
-            if ($model->validate(['teachCountries', 'site', 'soc_fb', 'soc_tw', 'soc_inst', 'email', 'homecountry_id'])) {
+            if ($model->validate(['teachCountries', 'city', 'site', 'soc_fb', 'soc_tw', 'soc_inst', 'email', 'address',
+                'homecountry_id'])) {
 
                 $model->update_links();
 
