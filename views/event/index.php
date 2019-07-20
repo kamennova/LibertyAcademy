@@ -17,6 +17,15 @@ use yii\helpers\Url;
  */
 $this->title = 'Events | Liberty Academy';
 
+$meta_desc = 'Search for liberty horsemanship events: clinics, webinars, book/film releases and more';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    'liberty academy, liberty training, liberty horse, liberty horsemanship, liberty horse training, liberty horse event']);
+$this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'website']);
+$this->registerMetaTag(['og:description' => $meta_desc]);
+
 $this->registerCssFile('/build/list_layout.css');
 $this->registerCssFile('/build/event_index.css');
 
@@ -78,7 +87,8 @@ $workshopDates = [];
             </span>
         </div>
 
-        <h1 class="filter-title">Filter by</h1>
+        <h1 class="visually-hidden">Liberty training events</h1>
+        <h2 class="filter-title">Filter by</h2>
 
         <div class="fields-container">
             <?php $form = ActiveForm::begin([
@@ -144,7 +154,7 @@ $workshopDates = [];
 
             <li class="item event-item">
                 <section class="event-info">
-                    <div class="thumb"> <?= $event->thumb ? "<img src='$event->thumb' />" : null ?> </div>
+                    <div class="thumb"> <?= $event->thumb ? "<img alt='$event->name' src='$event->thumb' />" : null ?> </div>
                     <div class="event-content">
 
                         <?php if ($event->tags) { ?>

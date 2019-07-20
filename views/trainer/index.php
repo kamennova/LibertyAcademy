@@ -19,6 +19,15 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Teachers | Liberty Academy';
 
+$meta_desc =  'Find a skilled liberty horsemanship trainer worldwide';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    'liberty academy, liberty training, liberty trainers, liberty trainer, liberty horse, liberty horsemanship, liberty horse training']);
+$this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'website']);
+$this->registerMetaTag(['og:description' => $meta_desc]);
+
 $this->registerCssFile('/build/list_layout.css');
 
 $trainers = $provider->getModels();
@@ -77,11 +86,8 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
 ?>
 
 <div class="site-container flex-container">
-
     <aside class="filter-column trainer-filter-column">
-
         <div class="filter-column-top">
-
             <?php if ($trainers) {
 
                 $smallThumbsList = '';
@@ -101,13 +107,13 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
                 }
 
             } ?>
-
             <span class="number trainers-number">
                 <?= $trainersNumber ?> teacher<?= (($trainersNumber !== 1) ? 's' : null) ?>
             </span>
         </div>
 
-        <h1 class="filter-title">Find a skilled teacher</h1>
+        <h1 class="visually-hidden">Liberty horse trainers</h1>
+        <h2 class="filter-title">Find a skilled teacher</h2>
 
         <div class="form-wrapper">
             <?php $form = ActiveForm::begin([
@@ -168,7 +174,6 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
     </aside>
 
     <section class="trainers-grid main-grid" id="main-grid">
-
         <?= ($trainersNumber == 0) ? '<p class="nothing-found-message">No teachers found :-(</p>' : null ?>
 
         <ul class="trainers-list">
@@ -183,12 +188,11 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
                     foreach ($trainer->languages as $language) {
                         $lang_flag = $language->lang_flag == '' ? $language->lang_code :
                             $language->lang_flag;
-                        echo '<li class="lang-flag"><img src="/img/flags/' . $lang_flag . '.svg" /></li>';
+                        echo "<li class='lang-flag'><img alt='$lang_flag' src='/img/flags/$lang_flag.svg' /></li>";
                     }
 
                     echo '</ul>';
                 }
-
 
                 $style = $trainer->thumb ?
                     "style='background:url({$trainer->thumb}) no-repeat center center; background-size: cover'" : null ?>

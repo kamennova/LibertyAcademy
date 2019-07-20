@@ -16,6 +16,15 @@ use \app\models\Trainer;
  */
 $this->title = 'Articles | Liberty Academy';
 
+$meta_desc = 'Read articles on liberty horsemanship';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    'liberty academy, liberty training, liberty training articles, liberty training blog, liberty horse, liberty horsemanship, liberty horse training']);
+$this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'website']);
+$this->registerMetaTag(['og:description' => $meta_desc]);
+
 $this->registerCssFile('/build/article_index.css');
 $this->registerCssFile('/build/list_layout.css');
 
@@ -43,17 +52,14 @@ $articleComments = \app\models\Comment::find()->orderBy(['date' => SORT_DESC])->
 
 foreach ($articleComments as $comment) {
     $commentedArticle = \app\models\Article::findOne(['id' => $comment->article_id]);
-    $commentsList .=  '<li>' .
+    $commentsList .= '<li>' .
         '<p class="comment-date">' . $comment->date . '</p>' .
         '<p class="comment-content">„' . $comment->content . '“</p>' .
         '- <strong class="comment-author-name">' . $comment->author_name . '</strong> on ' .
         '<span class="article-name">' . Html::a($commentedArticle->title, ['/article/view', 'id' => $commentedArticle->id])
         . '</span>'
-
         . '</li>';
-}
-
-?>
+} ?>
 
 <div class="site-container flex-container">
     <aside class="filter-column" id="filter-column">
@@ -77,7 +83,8 @@ foreach ($articleComments as $comment) {
 
         </div>
 
-        <h1 class="filter-title">Filter by</h1>
+        <h1 class="visually-hidden">Liberty training articles</h1>
+        <h2 class="filter-title">Filter by</h2>
 
         <?php $form = ActiveForm::begin([
                 'action' => Url::to(['article/index']),
@@ -134,9 +141,9 @@ foreach ($articleComments as $comment) {
 
                     echo "<li class='item article-item'>";
                     if ($article->thumb) {
-                        echo "<img src='$article->thumb' class='article-img'/>";
+                        echo "<img src='$article->thumb' alt='$article->title' class='article-img'/>";
                     } else {
-                        echo "<img src='/img/default.jpg' class='article-img'/>";
+                        echo "<img src='/img/default.jpg' alt='$article->title' class='article-img'/>";
                     }
                     echo '<div class="tags-container">';
 

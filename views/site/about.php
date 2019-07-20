@@ -4,9 +4,15 @@ use yii\helpers\Html;
 
 $this->title = 'About | Liberty Academy';
 
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    'liberty academy, liberty training, liberty horse, liberty horsemanship, liberty trainers, liberty horse training']);
+$this->registerMetaTag(['name' => 'description', 'content' =>
+    'About Liberty Academy, liberty horsemanship trainers, events & articles database']);
+
 ?>
 <div class="text-container">
     <section class="about-academy">
+        <h1 class="visually-hidden">Liberty Academy | Liberty trainers, events & articles database</h1>
         <h2 class="page-title">About project</h2>
         <p class="entry-p">
             Liberty Academy is a project aimed to popularize liberty approach in horsemanship as a way to build a strong

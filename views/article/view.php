@@ -10,6 +10,16 @@ use yii\helpers\Html;
 $author = $article->trainer;
 
 $this->title = $article->title . ' | Liberty Academy';
+
+$meta_desc = substr($article->content, 0, 250) . "..."; // todo
+$meta_keys = 'liberty academy, liberty training, liberty training articles, liberty training blog, liberty horse, liberty horsemanship, liberty horse training';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' => $meta_keys]);
+$this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'article']);
+$this->registerMetaTag(['og:description' => $meta_desc]);
+
 $this->registerCssFile('/build/article_profile.css');
 $this->registerCssFile('/build/sort-by-form.css');
 
@@ -59,7 +69,7 @@ $authorServiceList .= '</ul>'; ?>
             <h3 class="section-subtitle">About author</h3>
             <div class='author-info-container'>
                 <div class='author-thumb'>
-                    <?= $author->thumb ? "<img src='{$author->thumb}' class='author-thumb-img' />" : null ?>
+                    <?= $author->thumb ? "<img src='$author->thumb' alt='$author->fullName' class='author-thumb-img' />" : null ?>
                 </div>
                 <h3 class="author-name">
                     <?= Html::a($author->name . ' ' . $author->surname, ['/trainer/profile', 'id' => $author->id]) ?>

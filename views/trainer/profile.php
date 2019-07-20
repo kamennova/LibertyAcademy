@@ -2,16 +2,25 @@
 
 /**
  * @var \app\models\Trainer $trainer
- * @var
  */
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+$this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
+
+$meta_desc = $trainer->getMainInfoStr() . ' | "' . $trainer->desc . '"';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    strtolower($trainer->name) . ', ' .
+    'liberty academy, liberty training, liberty trainers, liberty trainer, liberty horse, liberty horsemanship, liberty horse training']);
+$this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'profile']);
+$this->registerMetaTag(['og:description' => $meta_desc]);
+
 $this->registerCssFile('/build/profile.css');
 $this->registerJs(' $(".big-description p:has(img)").addClass("image-p");');
-
-$this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
 
 // --- Trainer main info ---
 
@@ -35,7 +44,7 @@ if ($trainer->languages) {
     $languageList = '<ul class="languages-list">';
     foreach ($trainer->languages as $language) {
         $lang_flag = $language->lang_flag == '' ? $language->lang_code : $language->lang_flag;
-        $languageList .= "<li><img class='lang-icon' alt='{$language->lang_code}' src='/img/flags/$lang_flag.svg' />" . $language->lang_name . '</li>';
+        $languageList .= "<li><img class='lang-icon' alt='$language->lang_code' src='/img/flags/$lang_flag.svg' />" . $language->lang_name . '</li>';
     }
     $languageList .= '</ul>';
 }
@@ -60,7 +69,7 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
 
     <section class="profile-top trainer-profile-top">
         <div class="main-thumbnail trainer-main-thumbnail">
-            <?= ($trainer->thumb <> '') ? "<img src='$trainer->thumb' />" : null ?>
+            <?= ($trainer->thumb <> '') ? "<img alt='$trainer->fullName' src='$trainer->thumb' />" : null ?>
         </div>
 
         <h1 class="name trainer-name"><?= $trainer->name . ' ' . $trainer->surname ?></h1>
@@ -148,7 +157,7 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
             <div class="event-thumb">
 
                 <?php if ($upcomingEvent->thumb != '') {
-                    echo "<img src='$upcomingEvent->thumb' />";
+                    echo "<img alt='$upcomingEvent->name' src='$upcomingEvent->thumb' />";
                 } ?>
 
             </div>
@@ -156,9 +165,9 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
             <h3 class="event-name"> <?= $upcomingEvent->name ?> </h3>
             <p class="date">
                 <span class="day month"><?= $upcomingEvent->start ?></span>
-                <?php if($upcomingEvent->end){ ?>
-                -
-                <span class="day"><?= $upcomingEvent->end ?></span>
+                <?php if ($upcomingEvent->end) { ?>
+                    -
+                    <span class="day"><?= $upcomingEvent->end ?></span>
                 <?php } ?>
             </p>
         </article>

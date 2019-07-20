@@ -11,10 +11,17 @@ use yii\widgets\DetailView;
 /** @var Event $event */
 $trainer = $event->trainer;
 
-$this->registerCssFile('/build/profile.css');
-
 $this->title = $event->name . ' | Liberty Academy';
 
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    strtolower($event->name) . ', ' . strtolower($trainer->fullName) . ', ' .
+    'liberty academy, liberty training, liberty horse, liberty horsemanship, liberty horse training, liberty horse event']);
+$this->registerMetaTag(['name' => 'description', 'content' => $event->desc]);
+$this->registerMetaTag(['og:title' => $this->title]);
+$this->registerMetaTag(['og:type' => 'website']);
+$this->registerMetaTag(['og:description' => $event->desc]);
+
+$this->registerCssFile('/build/profile.css');
 $this->registerJs('$(".big-description p:has(img)").addClass("image-p")');
 
 //-----------
@@ -40,7 +47,7 @@ $endDate = $event->end ? Yii::$app->formatter->asDate($event->end, 'php:d M') : 
 
     <section class="profile-top event-profile-top">
         <div class="main-thumbnail event-main-thumbnail">
-            <?= ($event->thumb <> '') ? "<img src='$event->thumb' />" : null ?>
+            <?= ($event->thumb <> '') ? "<img src='$event->thumb' alt='$event->name' />" : null ?>
         </div>
 
         <h1 class="name event-name"><?= $event->name ?></h1>

@@ -15,20 +15,32 @@ AppAsset::register($this); ?>
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Language" content="en">
         <link rel="shortcut icon" href="/favicon.ico"/>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144204946-1"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
             gtag('js', new Date());
 
             gtag('config', 'UA-144204946-1');
         </script>
+        <script type="application/ld+json">
+ "@context": "https://schema.org/",
+  "@type": "Website",
+  "name": "Liberty Academy"
+        </script>
 
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
+        <?php
+        $this->registerMetaTag(['og:site_name' => 'Liberty Academy']);
+        $this->head()
+        ?>
         <style>
             @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Open+Sans:400,600,700'); /* todo */
         </style>
@@ -63,7 +75,7 @@ AppAsset::register($this); ?>
                 } ?>
 
                 <div class="site-container">
-                    <nav class="main-nav">
+                    <nav class="main-nav" data-content-field="navigation">
 
                 <span class="menu-icon" id="menu-icon">
                     <span></span>
@@ -77,7 +89,8 @@ AppAsset::register($this); ?>
 
                     </nav>
 
-                    <?= Html::a('<img src="/img/logo.png" width="130" height="37" alt="Liberty Academy" />', '/site/index', ['class' => 'logo header-logo']) ?>
+                    <?= Html::a('<img src="/img/logo.png" width="130" height="37" alt="Liberty Academy" />',
+                        '/site/index', ['class' => 'logo header-logo']) ?>
 
                     <ul class="user-nav">
                         <?php
@@ -88,7 +101,7 @@ AppAsset::register($this); ?>
                             echo "<li class='dropdown-account'><span class='username'>" .
                                 Html::a($user->name . " " . $user->surname, ['/trainer/profile', 'id' => Yii::$app->user->id]) .
                                 "</span><p class='user-avatar'>" .
-                                ($user->thumb != '' ? "<img src='$user->thumb' />" : null) .
+                                ($user->thumb != '' ? "<img src='$user->thumb' alt='$user->fullName' />" : null) .
                                 "</p>" .
 
                                 '<ul class="sub-menu user-sub-menu">' .
@@ -165,7 +178,7 @@ AppAsset::register($this); ?>
         <footer class="main-footer">
 
             <div class="page-container">
-                <?= Html::a("<img src='/img/logo.png' width='186'  alt='Liberty Academy' />", ['/site/index'], ['class' => 'logo footer-logo']) ?>
+                <?= Html::a("<img src='/img/logo.png' width='186' alt='Liberty Academy' />", ['/site/index'], ['class' => 'logo footer-logo']) ?>
 
                 <section class="footer-links footer-academy-links">
                     <h4>Academy</h4>

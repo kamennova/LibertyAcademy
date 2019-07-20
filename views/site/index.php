@@ -4,18 +4,22 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 $this->registerCssFile('/build/site_index.css');
-$this->registerCssFile('/build/subscribe_form.css');
-$this->title = 'Liberty Academy';
+$this->title = 'Liberty Academy | Home';
+
+$this->registerMetaTag(['name' => 'keywords', 'content' =>
+    'liberty academy, liberty training, liberty horse, liberty horsemanship, liberty trainers, liberty horse training']);
+$this->registerMetaTag(['name' => 'description', 'content' => 'Liberty horsemanship trainers, events & articles database']);
 
 ?>
+<h1 class="visually-hidden">Liberty trainers, events & articles database</h1>
 
 <section class="poster">
     <ul class="poster-slides">
         <li class="slide slide-1 active" id="slide-1">
             <h2 class="slide-title">Go liberty</h2>
-<!--            <div class="slide-layer slide-layer-1"></div>-->
+            <!--            <div class="slide-layer slide-layer-1"></div>-->
             <!--            <div class="slide-layer slide-layer-2"></div>-->
-<!--            <div class="slide-layer slide-layer-3"></div>-->
+            <!--            <div class="slide-layer slide-layer-3"></div>-->
             <!--            <div class="slide-layer slide-layer-4"></div>-->
             <p class="slide-caption">
                 Mosie Trewhitt & Nipomo. Photo by Claire Bryett Andrew
