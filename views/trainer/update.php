@@ -28,7 +28,7 @@ $this->registerCssFile('/build/register.css');
         'layout' => 'horizontal',
         'options' => ['enctype' => 'multipart/form-data',],
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}\n{input}</div></div>\n<div class='row help-block'>{error}</div>",
+            'template' => "{label}\n{input}\n<div class='row help-block'>{error}</div>",
             'horizontalCssClasses' => [
                 'label' => ''
             ]

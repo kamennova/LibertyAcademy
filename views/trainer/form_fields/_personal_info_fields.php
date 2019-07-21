@@ -14,13 +14,12 @@ $this->registerJsFile('/build/upload_img.js');
 
 ?>
 
-<div class="row">
-    <div class="col-sm-12 image-upload">
+<div class="column">
+    <div class="image-upload">
         <div class="thumbnail">
             <?= $model->thumb ? "<img src='$model->thumb' />" : null ?>
         </div>
         <?= $form->field($model, 'imageFile')->fileInput([
-            'inputTemplate' => "<div class='row'><div class='col-lg-12'>{beginLabel}{labelTitle}\n<div class='col-sm-12'>{input}</div>{endLabel}</div></div>\n<div class='help-block'>{error}</div>",
             'class' => 'input-hidden']) ?>
     </div>
 </div>
@@ -68,17 +67,12 @@ $this->registerJsFile('/build/upload_img.js');
     </div>
 </div>
 
-<div class="row">
+<div class="column">
     <div class="col-sm-12 description-column">
 
-        <?= $form->field($model, 'desc', [
-            'template' => "<div class='row'><div class='col-sm-12'>{label}</div></div>\n" .
-                "<div class='row'><div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>"
-        ])->textarea(['maxlength' => true, 'rows' => 2])->label('Describe your approach shortly (150 symbols)') ?>
+        <?= $form->field($model, 'desc')->textarea(['maxlength' => true, 'rows' => 2])->label('Describe your approach shortly (150 symbols)') ?>
 
-        <?= $form->field($model, 'big_desc',
-            ['template' =>
-                '<div class="row"><div class="col-sm-12">{label}</div></div><div class="row"><div class="col-lg-12">{input}{error}{hint}</div></div>'])
+        <?= $form->field($model, 'big_desc')
             ->widget(CKEditor::class, [
                 'options' => [
                     'height' => '400px',

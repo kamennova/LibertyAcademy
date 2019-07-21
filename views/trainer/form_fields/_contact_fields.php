@@ -23,7 +23,7 @@ use kartik\select2\Select2;
         <?= $form->field($model, 'address')->textInput(['options' => ['color' => 'black']]) ?>
     </div>
 </div>
-<div class="row">
+<div class="column">
     <div class="col-sm-12">
         <?= $form->field($model, 'teachCountries')
             ->widget(Select2::className(), [
@@ -42,16 +42,12 @@ use kartik\select2\Select2;
             ])->label('Where do you teach?'); ?>
 
     </div>
-    <div class="col-sm-12">
-        <?= $form->field($model, 'site')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-sm-12">
-        <?= $form->field($model, 'soc_fb')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-sm-12">
-        <?= $form->field($model, 'soc_inst')->textInput(['maxlength' => true]) ?>
-    </div>
-    <div class="col-sm-12">
-        <?= $form->field($model, 'soc_tw')->textInput(['maxlength' => true]) ?>
-    </div>
+
+    <?= $form->field($model, 'site')->textInput(['maxlength' => true, 'class' => 'form-control full-width-field']) ?>
+
+    <?= $form->field($model, 'soc_fb')->textInput(['maxlength' => true, 'class' => 'form-control full-width-field']) ?>
+
+    <?= $form->field($model, 'soc_inst')->textInput(['maxlength' => true, 'class' => 'form-control full-width-field']) ?>
+
+    <?= $form->field($model, 'soc_tw')->textInput(['maxlength' => true, 'class' => 'form-control full-width-field']) ?>
 </div>
