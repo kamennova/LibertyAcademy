@@ -265,6 +265,15 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getArticleDesc()
     {
+        return $this->getMainInfoStr() . '.<br><br>' .
+            '<span class="quote">"' . $this->desc . '" </span><br>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getMainInfoStr()
+    {
         $desc = '';
         $counter = count($this->services);
 
@@ -276,9 +285,6 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
 
         $desc = ucfirst(substr($desc, 0, strlen($desc) - 2));
 
-        $desc .= ' from ' . $this->location . '.<br><br>';
-        $desc .= '<span class="quote">"' . $this->desc . '" </span><br>';
-
-        return $desc;
+        return ' from ' . $this->location;
     }
 }
