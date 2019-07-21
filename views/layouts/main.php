@@ -30,9 +30,9 @@ AppAsset::register($this); ?>
             gtag('config', 'UA-144204946-1');
         </script>
         <script type="application/ld+json">
- "@context": "https://schema.org/",
-  "@type": "Website",
-  "name": "Liberty Academy"
+            { "@context": "https://schema.org/",
+              "@type": "WebSite",
+              "name":  "Liberty Academy | Liberty trainers, events & training articles database" }
         </script>
 
         <?= Html::csrfMetaTags() ?>
@@ -40,7 +40,7 @@ AppAsset::register($this); ?>
         <?php
 
         $this->registerMetaTag(['name' => 'theme-color', 'content' => '#81c784']);
-        $this->registerMetaTag(['og:site_name' => 'Liberty Academy']);
+        $this->registerMetaTag(['og:site_name' => 'Liberty Academy | Liberty trainers, events & training articles database']);
         $this->head()
         ?>
         <style>

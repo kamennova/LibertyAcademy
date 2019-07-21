@@ -4,11 +4,14 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 $this->registerCssFile('/build/site_index.css');
-$this->title = 'Liberty Academy | Home';
+$this->title = 'Liberty Academy | Teachers, events and training articles';
 
 $this->registerMetaTag(['name' => 'keywords', 'content' =>
     'liberty academy, liberty training, liberty horse, liberty horsemanship, liberty trainers, liberty horse training']);
-$this->registerMetaTag(['name' => 'description', 'content' => 'Liberty horsemanship trainers, events & articles database']);
+$this->registerMetaTag(['name' => 'description', 'content' =>
+    'Liberty horsemanship trainers, events & training articles database. 
+    Connect with liberty teachers worldwide, enroll in clinics / webinars and read useful tips on how to train your 
+    horse at liberty for free. ']);
 
 ?>
 <h1 class="visually-hidden">Liberty trainers, events & articles database</h1>
@@ -120,9 +123,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => 'Liberty horsemans
         <h3 class="section-subtitle">You are welcome</h3>
         <hr class="content-divider">
         <p> If you are an experienced horse trainer sharing the approach of liberty in horse
-            training, you are welcome to join the community! Tell horse people about yourself, post articles and
-            announce clinics
-            schedule after registering. <?= Html::a('Find out more', '/site/about') ?></p>
+            training, you are welcome to join the community! Share your approach, post articles and
+            announce your events schedule right after registering. <?= Html::a('Find out more', '/site/about') ?>
+        </p>
     </section>
 </div>
 
