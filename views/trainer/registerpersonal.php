@@ -9,8 +9,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Register | Liberty Academy';
-$this->registerCssFile('/build/register.css');
+
 $this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/register.css');
 
 ?>
 
@@ -27,7 +28,7 @@ $this->registerCssFile('/build/forms.css');
             'enctype' => 'multipart/form-data'
         ],
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}\n{input}</div></div>\n<div class='row help-block'>{error}</div>",
+            'template' => "{label}\n{input}\n<div class='row help-block'>{error}</div>",
             'horizontalCssClasses' => [
                 'label' => ''
             ]
@@ -40,12 +41,7 @@ $this->registerCssFile('/build/forms.css');
         'form' => $form,
     ]); ?>
 
-    <div class="row">
-
-        <div class="col-sm-12">
-            <?= $form->field($model, 'pass')->passwordInput(['maxlength' => true]) ?>
-        </div>
-    </div>
+    <?= $form->field($model, 'pass')->passwordInput(['maxlength' => true])->label('Choose a password') ?>
 
     <div class="form-group" align="center">
         <?= Html::a('Back', ['/trainer/register'], ['class' => 'btn btn-wide']) ?>

@@ -5,33 +5,35 @@ form.event-sort {
   position: relative;
 }
 
-#comment-form{
+#comment-form {
   margin-top: 30px;
 }
 
-#contact-form{
+#contact-form {
   width: 100%;
 }
 
 //------
 
 .trainer-register-form,
-#comment-form {.form-group.required {
-  position: relative;
+#comment-form {
+  .form-group.required {
+    position: relative;
+  }
+
+  .form-group.required::before {
+    content: '*' !important;
+
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    display: inline !important;
+
+    font-size: 25px;
+    color: red !important
+  }
 }
-
-.form-group.required::before{
-  content: '*' !important;
-
-  position: absolute;
-  top: 8px;
-  right: 8px;
-
-  display: inline !important;
-
-  font-size: 25px;
-  color: red !important
-}}
 
 //-----------------------
 
@@ -42,13 +44,13 @@ form.event-sort {
   margin-bottom: 5px !important;
 }
 
-.login-form .form-group{
+.login-form .form-group {
   margin-bottom: 15px !important
 }
 
 .form-control,
 .select2-container,
-.select2-selection{
+.select2-selection {
   width: 100%;
   padding: 8px 17px 7px;
   margin-right: 0 !important;
@@ -63,7 +65,7 @@ form.event-sort {
 }
 
 .form-horizontal {
-  .left-field, .right-field{
+  .left-field, .right-field {
     width: 50%;
   }
 
@@ -75,6 +77,7 @@ form.event-sort {
     padding-left: 10px;
   }
 }
+
 /*------------------------*/
 
 .select2-container--krajee .select2-selection {
@@ -129,7 +132,7 @@ label.control-label, .checkboxList-title {
   box-shadow: none !important;
 }
 
-.form-control:focus{
+.form-control:focus {
   outline: none;
 }
 
@@ -250,10 +253,10 @@ select {
     padding-right: 0 !important;
   }
 
-  #contact-form .row{
+  #contact-form .row {
     flex-direction: column;
 
-    .left-field, .right-field{
+    .left-field, .right-field {
       width: 100%;
     }
   }

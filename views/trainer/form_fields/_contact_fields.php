@@ -7,7 +7,7 @@ use kartik\select2\Select2;
 
 <div class="row">
     <div class="col-sm-6 left-field">
-        <?= $form->field($model, 'email', ['errorOptions' => ['class' => 'help-block', 'encode' => false]])
+        <?= $form->field($model, 'email', ['errorOptions' => [ 'encode' => false]])
             ->input('email')->label('Email') ?>
     </div>
     <div class="col-sm-6 right-field">

@@ -9,8 +9,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Register | Liberty Academy';
-$this->registerCssFile('/build/register.css');
+
 $this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/register.css');
+
 ?>
 
 <div class="container register-form-container register-contact">
@@ -25,8 +27,7 @@ $this->registerCssFile('/build/forms.css');
             'class' => 'trainer-register-form contact-info-fields'
         ],
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'>\n" .
-                "<div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>",
+            'template' => "{label}\n{input}\n<div class='row help-block'>{error}</div>",
             'horizontalCssClasses' => [
                 'label' => ''
             ]

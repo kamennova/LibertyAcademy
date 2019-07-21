@@ -14,15 +14,13 @@ $this->registerJsFile('/build/upload_img.js');
 
 ?>
 
-<div class="column">
-    <div class="image-upload">
+    <div class="image-upload column">
         <div class="thumbnail">
             <?= $model->thumb ? "<img src='$model->thumb' />" : null ?>
         </div>
         <?= $form->field($model, 'imageFile')->fileInput([
             'class' => 'input-hidden']) ?>
     </div>
-</div>
 
 <div class="row">
     <div class="col-sm-4 left-field">
