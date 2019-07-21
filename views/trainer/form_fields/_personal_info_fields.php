@@ -14,22 +14,22 @@ $this->registerJsFile('/build/upload_img.js');
 
 ?>
 
-    <div class="image-upload column">
-        <div class="thumbnail">
-            <?= $model->thumb ? "<img src='$model->thumb' />" : null ?>
-        </div>
-        <?= $form->field($model, 'imageFile')->fileInput([
-            'class' => 'input-hidden']) ?>
+<div class="image-upload column">
+    <div class="thumbnail">
+        <?= $model->thumb ? "<img src='$model->thumb' />" : null ?>
     </div>
+    <?= $form->field($model, 'imageFile')->fileInput([
+        'class' => 'input-hidden']) ?>
+</div>
 
 <div class="row">
-    <div class="col-sm-4 left-field">
+    <div class="col-sm-4">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-sm-4">
         <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-sm-4 right-field">
+    <div class="col-sm-4">
         <?= $form->field($model, 'org')->textInput(['maxlength' => true]) ?>
     </div>
 </div>
