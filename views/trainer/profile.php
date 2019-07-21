@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 
 $this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
 
-$meta_desc = $trainer->getMainInfoStr() . ' | "' . $trainer->desc . '"';
+$meta_desc = $trainer->mainInfoStr . ' | "' . $trainer->desc . '"';
 
 $this->registerMetaTag(['name' => 'keywords', 'content' =>
     strtolower($trainer->name) . ', ' .
@@ -87,7 +87,7 @@ if ($trainer->soc_fb || $trainer->soc_tw || $trainer->soc_inst) {
             'template' => function ($attribute) {
                 if (isset($attribute['value']) && $attribute['value'] !== '' && $attribute['value'] !== ' ') {
                     return "<div class='info-item'><label class='item-label'>{$attribute['label']}</label>" .
-                        "<br><strong class='item-value'>{$attribute['value']}</strong></div>";
+                        "<strong class='item-value'>{$attribute['value']}</strong></div>";
                 }
 
                 return null;
