@@ -24,7 +24,7 @@ $this->registerCssFile('/build/forms.css');
         'enableClientValidation' => false,
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
-            'template' => "<div class='col-lg-12'>{input}</div>\n<div class='help-block'>{error}</div>"
+            'template' => "{input}\n<div class='help-block'>{error}</div>"
         ],
     ]); ?>
 

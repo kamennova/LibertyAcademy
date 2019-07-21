@@ -3,7 +3,7 @@
 .form-horizontal .form-group {
   position: relative;
 
-  margin: auto 0 25px;
+  margin: auto 0 5px;
 
   color: black !important;
 }
@@ -19,13 +19,13 @@
 
 //------INPUTS-----
 
-.form-control{
+.form-control {
+  width: 100%;
   padding: 5px 12px;
 }
 
 .form-group .form-control,
 .form-group .select2-container--krajee .select2-selection {
-
   margin: 7px auto 0;
 
   font-family: "Open Sans", Arial, sans-serif;
@@ -95,17 +95,7 @@
   border-radius: 8px !important;
 }
 
-/*---------------------------------------------------------------*/
-select.form-control:hover,
-select.form-control:active,
-.has-success select.form-control:focus,
-select.form-control:focus,
-.has-success select.form-control:visited {
-  //border-color: black;
-  //box-shadow: none;
-}
-
-//-----LABELS------
+// --- LABELS ---
 
 div:not(.checkbox) .control-label {
   display: inline-block;
@@ -121,53 +111,39 @@ div:not(.checkbox) .control-label {
 }
 
 .select2-container--krajee .select2-selection {
-  //margin-top: 10px !important;
-
   box-shadow: none !important;
 }
 
 //-----CHECKBOXES-------
 
 .checkbox label {
+  margin-bottom: 10px;
+
   font-size: 17px;
   line-height: 21px;
   font-weight: normal;
-  margin-bottom: 10px;
 }
 
-.col-lg-12 label {
-  //width: auto !important
-}
+.form-group.required::before {
+  content: '*';
 
-//---------------PASSWORD INPUT-----------------------------
-
-.input-group .form-control {
-  border: 1px solid lightgrey !important;
-  //padding-bottom: 5px !important
-}
-
-.input-group-addon {
-  border-radius: 0 !important
-}
-
-.kv-meter-container {
-  display: none;
-}
-
-//---------------------------------------------------
-
-.required label::after {
-  content: "*";
-  font-size: 20px;
   position: absolute;
-  top: 0;
+  top: 8px;
+  right: 8px;
+
+  display: inline;
+
+  font-size: 25px;
+  color: red;
 }
 
-.register-rules-container {
-  .required label::after {
+.login-form, .register-rules-container {
+  .form-group.required::before {
     display: none;
   }
 }
+
+//--- 2 field layout ---
 
 .form-horizontal .left-field {
   padding-right: 12px;
@@ -181,10 +157,6 @@ div:not(.checkbox) .control-label {
 
 .container.event-form-container {
   padding-bottom: 40px;
-
-  .form-control {
-
-  }
 }
 
 /*=========================
@@ -222,7 +194,7 @@ div:not(.checkbox) .control-label {
 }
 
 .form-horizontal {
-  .left-field, .right-field{
+  .left-field, .right-field {
     width: 50%;
   }
 
@@ -235,7 +207,7 @@ div:not(.checkbox) .control-label {
   }
 }
 
-.full-width-field{
+.full-width-field {
   width: 100%;
 }
 
