@@ -38,6 +38,8 @@ AppAsset::register($this); ?>
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php
+
+        $this->registerMetaTag(['name' => 'theme-color', 'content' => '#81c784']);
         $this->registerMetaTag(['og:site_name' => 'Liberty Academy']);
         $this->head()
         ?>
