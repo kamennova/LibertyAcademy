@@ -3,7 +3,7 @@
 .form-horizontal .form-group {
   position: relative;
 
-  margin: auto 0 5px !important;
+  margin: auto 0 25px;
 
   color: black !important;
 }
@@ -19,8 +19,13 @@
 
 //------INPUTS-----
 
+.form-control{
+  padding: 5px 12px;
+}
+
 .form-group .form-control,
 .form-group .select2-container--krajee .select2-selection {
+
   margin: 7px auto 0;
 
   font-family: "Open Sans", Arial, sans-serif;
@@ -102,7 +107,8 @@ select.form-control:focus,
 
 //-----LABELS------
 
-div:not(.checkbox) label.control-label {
+div:not(.checkbox) .control-label {
+  display: inline-block;
   padding-left: 10px;
   padding-top: 7px;
 
@@ -213,6 +219,24 @@ div:not(.checkbox) label.control-label {
 
 .update-trainer-profile.page-container {
   padding-bottom: 30px;
+}
+
+.form-horizontal {
+  .left-field, .right-field{
+    width: 50%;
+  }
+
+  .left-field {
+    padding-right: 10px;
+  }
+
+  .right-field {
+    padding-left: 10px;
+  }
+}
+
+.full-width-field{
+  width: 100%;
 }
 
 /*========================

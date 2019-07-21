@@ -5,10 +5,12 @@ form.event-sort {
   position: relative;
 }
 
-
-
 #comment-form{
   margin-top: 30px;
+}
+
+#contact-form{
+  width: 100%;
 }
 
 //------
@@ -22,8 +24,8 @@ form.event-sort {
   content: '*' !important;
 
   position: absolute;
-  top: 1px;
-  right: 10px;
+  top: 8px;
+  right: 8px;
 
   display: inline !important;
 
@@ -32,10 +34,6 @@ form.event-sort {
 }}
 
 //-----------------------
-
-//.input-invalid input[type=text]::-webkit-input-placeholder::after {
-//  visibility: visible;
-//}
 
 .form-horizontal .form-group {
   width: 100%;
@@ -48,46 +46,40 @@ form.event-sort {
   margin-bottom: 15px !important
 }
 
-.login-form .form-group {
-  //margin-bottom: 20px !important
-}
-
 .form-control,
 .select2-container,
 .select2-selection{
   width: 100%;
+  padding: 8px 17px 7px;
   margin-right: 0 !important;
   margin-left: 0 !important;
 
-  //background: transparent !important;
   border-radius: 16px !important;
   box-shadow: none !important
 }
 
-.select2-selection__rendered {
-  //border-radius: 0;
-
-}
-
 .form-control {
-  border: 1px solid @lightgrey !important;
+  border: 1px solid @lightgrey;
 }
 
-.form-horizontal .left-field {
-  padding-right: 10px;
-}
+.form-horizontal {
+  .left-field, .right-field{
+    width: 50%;
+  }
 
-.form-horizontal .right-field {
-  padding-left: 10px;
-}
+  .left-field {
+    padding-right: 10px;
+  }
 
+  .right-field {
+    padding-left: 10px;
+  }
+}
 /*------------------------*/
 
 .select2-container--krajee .select2-selection {
   border: 1px solid @lightgrey !important;
-  //border-radius: 0 !important;
   box-shadow: none !important;
-  //background: transparent !important;
 }
 
 .select2-container--krajee .select2-selection--single .select2-selection__placeholder,
@@ -137,6 +129,10 @@ label.control-label, .checkboxList-title {
   box-shadow: none !important;
 }
 
+.form-control:focus{
+  outline: none;
+}
+
 select {
   -webkit-appearance: none;
   appearance: none;
@@ -144,7 +140,7 @@ select {
   -moz-appearance: none;
   text-indent: 0.01px;
   text-overflow: "";
-  background-image: url(/img/icons/arrow_btm.png) !important;
+  //background-image: url(/img/icons/arrow_btm.png) !important;
   background-repeat: no-repeat !important;
   background-position: bottom 14px right 7px !important;
   background-size: 10px !important;
@@ -245,8 +241,30 @@ select {
   opacity: 1;
 }
 
-@media screen and(min-width: 320px) and (max-width: 767px){
-  .enter-container{
+@media screen and (min-width: 320px) and(max-width: 470px) {
+  .form-horizontal .right-field {
+    padding-left: 0 !important;
+  }
+
+  .form-horizontal .left-field {
+    padding-right: 0 !important;
+  }
+
+  #contact-form .row{
+    flex-direction: column;
+
+    .left-field, .right-field{
+      width: 100%;
+    }
+  }
+}
+
+@media screen and(min-width: 320px) and (max-width: 767px) {
+  .enter-container {
     padding-right: 15px
+  }
+
+  #contact-form .row {
+    flex-direction: row;
   }
 }

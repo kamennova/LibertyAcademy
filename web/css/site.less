@@ -16,6 +16,7 @@
 }
 
 .row {
+  display: flex;
   margin-right: 0;
   margin-left: 0;
 }
@@ -135,6 +136,10 @@ img {
 
   &.btn-wide {
     min-width: 200px;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 
   &:hover,
@@ -438,6 +443,7 @@ h2 {
   display: flex;
   padding: 0;
   margin-bottom: 0;
+  margin-top: 0;
 
   list-style: none;
 }
@@ -517,7 +523,7 @@ h2 {
   display: inline-block;
   width: 36px;
   height: 36px;
-  margin-bottom: 0;
+  margin: 0;
 
   background: white url(/img/placeholder2.png) no-repeat center center;
   background-size: cover;
@@ -625,6 +631,7 @@ h2 {
   }
 
   ul {
+    margin-top: 0;
     padding: 0;
 
     list-style: none;
@@ -809,7 +816,7 @@ span.date {
   height: 30px;
   margin: 10px auto 25px;
 
-  background-repeat:  space no-repeat;
+  background-repeat: space no-repeat;
   background-position: center center;
   background-size: 39px;
 }
@@ -817,7 +824,7 @@ span.date {
 // --- Site contact page ---
 
 .site-contact {
-  .page-title{
+  .page-title {
     margin-bottom: 35px;
   }
 
@@ -916,6 +923,10 @@ span.date {
 // --- MEDIA ---
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
+  .row {
+    flex-direction: column;
+  }
+
   .smaller-container,
   .site-container,
   .page-container,
@@ -930,6 +941,7 @@ span.date {
 
   //------MAIN HEADER-------
   .header-site-nav,
+  .user-nav .username,
   .user-nav .btn-join {
     display: none;
   }
@@ -945,6 +957,11 @@ span.date {
       align-items: center;
       align-content: center;
     }
+  }
+
+  .main-header .user-sub-menu {
+    right: 0;
+    left: auto;
   }
 
   .main-nav-sub-menu h4,

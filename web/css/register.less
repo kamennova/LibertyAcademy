@@ -23,7 +23,7 @@
     line-height: 25px;
   }
 
-  label{
+  label {
     line-height: 1.7;
   }
 
@@ -34,7 +34,7 @@
     text-align: left;
   }
 
-  .fields-container{
+  .fields-container {
     max-width: 560px;
   }
 }
@@ -59,9 +59,9 @@ p {
 }
 
 .register-rules {
-.fields-container{
-  margin-top: 15px;
-}
+  .fields-container {
+    margin-top: 15px;
+  }
 
   .checkbox {
     padding-left: 20px;
@@ -96,27 +96,29 @@ p {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.checkbox input[type="checkbox"]:active, .checkbox input[type="checkbox"]:checked:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+.checkbox input[type="checkbox"] {
+  &:active, &:checked:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
 
-.checkbox input[type="checkbox"]:focus {
-  outline: none;
-}
+  &:focus {
+    outline: none;
+  }
 
-.checkbox input[type="checkbox"]:checked {
-  border: 1px solid #adb8c0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  color: #99a1a7;
-}
+  &:checked {
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #99a1a7;
+  }
 
-.checkbox input[type="checkbox"]:checked:after {
-  content: '\2714';
-  font-size: 14px;
-  position: absolute;
-  top: 0;
-  left: 3px;
-  color: rgba(0, 0, 0, 0.6);
+  &:checked:after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 3px;
+    color: rgba(0, 0, 0, 0.6);
+  }
 }
 
 h2 + .section-subtitle {
@@ -125,7 +127,7 @@ h2 + .section-subtitle {
 
 .register-personal,
 .personal-info-fields,
-.contact-info-fields{
+.contact-info-fields {
   padding: 20px 0 30px;
   margin: 30px auto 0;
 
@@ -133,36 +135,44 @@ h2 + .section-subtitle {
     margin-bottom: 30px;
   }
 
-  .image-upload {
-    text-align: center;
+  input.input-hidden {
+    position: absolute;
+    top: 0;
+    opacity: 0;
   }
+}
 
-  .image-upload label {
+.personal-info-fields .image-upload {
+  text-align: center;
+
+  margin-bottom: 20px;
+
+  label {
     position: relative;
 
-    padding-bottom: 20px;
+    padding-left: 0;
+    padding-bottom: 25px;
+    &::after {
+      content: "Set image";
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      display: block;
+      width: 100%;
+      margin: 10px auto 0;
+
+      color: #3e8b41;
+      text-decoration: underline;
+      text-align: center;
+
+      cursor: pointer;
+    }
   }
 
-  .image-upload label::after {
-    content: "Set image";
-
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-
-    display: block;
-    width: 100%;
-    margin: 10px auto 0;
-
-    color: #3e8b41;
-    text-decoration: underline;
-    text-align: center;
-
-    cursor: pointer;
-  }
-
-  .image-upload .thumbnail {
+  .thumbnail {
     width: 128px;
     height: 128px;
     margin-left: auto;
@@ -185,23 +195,17 @@ h2 + .section-subtitle {
     }
   }
 
-  .thumbnail-input {
+  .thumbnail-input { // todo?
     margin-top: 10px;
     margin-right: auto;
     margin-left: auto;
-  }
-
-  input.input-hidden {
-    position: absolute;
-    top: 0;
-    opacity: 0;
   }
 }
 
 .personal-info-fields,
 .contact-info-fields {
   input, textarea,
-  .text-field .form-control{
+  .text-field .form-control {
     font-family: "Open Sans", Arial, sans-serif;
     font-weight: 400;
     font-size: 15px;
@@ -209,8 +213,8 @@ h2 + .section-subtitle {
   }
 }
 
-.register-personal{
-  .form-section-title{
+.register-personal {
+  .form-section-title {
     margin-bottom: 30px;
   }
 }
@@ -223,4 +227,14 @@ h2 + .section-subtitle {
   .right-field {
     padding-left: 0;
   }
+}
+
+//--
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+.form-control{
+  width: 100%;
 }

@@ -75,9 +75,14 @@
   font-family: inherit;
   font-weight: 400;
 
+  .form-group {
+    margin-bottom: -5px;
+  }
+
   .form-group .select2-selection,
   .form-group .form-control {
-    padding: 3px 11px 4px;
+    width: 100%;
+    padding: 8px 17px 7px;
 
     color: black !important;
 
@@ -91,6 +96,7 @@
 
   .form-group .select2-selection {
     padding-left: 17px;
+    padding-top: 5px;
     padding-bottom: 5px;
   }
 
@@ -145,7 +151,8 @@
   }
 
   .control-label {
-    margin-bottom: 0;
+    display: inline-block;
+    margin-bottom: 17px;
     padding-left: 0;
 
     font-family: inherit;
@@ -153,14 +160,18 @@
     font-weight: 400;
   }
 
-  .checkbox label {
-    margin-bottom: 2px;
-    padding: 2px 0;
+  .checkbox {
+    margin-bottom: 10px;
 
-    font-size: 10px;
-    color: black;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    label {
+      margin-bottom: 2px;
+      padding: 2px 0;
+
+      font-size: 10px;
+      color: black;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
   }
 
   .checkbox input[type="checkbox"],
@@ -230,8 +241,8 @@
   .checkbox label {
     position: relative;
 
-    margin: 8px 4px 0 0 !important;
-    padding: 3px 2px 2px 11px !important;
+    margin: 9px 5px 0 0;
+    padding: 4px 4px 4px 11px;
 
     color: @primary;
     line-height: 1;
@@ -239,17 +250,21 @@
     background-color: white;
     border: 1px dashed @primary !important;
     border-radius: 13px;
-  }
 
-  .checkbox label::before {
-    content: '#';
+    &:hover {
+      cursor: pointer;
+    }
 
-    position: absolute;
-    left: 3px;
-    top: 2px;
+    &::before {
+      content: '#';
 
-    font-size: 13px;
-    color: inherit;
+      position: absolute;
+      left: 3px;
+      top: 2px;
+
+      font-size: 13px;
+      color: inherit;
+    }
   }
 
   .checkbox input[type="checkbox"],
@@ -372,6 +387,7 @@
   font-family: Lato, Arial, sans-serif;
   font-size: 17px;
   font-weight: 500;
+  word-break: break-all;
 
   a {
     color: black;

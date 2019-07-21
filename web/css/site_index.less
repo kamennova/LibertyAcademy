@@ -1,77 +1,5 @@
 @import "variables.less";
 
-.main-header-wrapper.transparent {
-  background-color: transparent !important;
-}
-
-//----- DARK THEME -----
-
-.dark {
-  .main-header-wrapper {
-    border-color: #afafaf !important;
-  }
-
-  .main-nav a,
-  .user-nav a {
-    color: white;
-  }
-
-  .btn-join {
-    border-color: white !important;
-  }
-
-  .btn-join:hover {
-    border-color: @primary !important;
-  }
-
-  .poster-layer {
-    display: none;
-  }
-
-  .poster-title {
-    color: white;
-  }
-
-  .menu-icon span {
-    background-color: white !important
-  }
-
-  .header-logo {
-    width: 130px;
-    height: 37px;
-
-    background: url(../img/white-logo.png) no-repeat center center;
-    background-size: 100%;
-
-    img {
-      display: none;
-    }
-  }
-
-  .main-header .user-sub-menu {
-    a, button.logout {
-      color: white;
-    }
-
-    a:hover,
-    .logout:hover {
-      color: @primary
-    }
-
-    background-color: transparent;
-
-  }
-
-  .slides-indicators li {
-    background-color: white;
-
-    span {
-      background-color: white;
-    }
-  }
-
-}
-
 //---------POSTER SECTION---------
 
 .poster {
@@ -82,11 +10,9 @@
   height: 100vh;
   padding: 0;
 
-  //background: url(../img/liberty.jpg) no-repeat center right;
   background-size: calc(100% + 50px);
 
   z-index: 100;
-
   overflow: hidden;
 }
 
@@ -212,7 +138,7 @@
 
   font-family: Lato, Arial, sans-serif;
   color: @darkgrey;
-  font-size: 130px !important;
+  font-size: 130px;
   font-weight: 700;
   text-align: center;
   word-spacing: 10px;
@@ -232,10 +158,10 @@
   a {
     font-weight: bold;
     color: inherit;
-  }
 
-  a:hover {
-    color: inherit;
+    &:hover {
+      color: inherit;
+    }
   }
 }
 
@@ -249,35 +175,10 @@
     z-index: 180;
   }
 
-  /*.slide-layer-1 {
-    display: none;
-    background-image: url(../img/slider/liberty_bottom.png);
-    background-size: 1000px;
-    background-position: right 47% top 40%;
-
-    z-index: 160;
-  }
-
-  .slide-layer-2 {
-    display: none;
-    background-image: url(../img/slider/mist-2.png);
-    background-size: 800px;
-    background-position: right 15% top 40%;
-
-    z-index: 150;
-  }
-
-  .slide-layer-3 {
-    background-image: url(../img/slider/mosie_top.png);
-    background-position: center right;
-  }*/
-
   .slide-caption {
     z-index: 160;
   }
-}
 
-.slide-1 {
   &::before, &::after {
     content: "";
 
@@ -316,52 +217,6 @@
     transform: translate3d(-200vw, 0, 0);
   }
 }
-//
-//.slide-2 {
-//  background-image: url(../img/gallery/mc3.jpg);
-//  background-position: right bottom -238px;
-//
-//  z-index: 200;
-//
-//  .slide-layer {
-//    height: inherit;
-//
-//    background-image: url(../img/top.png);
-//    background-position: right bottom -238px;
-//
-//    z-index: 250;
-//  }
-//
-//  .slide-title {
-//    color: white;
-//  }
-//
-//  .slide-caption {
-//    color: rgba(0, 0, 0, 0.8);
-//
-//    z-index: 260;
-//  }
-//}
-//
-//.slide-3 {
-//  background-image: url(../img/anna2.jpg);
-//
-//  z-index: 300;
-//
-//  .slide-layer {
-//    background-image: url(../img/anna_marciniak.png);
-//
-//
-//  }
-//
-//  .slide-title {
-//    color: white;
-//  }
-//}
-
-//.slide-3, .slide-3 .slide-layer{
-//  background-position: right -4.5vw bottom 60%;
-//}
 
 //-------------PHILOSOPHY SECTION----------------
 
@@ -402,6 +257,7 @@
       text-align: left;
       font-size: 14px;
       line-height: 20px;
+      margin: 0;
     }
   }
 
@@ -453,18 +309,13 @@
 /*------------GUIDE SECTION------------------*/
 
 .guide {
-
   padding: 55px 0 75px;
 
   .guide-list {
     margin-top: 40px;
 
-    .guide-list-item {
-      padding: 0 30px;
-    }
-
     h3 {
-      margin: 25px auto 10px;
+      margin: 20px auto 10px;
 
       font-family: Lato, Arial, sans-serif;
       font-size: 17px;
@@ -496,6 +347,15 @@
     #event-section span {
       background: url(/img/icons/calendar.png) no-repeat center center;
       background-size: 100%
+    }
+  }
+
+  .guide-list-item {
+    margin-bottom: 30px;
+    padding: 0 30px;
+
+    p {
+      max-width: 250px;
     }
   }
 }
@@ -544,8 +404,7 @@
 
   .form-control {
     margin: 0;
-    padding-top: 24px;
-    padding-bottom: 23px;
+    padding: 22px 15px;
 
     border: 1px solid #eee;
     border-radius: 0;
@@ -554,7 +413,7 @@
     flex-grow: 2;
     width: 100% !important;
 
-    &:hover{
+    &:hover {
       border: 1px solid lighten(@primary, 10%);
     }
 
@@ -570,6 +429,8 @@
 
   .subscribe-form-btn {
     margin: 0;
+    padding-top: 22px;
+    padding-bottom: 22px;
   }
 }
 
@@ -581,21 +442,45 @@
     background-size: cover;
   }
 
-  .poster-title {
-    font-size: 80px;
+  .slide-title {
+    width: auto;
+
+    white-space: normal;
+    font-size: 70px;
   }
 
-  .poster-layer {
-
+  .slide-caption {
+    font-size: 14px;
+    text-align: center;
   }
 
-  .philosophy .col-sm-6 {
-    padding-right: 10px !important;
-    padding-left: 10px !important;
+  .slide-title, .slide-caption {
+    right: 0;
+    left: 0;
+
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .philosophy {
+    .row {
+      align-items: center;
+    }
+
+    .col-sm-6 {
+      padding-right: 10px !important;
+      padding-left: 10px !important;
+    }
   }
 
   .contacts p {
     max-width: none;
+  }
+}
+
+@media screen and(min-width: 543px) and(max-width: 767px) {
+  .philosophy .col-sm-6 ul {
+    min-width: 523px;
   }
 }
 

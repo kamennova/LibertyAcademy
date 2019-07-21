@@ -10,12 +10,20 @@
 
   font-family: Lato, Arial, sans-serif;
 
+  border-collapse: collapse;
+
+  thead tr{
+    border-bottom: 1px solid @lightgrey;
+    margin-bottom: 2px;
+  }
+
   th {
     padding: 10px 15px;
 
     font-size: 14px;
     font-weight: 500;
     color: lighten(@darkgrey, 10%);
+    text-align: left;
 
     a {
       font-weight: 500;
@@ -128,6 +136,11 @@ a:hover .glyphicon {
     color: @primary;
     text-decoration: none;
   }
+}
+
+.title-td{
+  display: flex;
+  align-items: center;
 }
 
 .item-tag {
