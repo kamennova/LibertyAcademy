@@ -127,21 +127,16 @@ $authorServiceList .= '</ul>'; ?>
                                 ->textInput(['type' => 'email', 'class' => 'form-control conform11', 'placeholder' => 'Email']) ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?= $form->field($model, 'author_website')
-                                ->textInput(['class' => 'form-control conform11', 'placeholder' => 'Website']) ?>
-                        </div>
 
-                        <div class="col-sm-12">
-                            <?= $form->field($model, 'content')->textArea(['rows' => 8, 'placeholder' => 'Content']) ?>
-                        </div>
-                        <div class="form-group" align="center">
-                            <?= Html::submitButton('Post comment', ['class' => 'btn', 'name' => 'Post comment']) ?>
-                        </div>
+                    <?= $form->field($model, 'author_website')
+                        ->textInput(['class' => 'form-control conform11', 'placeholder' => 'Website']) ?>
+                    <?= $form->field($model, 'content')->textArea(['rows' => 8, 'placeholder' => 'Content']) ?>
 
-                        <?php ActiveForm::end(); ?>
+                    <div class="form-group" align="center">
+                        <?= Html::submitButton('Post comment', ['class' => 'btn', 'name' => 'Post comment']) ?>
                     </div>
+
+                    <?php ActiveForm::end(); ?>
                 </section>
     </div>
 </div>

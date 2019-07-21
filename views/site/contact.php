@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
+
 /* @var $model app\models\ContactForm */
 
 use yii\helpers\Html;
@@ -10,7 +11,10 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 
-function generate_horsey(){
+$this->registerCssFile('/build/sort-by-form.css');
+
+function generate_horsey()
+{
     $horsey_num = rand(1, 6);
 
     return "url(/img/icons/temp/{$horsey_num}.svg);";
@@ -51,24 +55,19 @@ function generate_horsey(){
                         <?= $form->field($model, 'name')->textInput(['class' => 'form-control conform11', 'placeholder' => 'Name']) ?>
                     </div>
                     <div class="col-sm-6 right-field">
-                        <?= $form->field($model, 'email' )->textInput(['type' => 'email', 'class' => 'form-control conform11', 'placeholder' => 'Email']) ?>
+                        <?= $form->field($model, 'email')->textInput(['type' => 'email', 'class' => 'form-control conform11', 'placeholder' => 'Email']) ?>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <?= $form->field($model, 'subject')->textInput(['class' => 'form-control conform11', 'placeholder' => 'Subject']) ?>
-                    </div>
+                <?= $form->field($model, 'subject')->textInput(['class' => 'form-control conform11', 'placeholder' => 'Subject']) ?>
 
-                    <?= $form->field($model, 'body')->textArea(['rows' => 8, 'style' => 'width: 100%;
+                <?= $form->field($model, 'body')->textArea(['rows' => 8, 'style' => 'width: 100%;
                          ', 'placeholder' => 'Message']) ?>
 
-                    <div class="form-group" align="center">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-wide', 'name' => 'submit-btn']) ?>
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
-
+                <div class="form-group" align="center">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-wide', 'name' => 'submit-btn']) ?>
                 </div>
+
+                <?php ActiveForm::end(); ?>
             </div>
 
         <?php endif; ?>
