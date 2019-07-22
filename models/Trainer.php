@@ -43,6 +43,9 @@ use yii\web\UploadedFile;
  * @property string $fullName
  * @property mixed $trainerService
  * @property void $authKey
+ * @property string $articleDesc
+ * @property string $location
+ * @property string $mainInfoStr
  * @property Article[] $articles
  *
  */
@@ -285,6 +288,6 @@ class Trainer extends \yii\db\ActiveRecord implements IdentityInterface
 
         $desc = ucfirst(substr($desc, 0, strlen($desc) - 2));
 
-        return ' from ' . $this->location;
+        return $desc . ' from ' . $this->location;
     }
 }
