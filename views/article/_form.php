@@ -25,8 +25,7 @@ $default_lang_id = 1; // English
     <?php $form = ActiveForm::begin([
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div><div class='row'>" .
-                "<div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>"
+            'template' => "<div class='column'>{label}<br>{input}\n<div class='help-block'>{error}</div></div>"
         ],
         'options' => [
             'enctype' => 'multipart/form-data',
@@ -73,17 +72,17 @@ $default_lang_id = 1; // English
         </div>
     </div>
 
-    <div class="row article-content-input">
-        <?= $form->field($model, 'content', ['template' => '{label}<br><br><div class="row" ><div class="col-lg-12">{input}{error}{hint}</div></div>'])
-            ->widget(CKEditor::class, [
-                'preset' => 'standart',
-                'clientOptions' => [
-                    'min-height' => '500px',
-                ]]) ?>
+    <div class="article-content-input">
+        <?= $form->field($model, 'content')->widget(CKEditor::class, [
+            'preset' => 'standart',
+            'clientOptions' => [
+                'min-height' => '500px',
+            ]]) ?>
     </div>
 
     <div class="form-group" align="center">
-        <?= Html::submitButton($model->isNewRecord ? 'Publish' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-create' : 'btn']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Publish' : 'Update',
+            ['class' => $model->isNewRecord ? 'btn btn-create btn-tick' : 'btn btn-tick']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

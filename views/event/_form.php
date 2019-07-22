@@ -28,8 +28,7 @@ $this->registerJsFile('/build/upload_img.js');
     <?php $form = ActiveForm::begin([
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "<div class='row'><div class='col-lg-12'>{label}</div></div>" .
-                "<div class='row'><div class=\"col-lg-12\">{input}</div></div>\n<div class='help-block'>{error}</div>",
+            'template' => "<div class='column'>{label}<br>{input}\n<div class='help-block'>{error}</div></div>",
             'labelOptions' => ['class' => 'control-label'],
         ],
         'options' => ['enctype' => 'multipart/form-data'],
@@ -76,11 +75,11 @@ $this->registerJsFile('/build/upload_img.js');
     </section>
 
     <div class="row">
-        <div class="col-sm-6 left-field">
+        <div class="left-field">
             <?= $form->field($model, 'type_id')->dropDownList(EventType::find()->select(['name'])
                 ->indexBy('id')->orderBy('name')->column(), ['prompt' => 'select']) ?>
         </div>
-        <div class="col-sm-6 row">
+        <div class="right-field row">
             <div class="col-sm-6 left-field">
                 <?= $form->field($model, 'start')->widget(DateRangePicker::class, [
                     'pluginOptions' => [
@@ -108,6 +107,7 @@ $this->registerJsFile('/build/upload_img.js');
             </div>
         </div>
     </div>
+
     <?= $form->field($model, 'desc')->textarea(['rows' => 3]) ?>
 
     <div class="row price-fields">
@@ -144,11 +144,10 @@ $this->registerJsFile('/build/upload_img.js');
         </div>
     </div>
 
-    <?= $form->field($model, 'content', ['template' => '{label}<br><br><div class="row" ><div class="col-lg-12">{input}{error}{hint}</div></div>'])
-        ->widget(CKEditor::class, [
-            'options' => ['height' => 'auto'],
-            'preset' => 'standart',
-        ]) ?>
+    <?= $form->field($model, 'content')->widget(CKEditor::class, [
+        'options' => ['height' => 'auto'],
+        'preset' => 'standart',
+    ]) ?>
 
     <div class="form-group" align="center">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update',

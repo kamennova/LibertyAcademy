@@ -2,6 +2,7 @@
 
 .container.article-form-container {
   padding-top: 50px;
+  padding-bottom: 30px;
 
   font-family: "Open Sans", Arial, sans-serif;
 
@@ -76,29 +77,23 @@
   }
 }
 
-/*----*/
 .name {
   flex-grow: 1;
 }
 
-.article-main-info-input {
+.article-main-info-input .form-control.article-title {
+  padding-bottom: 9px;
 
-  .form-control.article-title {
-    height: auto;
-    /*margin-top: 30px !important;*/
-    font-family: Lato, Arial, sans-serif;
-    font-size: 50px !important;
-    font-weight: 700;
-    color: #303030 !important;
-    line-break: normal;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  color: #303030;
+  line-break: normal;
 
-    background-color: transparent !important;
-    background-image: none;
-    border: none !important;
-    box-shadow: none;
-
-    padding-bottom: 9px !important;
-  }
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
 }
 
 span.select2-selection {
@@ -110,13 +105,9 @@ span.select2-selection {
   position: relative;
 
   display: inline-block;
-  /*margin-top: 7px !important;*/
 
-  padding: 2px 9px 2px 16px;
-
-  font-family: Lato, Arial, sans-serif !important;
+  font-family: Lato, Arial, sans-serif;
   font-size: 14px;
-  /*color: rgba(0, 0, 0, 0.7);*/
   color: #5eb762 !important;
   font-weight: 400;
   text-transform: uppercase;
@@ -129,6 +120,10 @@ span.select2-selection {
   transition: 0.1s linear all;
 }
 
+.article-content-input .control-label {
+  margin-bottom: 13px;
+}
+
 .article-content-input p, .cke_editable {
   font-size: 15px !important;
 }
@@ -138,8 +133,8 @@ span.select2-selection {
   background-color: @background;
 }
 
-.price-fields{
-  .col-sm-4{
+.price-fields {
+  .col-sm-4 {
     margin-right: 2%;
   }
 }

@@ -1,7 +1,5 @@
 @import "variables.less";
 
-/*----*/
-
 [class^=col-xs-], [class ^= col-sm-], [class ^=col-md-], [class ^=col-lg-], .row {
   padding-right: 0;
   padding-left: 0;
@@ -11,6 +9,11 @@
   display: flex;
   margin-right: 0;
   margin-left: 0;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
 }
 
 .help-block-error {
@@ -151,6 +154,40 @@ img {
     outline: none;
     box-shadow: none;
   }
+
+  &.btn-tick {
+    position: relative;
+
+    padding-left: 40px;
+
+    &::after, &::before {
+      content: '';
+
+      position: absolute;
+      bottom: 16px;
+
+      display: block;
+      width: 2px;
+
+      background-color: white;
+    }
+
+    &::after {
+      left: 24px;
+
+      height: 11px;
+
+      transform: rotate(35deg);
+    }
+
+    &::before{
+      left: 19px;
+
+      height: 6px;
+
+      transform: rotate(-49deg);
+    }
+  }
 }
 
 .btn-smaller {
@@ -217,7 +254,7 @@ h2 {
 
   font-size: 50px;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 600;
   color: @darkgrey;
   letter-spacing: 2px;
   text-align: center;
@@ -914,6 +951,29 @@ span.date {
     width: 700px;
     margin: 20px auto;
   }
+}
+
+.glyphicon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  background-size: 100%;
+}
+
+.glyphicon-eye-open {
+  background: url(../img/icons/eye.svg) no-repeat center center;
+  background-size: 100%;
+}
+
+.glyphicon-pencil{
+  background: url(../img/icons/pencil.svg) no-repeat center center;
+  background-size: 100%;
+}
+
+.glyphicon-trash {
+  background: url(../img/icons/trash.svg) no-repeat center center;
+  background-size: 100%;
 }
 
 // --- MEDIA ---
