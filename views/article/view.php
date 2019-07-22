@@ -2,6 +2,7 @@
 
 /** @var /app/models/Article $article */
 
+use dosamigos\disqus\Comments;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
@@ -11,8 +12,9 @@ $author = $article->trainer;
 
 $this->title = $article->title . ' | Liberty Academy';
 
-$meta_desc = substr($article->content, 0, 250) . "..."; // todo
-$meta_keys = 'liberty academy, liberty training, liberty training articles, liberty training blog, liberty horse, liberty horsemanship, liberty horse training';
+$meta_desc = substr(strip_tags($article->content), 0, 250) . "..."; // todo
+$meta_keys = strtolower($article->title) . ', ' . strtolower($author->fullName) . ', ' . 'liberty academy, liberty training,
+ liberty training articles, liberty training blog, liberty horse, liberty horsemanship, liberty horse training';
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $meta_keys]);
 $this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
@@ -107,6 +109,14 @@ $authorServiceList .= '</ul>'; ?>
 
                 <section class="leave-comment">
                     <h3 class="comments-section-title">Leave a comment</h3>
+
+                    <?= Comments::widget([
+                        'shortname' => '{libertyacademy}',
+                        'identifier' => 'https://libertyacademy.info/article/view?id=' . $article->id,
+                        'url' => 'https://libertyacademy.info/article/view?id=' . $article->id,
+                    ]);
+                    ?>
+
                     <?php $form = ActiveForm::begin(['id' => 'comment-form', 'layout' => 'horizontal', 'fieldConfig' => [
                         'enableLabel' => false,
                         'template' => "{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",

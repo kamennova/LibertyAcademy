@@ -12,8 +12,8 @@ $this->title = $trainer->name . ' ' . $trainer->surname . ' | Liberty Academy';
 $meta_desc = $trainer->mainInfoStr . ' | "' . $trainer->desc . '"';
 
 $this->registerMetaTag(['name' => 'keywords', 'content' =>
-    strtolower($trainer->name) . ', ' .
-    'liberty academy, liberty training, liberty trainers, liberty trainer, liberty horse, liberty horsemanship, liberty horse training']);
+    strtolower($trainer->name) . ', ' . strtolower($trainer->location) . ' liberty' .
+    ', liberty academy, liberty training, liberty trainers, liberty trainer, liberty horse, liberty horsemanship, liberty horse training']);
 $this->registerMetaTag(['name' => 'description', 'content' => $meta_desc]);
 $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'profile']);
