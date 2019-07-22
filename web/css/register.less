@@ -11,7 +11,7 @@
   padding-bottom: 35px;
 
   .page-title {
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
   }
 }
 
@@ -39,23 +39,21 @@
   }
 }
 
-//-------------
-
 .register-personal,
 .personal-info-fields,
 .contact-info-fields,
 .register-contact {
-  //width: 800px;
   margin: 60px auto 0;
   padding: 20px 50px 30px;
 }
 
 p {
+  max-width: 500px;
+  margin: 0 auto 25px;
+
   font-size: 15px;
   line-height: 25px;
-  max-width: 500px;
   text-align: center;
-  margin: 0 auto 25px;
 }
 
 .register-rules {
@@ -159,6 +157,7 @@ h2 + .section-subtitle {
 
     padding-left: 0;
     padding-bottom: 25px;
+
     &::after {
       content: "Set image";
 
@@ -226,14 +225,7 @@ h2 + .section-subtitle {
   }
 }
 
-
-//--
-
-.column {
-  display: flex;
-  flex-direction: column;
-}
-.form-control{
+.form-control {
   width: 100%;
 }
 
