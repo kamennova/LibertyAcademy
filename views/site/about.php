@@ -9,6 +9,8 @@ $this->registerMetaTag(['name' => 'keywords', 'content' =>
 $this->registerMetaTag(['name' => 'description', 'content' =>
     'About Liberty Academy, liberty horsemanship trainers, events & articles database']);
 
+$this->registerCssFile('/build/site.css');
+
 ?>
 <div class="text-container">
     <section class="about-academy">

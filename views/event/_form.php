@@ -14,6 +14,7 @@ use app\models\Currency;
 /* @var $model app\models\eVENT */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerCssFile('/build/site.css');
 $this->registerCssFile('/build/forms.css');
 $this->registerCssFile('/build/create-form.css');
 

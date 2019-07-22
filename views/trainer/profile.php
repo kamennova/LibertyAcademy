@@ -19,6 +19,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'profile']);
 $this->registerMetaTag(['og:description' => $meta_desc]);
 
+$this->registerCssFile('/build/index.css');
 $this->registerCssFile('/build/profile.css');
 $this->registerJs(' $(".big-description p:has(img)").addClass("image-p");');
 

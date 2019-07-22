@@ -3,7 +3,6 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->registerCssFile('/build/site_index.css');
 $this->title = 'Liberty Academy | Teachers, events and training articles';
 
 $this->registerMetaTag(['name' => 'keywords', 'content' =>
@@ -12,6 +11,8 @@ $this->registerMetaTag(['name' => 'description', 'content' =>
     'Liberty horsemanship trainers, events & training articles database. 
     Connect with liberty teachers worldwide, enroll in clinics / webinars and read useful tips on how to train your 
     horse at liberty for free. ']);
+
+$this->registerCssFile('/build/index.css');
 
 ?>
 <h1 class="visually-hidden">Liberty trainers, events & articles database</h1>

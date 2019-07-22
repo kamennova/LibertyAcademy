@@ -13,8 +13,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 
-$this->registerCssFile('/build/trainer_view.css');
-$this->registerCssFile('/build/list_layout.css');
+$this->registerCssFile('/build/filter_layout.css');
 
 $this->title = "My articles | " . $model->name . " " . $model->surname;
 

@@ -22,6 +22,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'article']);
 $this->registerMetaTag(['og:description' => $meta_desc]);
 
+$this->registerCssFile('/build/site.css');
 $this->registerCssFile('/build/article_profile.css');
 $this->registerCssFile('/build/sort-by-form.css');
 

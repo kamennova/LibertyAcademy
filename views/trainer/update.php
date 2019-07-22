@@ -12,11 +12,8 @@ use yii\helpers\Url;
  */
 
 $this->title = 'Update profile | ' . $model->fullName;
-$this->params['breadcrumbs'][] = ['label' => 'Trainers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 
-$this->registerCssFile('/build/forms.css');
-$this->registerCssFile('/build/register.css');
+$this->registerCssFile('/build/trainer_forms.css');
 
 ?>
 

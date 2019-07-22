@@ -11,6 +11,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 
+$this->registerCssFile('/build/site.css');
 $this->registerCssFile('/build/sort-by-form.css');
 
 function generate_horsey()

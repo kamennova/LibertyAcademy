@@ -25,8 +25,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'website']);
 $this->registerMetaTag(['og:description' => $meta_desc]);
 
-$this->registerCssFile('/build/article_index.css');
-$this->registerCssFile('/build/list_layout.css');
+$this->registerCssFile('/build/filter_layout.css');
 
 $model = new \app\models\RegisterTrainer();
 

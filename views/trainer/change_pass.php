@@ -11,7 +11,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerCssFile('/build/forms.css');
+$this->registerCssFile('/build/trainer_forms.css');
+
 ?>
 
 <div class="site-login">

@@ -11,6 +11,7 @@ use yii\helpers\Html;
 /* @var $model app\models\article\ArticleForm */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerCssFile('/build/site.css');
 $this->registerCssFile('/build/forms.css');
 $this->registerCssFile('/build/create-form.css');
 

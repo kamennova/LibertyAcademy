@@ -28,7 +28,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'website']);
 $this->registerMetaTag(['og:description' => $meta_desc]);
 
-$this->registerCssFile('/build/list_layout.css');
+$this->registerCssFile('/build/filter_layout.css');
 
 $trainers = $provider->getModels();
 $trainersNumber = $provider->pagination->totalCount;
@@ -126,18 +126,9 @@ $langList = Language::find()->select('lang_name')->where(['in', 'id', $langListS
             <div class="fields-container">
 
                 <?= $form->field($condition, 'name', ['horizontalCssClasses' => ['wrapper' => false, 'offset' => false]],
-                    ['options' => ['class' => 'sort-select-field-2']])->widget(Select2::class, [
-                    'data' => $nameList,
-                    'options' => [
-                        'placeholder' => 'Name',
-                        'onchange' => 'this.form.submit()',
-                        'class' => 'form-control',
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'margin' => '0 8px'
-
-                    ]])->label(false) ?>
+                    ['options' => ['class' => 'sort-select-field title-field']])
+                    ->textInput(['placeholder' => 'Name', 'onchange' => 'this.form.submit()'])
+                    ->label(false); ?>
 
                 <?= $form->field($condition, 'teachcountry_id')
                     ->dropDownList($countryList, [

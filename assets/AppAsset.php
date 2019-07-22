@@ -19,7 +19,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'build/site.css',
+//        'build/site.css',
     ];
     public $js = [
         ['build/site.js', 'position'=>View::POS_END]

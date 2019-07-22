@@ -21,6 +21,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'website']);
 $this->registerMetaTag(['og:description' => $event->desc]);
 
+$this->registerCssFile('/build/site.css');
 $this->registerCssFile('/build/profile.css');
 $this->registerJs('$(".big-description p:has(img)").addClass("image-p")');
 

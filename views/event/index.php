@@ -26,8 +26,7 @@ $this->registerMetaTag(['og:title' => $this->title]);
 $this->registerMetaTag(['og:type' => 'website']);
 $this->registerMetaTag(['og:description' => $meta_desc]);
 
-$this->registerCssFile('/build/list_layout.css');
-$this->registerCssFile('/build/event_index.css');
+$this->registerCssFile('/build/filter_layout.css');
 
 //-----
 
