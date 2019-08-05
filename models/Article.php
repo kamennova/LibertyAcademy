@@ -12,10 +12,10 @@ use yii\helpers\Html;
  * @property integer $trainer_id
  * @property string $title
  * @property string $content
- * @property string $source
  * @property string $date
  * @property integer $lang_id
  * @property string $thumb
+ * @property boolean $visibility
  *
  * @property mixed $tags
  * @property mixed $language
@@ -41,8 +41,9 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'content'], 'required'],
-            [['title', 'content', 'thumb', 'source'], 'string'],
+            [['title', 'content', 'thumb'], 'string'],
             ['lang_id', 'integer'],
+            ['visibility', 'boolean'],
             ['imageFile', 'file', 'extensions' => 'png, jpg, jpeg'],
             ['title', 'filter', 'filter' => '\yii\helpers\Html::encode'],
             ['content', 'filter', 'filter' => '\yii\helpers\HtmlPurifier::process'],

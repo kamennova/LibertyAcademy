@@ -10,6 +10,7 @@ use app\models\Comment;
 use Yii;
 use yii\helpers\Html;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -48,11 +49,16 @@ class ArticleController extends Controller
      * @param $id
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException
+     * @throws ForbiddenHttpException
      */
     public function actionView($id)
     {
         if (!$article = Article::findOne($id)) {
             throw new NotFoundHttpException();
+        }
+
+        if (!$article->visibility) {
+            throw new ForbiddenHttpException();
         }
 
         $model = new Comment();
@@ -86,6 +92,7 @@ class ArticleController extends Controller
 
             $model->trainer_id = Yii::$app->user->id;
             $model->date = date('Y-m-d');
+            $model->visibility = !isset($_POST['is_draft']);
 
             if ($model->upload()) {
                 if ($model->imageFile) {
@@ -107,7 +114,9 @@ class ArticleController extends Controller
                 }
             }
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->visibility) return $this->redirect(['view', 'id' => $model->id]);
+
+            return $this->redirect(['trainer/myarticles']);
         }
 
         return $this->render('create', ['model' => $model]);
@@ -133,6 +142,8 @@ class ArticleController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             ArticleTag::deleteAll(['article_id' => $id]);
 
+            $model->visibility = !isset($_POST['is_draft']);
+
             if ($model->tags) {
                 foreach ($model->tags as $tag) {
                     $at = new ArticleTag();
@@ -152,7 +163,9 @@ class ArticleController extends Controller
             }
 
             if ($model->save(false)) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->visibility) return $this->redirect(['view', 'id' => $model->id]);
+
+                return $this->redirect(['trainer/myarticles']);
             }
         }
 
@@ -179,7 +192,7 @@ class ArticleController extends Controller
         if (Yii::$app->request->post()) {
             $model = $this->findModel($id);
 
-            if($model->trainer_id !== Yii::$app->user->id){
+            if ($model->trainer_id !== Yii::$app->user->id) {
                 return $this->redirect('/trainer/myarticles');
             }
 

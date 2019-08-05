@@ -26,7 +26,7 @@ $default_lang_id = 1; // English
     <?php $form = ActiveForm::begin([
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "<div class='column'>{label}<br>{input}\n<div class='help-block'>{error}</div></div>"
+            'template' => "<div class='column'>{label}{input}\n<div class='help-block'>{error}</div></div>"
         ],
         'options' => [
             'enctype' => 'multipart/form-data',
@@ -50,7 +50,7 @@ $default_lang_id = 1; // English
         </div>
     </section>
 
-    <div class="row">
+    <div class="row fields-row">
         <div class="col-sm-8 left-field article-tags-input">
             <?= $form->field($model, 'tags')
                 ->widget(Select2::class, [
@@ -82,7 +82,10 @@ $default_lang_id = 1; // English
     </div>
 
     <div class="form-group" align="center">
-        <?= Html::submitButton($model->isNewRecord ? 'Publish' : 'Update',
+        <?php if($model->isNewRecord || !$model->visibility) echo Html::submitButton('Save as draft',
+            ['class' => 'btn btn-create', 'name' => 'is_draft']) ?>
+
+        <?= Html::submitButton(($model->isNewRecord || !$model->visibility) ? 'Publish' : 'Update',
             ['class' => $model->isNewRecord ? 'btn btn-create btn-tick' : 'btn btn-tick']) ?>
     </div>
 
