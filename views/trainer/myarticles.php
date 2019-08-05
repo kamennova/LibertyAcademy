@@ -67,6 +67,7 @@ $articlesNumber = count($articles);
                         'attribute' => 'title',
                         'value' => function ($article) {
                             return "<div class='item-thumb'>" . ($article->thumb ? "<img src='$article->thumb' />" : null) . "</div>" .
+                                ($article->visibility ? '' : '<span class="draft-label">Draft</span>') .
                                 Html::a("$article->title", ['/article/view', 'id' => $article->id], ['class' => 'item-title']);
                         },
                         'format' => 'raw',

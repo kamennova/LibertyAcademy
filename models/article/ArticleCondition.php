@@ -21,7 +21,7 @@ class ArticleCondition extends Article
 
     public function search()
     {
-        $query = Article::find();
+        $query = Article::find()->where(['visibility' => true]);
 
         if ($this->title) {
             $query->andFilterWhere(['like', 'title', $this->title]);
